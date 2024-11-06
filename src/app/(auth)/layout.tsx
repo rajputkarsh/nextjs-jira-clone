@@ -14,7 +14,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           <Image src="/logo/heera.png" width={152} height={56} alt="Logo" />
           <Button variant="secondary">Sign Up</Button>
         </nav>
-        {children}
+        <div className="flex flex-col items-center justify-center pt-4 md:pt-14">{children}</div>
       </div>
     </div>
   );
