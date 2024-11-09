@@ -1,3 +1,5 @@
 {
-  "welcome_back": "Welcome Back!"
+  "SignInCard": {
+    "welcome_back": "Welcome Back!"
+  }
 }
