@@ -1,4 +1,6 @@
 
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from "react-icons/fa";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -53,6 +55,7 @@ export function SignInCard() {
           disabled={false}
           variant={"secondary"}
         >
+          <FcGoogle className="mr-2 size-5" />
           {translations("login_with_google")}
         </Button>
         <Button
@@ -61,6 +64,7 @@ export function SignInCard() {
           disabled={false}
           variant={"secondary"}
         >
+          <FaGithub className="mr-2 size-5" />
           {translations("login_with_github")}
         </Button>
       </CardContent>
