@@ -1,5 +1,21 @@
 {
   "SignInCard": {
-    "welcome_back": "Welcome Back!"
+    "welcome_back": "Welcome Back!",
+    "email_placeholder": "Enter email address",
+    "password_placeholder": "Enter password",
+    "login": "Login",
+    "login_with_google": "Login with Google",
+    "login_with_github": "Login with Github"
+  },
+  "SignUpCard": {
+    "sign_up": "Sign Up",
+    "form_description": "By signing up, you agree to our ",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service",
+    "name_placeholder": "Enter name",
+    "email_placeholder": "Enter email address",
+    "password_placeholder": "Enter password",
+    "signup_with_google": "Sign up with Google",
+    "signup_with_github": "Sign up with Github"
   }
 }
