@@ -1,4 +1,8 @@
 {
+  "auth": {
+    "login": "Login",
+    "sign_up": "Sign Up"
+  },
   "SignInCard": {
     "welcome_back": "Welcome Back!",
     "email_placeholder": "Enter email address",
