@@ -9,7 +9,9 @@
     "password_placeholder": "Enter password",
     "login": "Login",
     "login_with_google": "Login with Google",
-    "login_with_github": "Login with Github"
+    "login_with_github": "Login with Github",
+    "dont_have_an_account": "Don't have an account? ",
+    "sign_up": "Sign Up"
   },
   "SignUpCard": {
     "sign_up": "Sign Up",
@@ -20,6 +22,8 @@
     "email_placeholder": "Enter email address",
     "password_placeholder": "Enter password",
     "signup_with_google": "Sign up with Google",
-    "signup_with_github": "Sign up with Github"
+    "signup_with_github": "Sign up with Github",
+    "already_have_an_account": "Already have an account? ",
+    "login": "Login"
   }
 }
