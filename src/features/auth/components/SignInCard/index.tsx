@@ -106,9 +106,9 @@ export function SignInCard() {
       </div>
       <CardContent className="p-7 flex items-center justify-center">
         <p>
-          {translations("already_have_an_account")}
+          {translations("dont_have_an_account")}
           <Link className="text-blue-700 hover:underline" href="/sign-in">
-            {translations("login")}
+            {translations("sign_up")}
           </Link>
         </p>
       </CardContent>
