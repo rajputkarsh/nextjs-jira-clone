@@ -16,6 +16,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import Link from "next/link";
 
 export function SignInCard() {
   const translations = useTranslations("SignInCard");
@@ -99,6 +100,17 @@ export function SignInCard() {
           <FaGithub className="mr-2 size-5" />
           {translations("login_with_github")}
         </Button>
+      </CardContent>{" "}
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>
+          {translations("already_have_an_account")}
+          <Link className="text-blue-700 hover:underline" href="/sign-in">
+            {translations("login")}
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );
