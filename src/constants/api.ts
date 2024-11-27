@@ -4,4 +4,8 @@ export const HTTP_STATUS = {
     STATUS: 500,
     MESSAGE: 'Something went wrong. Please try again'
   },
+  OK: {
+    STATUS: 200,
+    MESSAGE: '',
+  }
 } as const;
