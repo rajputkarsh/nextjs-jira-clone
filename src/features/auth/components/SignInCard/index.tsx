@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import { SignInFormDefaultValues, SignInFormSchema } from "./schema";
+import { SignInFormDefaultValues, SignInFormSchema } from "../../schema";
 import {
   Form,
   FormControl,
