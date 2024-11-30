@@ -23,9 +23,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
+import { useRegister } from "../../api/use-register";
 
 export function SignUpCard() {
   const translations = useTranslations("SignUpCard");
+  const { mutate } = useRegister();
 
   const signUpForm = useForm<z.infer<typeof SignUpFormSchema>>({
     defaultValues: SignUpFormDefaultValues,
@@ -33,7 +35,9 @@ export function SignUpCard() {
   });
 
   const formSubmit = (values: z.infer<typeof SignUpFormSchema>) => {
-    console.log(`values - `, { values });
+    mutate({
+      json: values,
+    });
   };
 
   return (
