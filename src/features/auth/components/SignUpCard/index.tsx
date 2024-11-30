@@ -4,7 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { SignUpFormDefaultValues, SignUpFormSchema } from "./schema";
+import { SignUpFormDefaultValues, SignUpFormSchema } from "../../schema";
 import {
   Form,
   FormControl,
