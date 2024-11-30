@@ -17,9 +17,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
+import { useLogin } from "../../api/use-login";
 
 export function SignInCard() {
   const translations = useTranslations("SignInCard");
+  const { mutate } = useLogin()
 
   const signInForm = useForm<z.infer<typeof SignInFormSchema>>({
     defaultValues: SignInFormDefaultValues,
@@ -27,7 +29,9 @@ export function SignInCard() {
   });
 
   const formSubmit = (values: z.infer<typeof SignInFormSchema>) => {
-    console.log(`values - `, {values})
+    mutate({
+      json: values,
+    });
   }
 
   return (
