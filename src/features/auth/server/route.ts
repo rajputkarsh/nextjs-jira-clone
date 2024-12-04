@@ -7,6 +7,7 @@ const app = new Hono()
     return c.json({ success: "ok" });
   })
   .post("/sign-up", zValidator("json", SignUpFormSchema), (c) => {
+    const { name, email, password } = c.req.valid('json');
     return c.json({ success: "ok" });
   });
 
