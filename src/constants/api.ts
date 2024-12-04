@@ -9,3 +9,5 @@ export const HTTP_STATUS = {
     MESSAGE: '',
   }
 } as const;
+
+export const AUTH_COOKIE = 'pm_session';
