@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { setCookie } from "hono/cookie";
+import { deleteCookie, setCookie } from "hono/cookie";
 import { zValidator } from "@hono/zod-validator";
 import { SignInFormSchema, SignUpFormSchema } from "../schema";
 import { createAdminClient } from "@/lib/appwrite";
@@ -21,7 +21,7 @@ const app = new Hono()
       maxAge: 60 * 60 * 24 * 30,
     });
 
-    return c.json({ success: "ok" });
+    return c.json({ success: true });
   })
   .post("/sign-up", zValidator("json", SignUpFormSchema), async (c) => {
     const { name, email, password } = c.req.valid("json");
@@ -32,14 +32,18 @@ const app = new Hono()
     const session = await account.createEmailPasswordSession(email, password);
 
     setCookie(c, AUTH_COOKIE, session.secret, {
-      path: '/',
+      path: "/",
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      maxAge: 60 * 60 * 24 *30
+      maxAge: 60 * 60 * 24 * 30,
     });
 
-    return c.json({ success: "ok" });
+    return c.json({ success: true });
+  })
+  .post("/logout", (c) => {
+    deleteCookie(c, AUTH_COOKIE);
+    return c.json({ success: true });
   });
 
 export default app;
