@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/features/auth/api/use-currentUser";
 import { useLogout } from "@/features/auth/api/use-logout";
-import { Button } from "@/components/ui/button";
+import UserButton from "@/features/auth/components/UserButton";
 
 export default function Home() {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div className="">
-      <Button onClick={() => mutate()}>Logout</Button>
+      <UserButton />
     </div>
   );
 }
