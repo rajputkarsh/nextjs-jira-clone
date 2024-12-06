@@ -1,7 +1,9 @@
 {
   "auth": {
     "login": "Login",
-    "sign_up": "Sign Up"
+    "logout": "Log Out",
+    "sign_up": "Sign Up",
+    "default_user": "U"
   },
   "SignInCard": {
     "welcome_back": "Welcome Back!",
