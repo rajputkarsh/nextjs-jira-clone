@@ -7,7 +7,7 @@ export const useCurrentUser = () => {
     queryFn: async () => {
       const response = await client.api.auth["current-user"].$get();
 
-      if(!response.ok) {
+      if(!response.ok || response.status >= 400) {
         return null;
       }
 
