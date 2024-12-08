@@ -1,5 +1,6 @@
 "use server";
 
+import { AUTH_COOKIE } from "@/constants/api";
 import { cookies } from "next/headers";
 import { Account, Client, Models } from "node-appwrite";
 
@@ -11,13 +12,15 @@ export const getCurrent =
         .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!);
 
       const session = await cookies();
+      const authCookie = session.get(AUTH_COOKIE)?.value;
 
-      if (!session) return null;
-
+      if(!authCookie) return null;
+      
+      client.setSession(authCookie);
       const account = new Account(client);
-
       return await account.get();
     } catch (e) {
+      console.log(`e -- `, e)
       return null;
     }
   };
