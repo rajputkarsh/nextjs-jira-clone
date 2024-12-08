@@ -23,7 +23,7 @@ import { useLogin } from "../../api/use-login";
 
 export function SignInCard() {
   const translations = useTranslations("SignInCard");
-  const { mutate } = useLogin()
+  const { mutate, isPending } = useLogin()
 
   const signInForm = useForm<z.infer<typeof SignInFormSchema>>({
     defaultValues: SignInFormDefaultValues,
@@ -83,7 +83,7 @@ export function SignInCard() {
                 </FormItem>
               )}
             />
-            <Button disabled={false} size={"lg"} className="w-full">
+            <Button disabled={isPending} size={"lg"} className="w-full">
               {translations("login")}
             </Button>
           </form>
@@ -93,14 +93,19 @@ export function SignInCard() {
         <DottedSeparator />
       </div>
       <CardContent className="p-7 flex flex-col gap-y-4">
-        <Button size={"lg"} className="w-full" variant={"secondary"}>
+        <Button
+          size={"lg"}
+          className="w-full"
+          variant={"secondary"}
+          disabled={isPending}
+        >
           <FcGoogle className="mr-2 size-5" />
           {translations("login_with_google")}
         </Button>
         <Button
           size={"lg"}
           className="w-full"
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
         >
           <FaGithub className="mr-2 size-5" />

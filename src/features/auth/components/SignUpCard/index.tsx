@@ -29,7 +29,7 @@ import { useRegister } from "../../api/use-register";
 
 export function SignUpCard() {
   const translations = useTranslations("SignUpCard");
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
 
   const signUpForm = useForm<z.infer<typeof SignUpFormSchema>>({
     defaultValues: SignUpFormDefaultValues,
@@ -116,7 +116,7 @@ export function SignUpCard() {
                 </FormItem>
               )}
             />
-            <Button disabled={false} size={"lg"} className="w-full">
+            <Button disabled={isPending} size={"lg"} className="w-full">
               {translations("sign_up")}
             </Button>
           </form>
@@ -129,7 +129,7 @@ export function SignUpCard() {
         <Button
           size={"lg"}
           className="w-full"
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
         >
           <FcGoogle className="mr-2 size-5" />
@@ -138,7 +138,7 @@ export function SignUpCard() {
         <Button
           size={"lg"}
           className="w-full"
-          disabled={false}
+          disabled={isPending}
           variant={"secondary"}
         >
           <FaGithub className="mr-2 size-5" />
