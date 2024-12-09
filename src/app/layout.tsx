@@ -13,11 +13,13 @@ export const metadata: Metadata = {
   title: "Heera: Ultimate Project Management",
 };
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+}
+
 export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: RootLayoutProps) {
   const locale = await getLocale();
   const messages = await getMessages();
 
