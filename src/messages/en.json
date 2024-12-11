@@ -27,5 +27,11 @@
     "signup_with_github": "Sign up with Github",
     "already_have_an_account": "Already have an account? ",
     "login": "Login"
+  },
+  "Navigation": {
+    "home": "Home",
+    "my_tasks": "My Tasks",
+    "settings": "Settings",
+    "members": "Members"
   }
 }
