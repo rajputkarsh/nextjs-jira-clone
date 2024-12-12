@@ -33,5 +33,9 @@
     "my_tasks": "My Tasks",
     "settings": "Settings",
     "members": "Members"
+  },
+  "Navbar": {
+    "home": "Home",
+    "home_desc": "Monitor all of your projects and tasks here"
   }
 }
