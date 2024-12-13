@@ -1,5 +1,6 @@
 import UserButton from "@/features/auth/components/UserButton";
 import { useTranslations } from "next-intl"
+import MobileSidebar from "./mobile-sidebar";
 
 function Navbar() {
   const translations = useTranslations("Navbar");
@@ -11,6 +12,7 @@ function Navbar() {
         </h1>
         <p className="text-muted-foreground">{translations("home_desc")}</p>
       </div>
+      <MobileSidebar />
       <UserButton />
     </nav>
   );
