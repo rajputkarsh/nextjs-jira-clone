@@ -6,7 +6,7 @@ export interface ICreateWorkspace {
 }
 
 export const createWorkspaceSchema = z.object({
-  email: z.string().trim().min(1, "Required"),
+  name: z.string().trim().min(1, "Required"),
 });
 
 export const createWorkspaceFormDefaultValues: ICreateWorkspace = {
