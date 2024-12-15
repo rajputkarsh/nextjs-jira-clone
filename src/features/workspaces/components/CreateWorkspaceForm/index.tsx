@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { createWorkspaceFormDefaultValues, createWorkspaceSchema } from "../../schema";
 import { DottedSeparator } from "@/components/dotter-separator";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 
 interface ICreateWorkspaceFormProps {
@@ -34,10 +36,42 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
         </CardTitle>
       </CardHeader>
       <div className="px-7">
-        <DottedSeparator  />
+        <DottedSeparator />
       </div>
       <CardContent className="p-7">
-
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-y-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => {
+                  return (
+                    <FormItem>
+                      <FormLabel>{translations("workspace")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={translations("workspace_placeholder")}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
+              />
+            </div>
+            <DottedSeparator className="py-7" />
+            <div className="flex items-center justify-between">
+              <Button type="button" size="lg" variant="secondary" onClick={onCancel}>
+                {translations("cancel")}
+              </Button>
+              <Button type="submit" size="lg" variant="primary">
+                {translations("create_workspace")}
+              </Button>
+            </div>
+          </form>
+        </Form>
       </CardContent>
     </Card>
   );
