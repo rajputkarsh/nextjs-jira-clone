@@ -37,5 +37,12 @@
   "Navbar": {
     "home": "Home",
     "home_desc": "Monitor all of your projects and tasks here"
+  },
+  "CreateWorkspaceForm": {
+    "create_new_workspace": "Create a new workspace",
+    "workspace": "Workspace",
+    "workspace_placeholder": "Enter workspace name",
+    "cancel": "Cancel",
+    "create_workspace": "Create workspace"
   }
 }
