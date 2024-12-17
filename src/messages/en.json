@@ -43,6 +43,8 @@
     "workspace": "Workspace",
     "workspace_placeholder": "Enter workspace name",
     "cancel": "Cancel",
-    "create_workspace": "Create workspace"
+    "create_workspace": "Create workspace",
+    "workspace_created": "Workspace Created",
+    "failed_to_create_new_workspace": "Failed to create new workspace"
   }
 }

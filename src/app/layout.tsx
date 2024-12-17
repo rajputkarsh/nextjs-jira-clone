@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -28,6 +29,7 @@ export default async function RootLayout({
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
+            <Toaster />
             {children}
           </QueryProvider>
         </NextIntlClientProvider>
