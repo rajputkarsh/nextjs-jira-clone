@@ -1,22 +1,33 @@
-'use client';
+"use client";
 
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { createWorkspaceFormDefaultValues, createWorkspaceSchema } from "../../schema";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  createWorkspaceFormDefaultValues,
+  createWorkspaceSchema,
+} from "../../schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { useCreateWorkspace } from "../../api/use-createWorkspace";
 
 interface ICreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
+  const { mutate, isPending } = useCreateWorkspace();
   const translations = useTranslations("CreateWorkspaceForm");
 
   const form = useForm<z.infer<typeof createWorkspaceSchema>>({
@@ -25,7 +36,7 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
   });
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-    console.log({values});
+    mutate({ json: values });
   };
 
   return (
@@ -63,10 +74,21 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
             </div>
             <DottedSeparator className="py-7" />
             <div className="flex items-center justify-between">
-              <Button type="button" size="lg" variant="secondary" onClick={onCancel}>
+              <Button
+                type="button"
+                size="lg"
+                variant="secondary"
+                disabled={isPending}
+                onClick={onCancel}
+              >
                 {translations("cancel")}
               </Button>
-              <Button type="submit" size="lg" variant="primary">
+              <Button
+                type="submit"
+                size="lg"
+                variant="primary"
+                disabled={isPending}
+              >
                 {translations("create_workspace")}
               </Button>
             </div>
