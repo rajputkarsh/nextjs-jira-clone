@@ -17,6 +17,11 @@ export const useLogin = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth["sign-in"]["$post"]({ json });
+
+      if (!response.ok) {
+        throw new Error(translations("log_in_failed"));
+      }
+
       return await response.json();
     },
     onSuccess: () => {

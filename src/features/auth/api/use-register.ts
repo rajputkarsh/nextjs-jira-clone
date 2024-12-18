@@ -21,6 +21,11 @@ export const useRegister = () => {
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth["sign-up"]["$post"]({ json });
+
+      if(!response.ok) {
+        throw new Error(translations("failed_to_sign_up"));
+      }
+
       return await response.json();
     },
     onSuccess: () => {
