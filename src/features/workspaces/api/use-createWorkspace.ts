@@ -14,11 +14,11 @@ export const useCreateWorkspace = () => {
 
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
-      toast.success(translations("workspace_created"));
       const response = await client.api.workspaces['$post']({ json });
       return await response.json();
     },
     onSuccess: () => {
+      toast.success(translations("workspace_created"));
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
     },
     onError: () => {
