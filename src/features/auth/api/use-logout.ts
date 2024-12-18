@@ -1,5 +1,8 @@
+import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferResponseType } from "hono";
+
+import { useTranslations } from "next-intl";
 
 import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
@@ -8,6 +11,7 @@ type ResponseType = InferResponseType<typeof client.api.auth['logout']['$post']>
 
 export const useLogout = () => {
 
+  const translations = useTranslations("auth");
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -17,9 +21,13 @@ export const useLogout = () => {
       return await response.json();
     },
     onSuccess: () => {
+      toast.success(translations("logged_out_successfully"));
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
-    }
+    },
+    onError: () => {
+      toast.error(translations("log_out_failed"));
+    },
   });
 
   return mutation;
