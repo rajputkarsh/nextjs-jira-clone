@@ -3,7 +3,9 @@
     "login": "Login",
     "logout": "Log Out",
     "sign_up": "Sign Up",
-    "default_user": "U"
+    "default_user": "U",
+    "logged_out_successfully": "Logged out successfully!",
+    "failed_to_log_out": "Failed to log out"
   },
   "SignInCard": {
     "welcome_back": "Welcome Back!",
@@ -13,7 +15,9 @@
     "login_with_google": "Login with Google",
     "login_with_github": "Login with Github",
     "dont_have_an_account": "Don't have an account? ",
-    "sign_up": "Sign Up"
+    "sign_up": "Sign Up",
+    "logged_in_successfully": "Logged in successfully!",
+    "failed_to_log_in": "Failed to log in"
   },
   "SignUpCard": {
     "sign_up": "Sign Up",
@@ -26,7 +30,9 @@
     "signup_with_google": "Sign up with Google",
     "signup_with_github": "Sign up with Github",
     "already_have_an_account": "Already have an account? ",
-    "login": "Login"
+    "login": "Login",
+    "signed_up_successfully": "Signed up successfully!",
+    "failed_to_sign_up": "Failed to sign up"
   },
   "Navigation": {
     "home": "Home",
