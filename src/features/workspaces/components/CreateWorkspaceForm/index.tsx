@@ -1,10 +1,12 @@
 "use client";
-
+import { ChangeEvent, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Form,
   FormControl,
@@ -21,12 +23,15 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../../api/use-createWorkspace";
+import { ImageIcon } from "lucide-react";
 
 interface ICreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
   const { mutate, isPending } = useCreateWorkspace();
   const translations = useTranslations("CreateWorkspaceForm");
 
@@ -36,8 +41,22 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
   });
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
-    mutate({ json: values });
+
+    mutate({
+      form: {
+        ...values,
+        image: values.image instanceof File ? values.image : "",
+      },
+    });
   };
+
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+
+    if(file) {
+      form.setValue("image", file)
+    }
+  }
 
   return (
     <Card className="w-full h-full border-none shadow-none">
@@ -70,6 +89,64 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
                     </FormItem>
                   );
                 }}
+              />
+              <FormField
+                control={form.control}
+                name="image"
+                render={({ field }) => (
+                  <div className="flex gap-y-2 gap-x-5">
+                    <div className="flex items-center gap-x-5">
+                      {field.value ? (
+                        <div className="size-[72px] relative rounded-md overflow-hidden">
+                          <Image
+                            alt="Logo"
+                            fill
+                            className="object-cover"
+                            src={
+                              field.value instanceof File
+                                ? URL.createObjectURL(field.value)
+                                : field.value
+                            }
+                          />
+                        </div>
+                      ) : (
+                        <Avatar className="size-[72px]">
+                          <AvatarFallback>
+                            <ImageIcon className="size-[36px] text-neutral-400" />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="text-sm">
+                        {translations("workspace_icon")}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {translations("jpg_png_svg_gif_or_jpeg_max_1_mb")}
+                      </p>
+                      <input
+                        className="hidden"
+                        accept=".jpg, .png, .jpeg, .svg, .gif"
+                        type="file"
+                        ref={inputRef}
+                        disabled={isPending}
+                        onChange={handleImageChange}
+                      />
+                      <Button
+                        type="button"
+                        size="xs"
+                        variant="tertiary"
+                        className="w-fit mt-2"
+                        disabled={isPending}
+                        onClick={() => {
+                          inputRef.current?.click();
+                        }}
+                      >
+                        {translations("upload_image")}
+                      </Button>
+                    </div>
+                  </div>
+                )}
               />
             </div>
             <DottedSeparator className="py-7" />

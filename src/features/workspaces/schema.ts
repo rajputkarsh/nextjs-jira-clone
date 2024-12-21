@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 export interface ICreateWorkspace {
   name: string;
-  imageUrl?: string;
+  image?: string;
 }
 
 export const createWorkspaceSchema = z.object({
@@ -16,5 +16,5 @@ export const createWorkspaceSchema = z.object({
 
 export const createWorkspaceFormDefaultValues: ICreateWorkspace = {
   name: "",
-  imageUrl: "",
+  image: "",
 };
