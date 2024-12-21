@@ -42,12 +42,19 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
 
-    mutate({
-      form: {
-        ...values,
-        image: values.image instanceof File ? values.image : "",
+    mutate(
+      {
+        form: {
+          ...values,
+          image: values.image instanceof File ? values.image : "",
+        },
       },
-    });
+      {
+        onSuccess: () => {
+          form.reset();
+        },
+      }
+    );
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
