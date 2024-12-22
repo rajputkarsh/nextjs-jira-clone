@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 export const useCurrentUser = () => {
   const router = useRouter();
-  const mutation = useQuery({
+  const query = useQuery({
     queryKey: ["current"],
     queryFn: async () => {
       const response = await client.api.auth["current-user"].$get();
@@ -19,5 +19,5 @@ export const useCurrentUser = () => {
     },
   });
 
-  return mutation;
+  return query;
 };
