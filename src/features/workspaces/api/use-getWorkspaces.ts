@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 
-export const useCreateWorkspace = () => {
+export const useGetWorkspace = () => {
   const translations = useTranslations("CreateWorkspaceForm");
   const query = useQuery({
     queryKey: ["workspaces"],
