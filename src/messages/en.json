@@ -56,5 +56,9 @@
     "jpg_png_svg_gif_or_jpeg_max_1_mb": "JPG, PNG, SVG, GIF or JPEG (Max 1 MB)",
     "upload_image": "Upload Image",
     "failed_to_fetch_workspaces": "Failed to fetch workspaces"
+  },
+  "WorkspaceSwitcher": {
+    "workspaces": "Workspaces",
+    "no_workspace_selected": "No workspace selected"
   }
 }
