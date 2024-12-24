@@ -2,8 +2,9 @@ import { Hono } from "hono";
 import { ID } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 import { sessionMiddleware } from "@/middlewares/session";
-import { DATABASE_ID, IMAGES_BUCKET_ID, WORKSPACES_ID } from "@/config";
+import { DATABASE_ID, IMAGES_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 import { createWorkspaceSchema } from "../schema";
+import { MemberRole } from "@/features/members/types";
 
 const app = new Hono()
   .get(
@@ -59,6 +60,17 @@ const app = new Hono()
           imageUrl: uploadedImageUrl,
         }
       );
+
+      await databases.createDocument(
+        DATABASE_ID,
+        MEMBERS_ID,
+        ID.unique(),
+        {
+          userId: user.$id,
+          workspaceId: workspace.$id,
+          role: MemberRole.ADMIN
+        }
+      )
 
       return c.json({ data: workspace });
     }
