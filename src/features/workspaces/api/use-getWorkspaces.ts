@@ -3,7 +3,6 @@ import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 
 export const useGetWorkspace = () => {
-  const translations = useTranslations("CreateWorkspaceForm");
   const query = useQuery({
     queryKey: ["workspaces"],
     queryFn: async () => {

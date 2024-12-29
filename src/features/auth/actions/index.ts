@@ -20,7 +20,6 @@ export const getCurrent =
       const account = new Account(client);
       return await account.get();
     } catch (e) {
-      console.log(`e -- `, e)
       return null;
     }
   };
