@@ -1,5 +1,6 @@
 import QueryProvider from "@/providers/QueryProvider";
 import { NextIntlClientProvider } from "next-intl";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { getLocale, getMessages } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -29,8 +30,10 @@ export default async function RootLayout({
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <NextIntlClientProvider messages={messages}>
           <QueryProvider>
-            <Toaster />
-            {children}
+            <NuqsAdapter>
+              <Toaster />
+              {children}
+            </NuqsAdapter>
           </QueryProvider>
         </NextIntlClientProvider>
       </body>

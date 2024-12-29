@@ -24,14 +24,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../../api/use-createWorkspace";
 import { ImageIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ICreateWorkspaceFormProps {
   onCancel?: () => void;
 }
 
 function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
-
   const { mutate, isPending } = useCreateWorkspace();
   const translations = useTranslations("CreateWorkspaceForm");
 
@@ -50,8 +51,9 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
         },
       },
       {
-        onSuccess: () => {
+        onSuccess: ({ data }) => {
           form.reset();
+          router.push(`/workspaces/${data?.$id}`);
         },
       }
     );
