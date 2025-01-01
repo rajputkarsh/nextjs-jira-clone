@@ -9,7 +9,7 @@ interface WorkspaceAvatarProps {
 }
 
 function WorkspaceAvatar({ name, image, className }: WorkspaceAvatarProps) {
-  if (image) {
+  if (image && image !== "undefined") {
     return (
       <div
         className={cn("size-10 relative rounded-md overflow-hidden", className)}
