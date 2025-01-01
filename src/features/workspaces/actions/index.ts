@@ -5,6 +5,7 @@ import { AUTH_COOKIE } from "@/constants/api";
 import { getMembers } from "@/features/members/types/utils";
 import { cookies } from "next/headers";
 import { Account, Client, Databases, Models, Query } from "node-appwrite";
+import { Workspace } from "../types";
 
 interface GetWorkspaceProps {
   workspaceId: string;
@@ -56,7 +57,7 @@ export const getWorkspaces = async (): Promise<
 
 export const getWorkspace = async ({
   workspaceId,
-}: GetWorkspaceProps): Promise<Models.Document | null> => {
+}: GetWorkspaceProps): Promise<Workspace | null> => {
   try {
     const client = new Client()
       .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
@@ -80,7 +81,7 @@ export const getWorkspace = async ({
       return null;
     }
 
-    const workspace = await databases.getDocument(
+    const workspace = await databases.getDocument<Workspace>(
       DATABASE_ID,
       WORKSPACES_ID,
       workspaceId
