@@ -161,18 +161,36 @@ function UpdateWorkSpaceForm({
                         disabled={isPending}
                         onChange={handleImageChange}
                       />
-                      <Button
-                        type="button"
-                        size="xs"
-                        variant="tertiary"
-                        className="w-fit mt-2"
-                        disabled={isPending}
-                        onClick={() => {
-                          inputRef.current?.click();
-                        }}
-                      >
-                        {translations("upload_image")}
-                      </Button>
+                      {field.value ? (
+                        <Button
+                          type="button"
+                          size="xs"
+                          variant="destructive"
+                          className="w-fit mt-2"
+                          disabled={isPending}
+                          onClick={() => {
+                            field.onChange(null);
+                            if (inputRef.current) {
+                              inputRef.current.value = "";
+                            }
+                          }}
+                        >
+                          {translations("remove_image")}
+                        </Button>
+                      ) : (
+                        <Button
+                          type="button"
+                          size="xs"
+                          variant="tertiary"
+                          className="w-fit mt-2"
+                          disabled={isPending}
+                          onClick={() => {
+                            inputRef.current?.click();
+                          }}
+                        >
+                          {translations("upload_image")}
+                        </Button>
+                      )}
                     </div>
                   </div>
                 )}
