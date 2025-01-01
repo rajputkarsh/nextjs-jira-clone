@@ -6,7 +6,10 @@ import { FaGithub } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
-import { SignUpFormDefaultValues, SignUpFormSchema } from "../../schema";
+import {
+  SignUpFormDefaultValues,
+  SignUpFormSchema,
+} from "@/features/auth/schema";
 import {
   Form,
   FormControl,
@@ -25,7 +28,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { useRegister } from "../../api/use-register";
+import { useRegister } from "@/features/auth/api/use-register";
 
 export function SignUpCard() {
   const translations = useTranslations("SignUpCard");

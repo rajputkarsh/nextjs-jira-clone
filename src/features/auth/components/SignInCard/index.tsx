@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useTranslations } from "next-intl";
-import { SignInFormDefaultValues, SignInFormSchema } from "../../schema";
+import { SignInFormDefaultValues, SignInFormSchema } from "@/features/auth/schema";
 import {
   Form,
   FormControl,
@@ -19,7 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
-import { useLogin } from "../../api/use-login";
+import { useLogin } from "@/features/auth/api/use-login";
 
 export function SignInCard() {
   const translations = useTranslations("SignInCard");

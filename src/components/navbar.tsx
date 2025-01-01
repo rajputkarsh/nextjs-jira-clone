@@ -1,6 +1,6 @@
 import UserButton from "@/features/auth/components/UserButton";
 import { useTranslations } from "next-intl"
-import MobileSidebar from "./mobile-sidebar";
+import MobileSidebar from "@/components/mobile-sidebar";
 
 function Navbar() {
   const translations = useTranslations("Navbar");

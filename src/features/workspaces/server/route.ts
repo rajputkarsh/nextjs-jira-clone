@@ -3,10 +3,10 @@ import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 import { sessionMiddleware } from "@/middlewares/session";
 import { DATABASE_ID, IMAGES_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
-import { createWorkspaceSchema, updateWorkspaceSchema } from "../schema";
+import { createWorkspaceSchema, updateWorkspaceSchema } from "@/features/workspaces/schema";
 import { MemberRole } from "@/features/members/types";
 import { generateInviteCode } from "@/lib/utils";
-import { WORKSPACE_INVITE_CODE_LENGTH } from "../constants";
+import { WORKSPACE_INVITE_CODE_LENGTH } from "@/features/workspaces/constants";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
 

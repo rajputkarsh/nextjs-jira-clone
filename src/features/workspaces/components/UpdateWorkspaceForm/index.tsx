@@ -15,15 +15,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { updateWorkspaceSchema } from "../../schema";
+import { updateWorkspaceSchema } from "@/features/workspaces/schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useUpdateWorkspace } from "../../api/use-updateWorkspace";
+import { useUpdateWorkspace } from "@/features/workspaces/api/use-updateWorkspace";
 import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Workspace } from "../../types";
+import { Workspace } from "@/features/workspaces/types";
 
 interface IUpdateWorkspaceFormProps {
   onCancel?: () => void;

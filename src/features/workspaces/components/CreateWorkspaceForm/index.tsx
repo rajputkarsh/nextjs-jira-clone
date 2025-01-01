@@ -18,11 +18,11 @@ import {
 import {
   createWorkspaceFormDefaultValues,
   createWorkspaceSchema,
-} from "../../schema";
+} from "@/features/workspaces/schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useCreateWorkspace } from "../../api/use-createWorkspace";
+import { useCreateWorkspace } from "@/features/workspaces/api/use-createWorkspace";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";

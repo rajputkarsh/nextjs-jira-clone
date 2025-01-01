@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { useTranslations } from "next-intl";
-import { useLogout } from "../../api/use-logout";
-import { useCurrentUser } from "../../api/use-currentUser";
+import { useLogout } from "@/features/auth/api/use-logout";
+import { useCurrentUser } from "@/features/auth/api/use-currentUser";
 
 function UserButton() {
   const translations = useTranslations("auth");
