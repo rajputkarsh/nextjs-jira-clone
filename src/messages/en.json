@@ -62,7 +62,8 @@
     "no_workspace_selected": "No workspace selected"
   },
   "UpdateWorkspaceForm": {
-    "update_workspace": "Update Workspace",
+    "back": "Back",
+    "save_changes": "Save Changes",
     "workspace": "Workspace",
     "workspace_placeholder": "Enter workspace name",
     "workspace_icon": "Workspace Icon",

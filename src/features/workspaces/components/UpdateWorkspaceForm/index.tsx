@@ -20,7 +20,7 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useUpdateWorkspace } from "../../api/use-updateWorkspace";
-import { ImageIcon } from "lucide-react";
+import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "../../types";
@@ -42,8 +42,8 @@ function UpdateWorkSpaceForm({
   const form = useForm<z.infer<typeof updateWorkspaceSchema>>({
     resolver: zodResolver(updateWorkspaceSchema),
     defaultValues: {
-      ...initialValues,
-      image: initialValues.imageUrl ?? ""
+      name: initialValues.name,
+      image: initialValues.imageUrl ?? "",
     },
   });
 
@@ -55,7 +55,7 @@ function UpdateWorkSpaceForm({
         },
         form: {
           ...values,
-          image: values.image instanceof File ? values.image : undefined,
+          image: values.image instanceof File ? values.image : "",
         },
       },
       {
@@ -77,7 +77,11 @@ function UpdateWorkSpaceForm({
 
   return (
     <Card className="w-full h-full border-none shadow-none">
-      <CardHeader className="flex p-7">
+      <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
+        <Button size={"sm"} variant={"secondary"} onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}>
+          {translations("back")}
+          <ArrowLeftIcon className="size-4 mr-2" />
+        </Button>
         <CardTitle className="text-xl font-bold">
           {initialValues.name}
         </CardTitle>
@@ -184,7 +188,7 @@ function UpdateWorkSpaceForm({
                 variant="primary"
                 disabled={isPending}
               >
-                {translations("update_workspace")}
+                {translations("save_changes")}
               </Button>
             </div>
           </form>
