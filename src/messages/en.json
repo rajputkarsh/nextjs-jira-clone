@@ -60,5 +60,9 @@
   "WorkspaceSwitcher": {
     "workspaces": "Workspaces",
     "no_workspace_selected": "No workspace selected"
+  },
+  "UpdateWorkspaceForm": {
+    "failed_to_update_workspace": "Failed to update workspace",
+    "workspace_updated": "Workspace updated"
   }
 }
