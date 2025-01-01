@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { useCreateWorkspace } from "../../api/use-createWorkspace";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface ICreateWorkspaceFormProps {
   onCancel?: () => void;
@@ -166,6 +167,7 @@ function CreateWorkSpaceForm({ onCancel }: ICreateWorkspaceFormProps) {
                 variant="secondary"
                 disabled={isPending}
                 onClick={onCancel}
+                className={cn(!!onCancel ? "" : "invisible")}
               >
                 {translations("cancel")}
               </Button>
