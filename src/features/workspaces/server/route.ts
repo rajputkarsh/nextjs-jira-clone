@@ -170,7 +170,9 @@ const app = new Hono()
       );
     }
 
-    const workspace = await databases.deleteDocument(
+    // TODO: Delete members, projects and tasks
+
+    await databases.deleteDocument(
       DATABASE_ID,
       WORKSPACES_ID,
       workspaceId
