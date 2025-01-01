@@ -77,14 +77,22 @@ function UpdateWorkSpaceForm({
 
   return (
     <Card className="w-full h-full border-none shadow-none">
-      <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
-        <Button size={"sm"} variant={"secondary"} onClick={onCancel ? onCancel : () => router.push(`/workspaces/${initialValues.$id}`)}>
-          {translations("back")}
-          <ArrowLeftIcon className="size-4 mr-2" />
-        </Button>
+      <CardHeader className="flex flex-row items-center justify-between gap-x-4 p-7 space-y-0">
         <CardTitle className="text-xl font-bold">
           {initialValues.name}
         </CardTitle>
+        <Button
+          size={"sm"}
+          variant={"secondary"}
+          onClick={
+            onCancel
+              ? onCancel
+              : () => router.push(`/workspaces/${initialValues.$id}`)
+          }
+        >
+          <ArrowLeftIcon className="size-4" />
+          {translations("back")}
+        </Button>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator />

@@ -21,7 +21,7 @@ async function WorkspaceSettings({ params }: WorkspaceSettingsProps) {
   }
 
   return (
-    <div>
+    <div className="w-full lg:max-w-xl">
       <UpdateWorkSpaceForm initialValues={initialValues} />
     </div>
   );
