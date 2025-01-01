@@ -176,7 +176,7 @@ const app = new Hono()
       workspaceId
     );
 
-    return c.json({ data: workspace });
+    return c.json({ data: { $id: workspaceId } });
   });
 
 export default app;
