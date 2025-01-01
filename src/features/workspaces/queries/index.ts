@@ -1,10 +1,8 @@
 "use server";
 
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
-import { AUTH_COOKIE } from "@/constants/api";
 import { getMembers } from "@/features/members/types/utils";
-import { cookies } from "next/headers";
-import { Account, Client, Databases, Models, Query } from "node-appwrite";
+import { Models, Query } from "node-appwrite";
 import { Workspace } from "@/features/workspaces/types";
 import { createSessionClient } from "@/lib/appwrite";
 
