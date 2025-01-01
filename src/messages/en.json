@@ -74,5 +74,9 @@
     "cancel": "Cancel",
     "failed_to_update_workspace": "Failed to update workspace",
     "workspace_updated": "Workspace updated"
+  },
+  "DeleteWorkspaceForm": {
+    "workspace_deleted": "Workspace deleted",
+    "failed_to_delete_workspace": "Failed to delete workspace"
   }
 }
