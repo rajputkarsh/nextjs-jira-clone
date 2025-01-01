@@ -2,8 +2,16 @@ import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 import { sessionMiddleware } from "@/middlewares/session";
-import { DATABASE_ID, IMAGES_BUCKET_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
-import { createWorkspaceSchema, updateWorkspaceSchema } from "@/features/workspaces/schema";
+import {
+  DATABASE_ID,
+  IMAGES_BUCKET_ID,
+  MEMBERS_ID,
+  WORKSPACES_ID,
+} from "@/config";
+import {
+  createWorkspaceSchema,
+  updateWorkspaceSchema,
+} from "@/features/workspaces/schema";
 import { MemberRole } from "@/features/members/types";
 import { generateInviteCode } from "@/lib/utils";
 import { WORKSPACE_INVITE_CODE_LENGTH } from "@/features/workspaces/constants";
@@ -96,10 +104,17 @@ const app = new Hono()
       const { workspaceId } = c.req.param();
       const { name, image } = c.req.valid("form");
 
-      const member = await getMembers({ databases, workspaceId, userId: user?.$id });
+      const member = await getMembers({
+        databases,
+        workspaceId,
+        userId: user?.$id,
+      });
 
       if (!member || member?.role !== MemberRole.ADMIN) {
-        return c.json({ error: HTTP_STATUS.UNAUTHORISED.MESSAGE }, HTTP_STATUS.UNAUTHORISED.STATUS);
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
       }
 
       let uploadedImageUrl: string | undefined;
@@ -135,6 +150,33 @@ const app = new Hono()
 
       return c.json({ data: workspace });
     }
-  );
+  )
+  .delete("/:workspaceId", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const user = c.get("user");
+
+    const { workspaceId } = c.req.param();
+
+    const member = await getMembers({
+      databases,
+      workspaceId,
+      userId: user?.$id,
+    });
+
+    if (!member || member?.role !== MemberRole.ADMIN) {
+      return c.json(
+        { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+        HTTP_STATUS.UNAUTHORISED.STATUS
+      );
+    }
+
+    const workspace = await databases.deleteDocument(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId
+    );
+
+    return c.json({ data: workspace });
+  });
 
 export default app;
