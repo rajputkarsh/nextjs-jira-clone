@@ -4,7 +4,7 @@ import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 
-type ResponseType = InferResponseType<typeof client.api.workspaces[':workspaceId']['$delete']>;
+type ResponseType = InferResponseType<typeof client.api.workspaces[':workspaceId']['$delete'], 200>;
 type RequestType = InferRequestType<
   (typeof client.api.workspaces)[":workspaceId"]["$delete"]
 >;
@@ -26,9 +26,10 @@ export const useDeleteWorkspace = () => {
 
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success(translations("workspace_deleted"));
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
+      queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
     },
     onError: () => {
       toast.error(translations("failed_to_delete_workspace"));
