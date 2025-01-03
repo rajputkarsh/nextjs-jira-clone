@@ -73,7 +73,10 @@
     "remove_image": "Remove Image",
     "cancel": "Cancel",
     "failed_to_update_workspace": "Failed to update workspace",
-    "workspace_updated": "Workspace updated"
+    "workspace_updated": "Workspace updated",
+    "danger_zone": "Danger Zone",
+    "deleting_a_workspace_is_irreversible_and_will_delete_all_associated_data": "Deleting a workspace is irreversible and will delete all associated data",
+    "delete_workspace": "Delete Workspace"
   },
   "DeleteWorkspaceForm": {
     "workspace_deleted": "Workspace deleted",
