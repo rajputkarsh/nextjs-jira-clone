@@ -10,6 +10,7 @@ import {
 } from "@/config";
 import {
   createWorkspaceSchema,
+  joinWorkspaceSchema,
   updateWorkspaceSchema,
 } from "@/features/workspaces/schema";
 import { MemberRole } from "@/features/members/types";
@@ -17,6 +18,7 @@ import { generateInviteCode } from "@/lib/utils";
 import { WORKSPACE_INVITE_CODE_LENGTH } from "@/features/workspaces/constants";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
+import { Workspace } from "@/features/workspaces/types";
 
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
@@ -176,7 +178,6 @@ const app = new Hono()
 
     return c.json({ data: { $id: workspaceId } });
   })
-
   .post("/:workspaceId/reset-invite-code", sessionMiddleware, async (c) => {
     const databases = c.get("databases");
     const user = c.get("user");
@@ -204,6 +205,52 @@ const app = new Hono()
     );
 
     return c.json({ data: workspace });
-  });
+  })
+  .post(
+    "/:workspaceId/join",
+    sessionMiddleware,
+    zValidator("json", joinWorkspaceSchema),
+    async (c) => {
+      const databases = c.get("databases");
+      const user = c.get("user");
+
+      const { workspaceId } = c.req.param();
+      const { code } = c.req.valid("json");
+
+      const member = await getMembers({
+        databases,
+        workspaceId,
+        userId: user?.$id,
+      });
+
+      if (member) {
+        return c.json(
+          { error: HTTP_STATUS.CONFLICT.MESSAGE },
+          HTTP_STATUS.CONFLICT.STATUS
+        );
+      }
+
+      const workspace = await databases.getDocument<Workspace>(
+        DATABASE_ID,
+        WORKSPACES_ID,
+        workspaceId
+      );
+
+      if (workspace?.inviteCode !== code) {
+        return c.json(
+          { error: HTTP_STATUS.BAD_REQUEST.MESSAGE },
+          HTTP_STATUS.BAD_REQUEST.STATUS
+        );
+      }
+
+      await databases.createDocument(DATABASE_ID, MEMBERS_ID, ID.unique(), {
+        userId: user.$id,
+        workspaceId: workspace.$id,
+        role: MemberRole.MEMBER,
+      });
+
+      return c.json({ data: workspace });
+    }
+  );
 
 export default app;
