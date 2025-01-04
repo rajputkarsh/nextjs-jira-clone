@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 
 export const useGetWorkspace = () => {
