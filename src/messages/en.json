@@ -95,5 +95,9 @@
   "ResetInviteCode": {
     "failed_to_reset_invite_code": "Failed to reset invite code",
     "invite_code_reset": "Invite Code reset"
+  },
+  "JoinWorkspace": {
+    "workspace_joined": "Workspace joined",
+    "failed_to_join_workspace": "Failed to join workspace"
   }
 }
