@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "@/features/workspaces/types";
 import useConfirm from "@/hooks/use-confirm";
+import { useDeleteWorkspace } from "../../api/use-deleteWorkspace";
 
 interface IUpdateWorkspaceFormProps {
   onCancel?: () => void;
@@ -44,6 +45,7 @@ function UpdateWorkSpaceForm({
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { mutate, isPending } = useUpdateWorkspace();
+  const {mutate: deleteWorkspace, isPending: isDeleteWorkspacePending} = useDeleteWorkspace();
 
   const form = useForm<z.infer<typeof updateWorkspaceSchema>>({
     resolver: zodResolver(updateWorkspaceSchema),
@@ -85,7 +87,15 @@ function UpdateWorkSpaceForm({
     const ok = await confirmDelete();
     if(!ok) return;
 
-    alert("Deleting");
+    deleteWorkspace({
+      param: {
+        workspaceId: initialValues.$id
+      }
+    }, {
+      onSuccess: () => {
+        router.push("/");
+      }
+    });
   }
 
   return (
@@ -250,7 +260,7 @@ function UpdateWorkSpaceForm({
               size={"sm"}
               variant={"destructive"}
               type="button"
-              disabled={isPending}
+              disabled={isPending || isDeleteWorkspacePending}
               onClick={handleDelete}
             >
               {translations("delete_workspace")}
