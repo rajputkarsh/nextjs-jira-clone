@@ -86,5 +86,9 @@
   "ConfirmDialog": {
     "cancel": "Cancel",
     "confirm": "Confirm"
+  },
+  "ResetInviteCode": {
+    "failed_to_reset_invite_code": "Failed to reset invite code",
+    "invite_code_reset": "Invite Code reset"
   }
 }
