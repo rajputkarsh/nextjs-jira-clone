@@ -93,7 +93,7 @@ function UpdateWorkSpaceForm({
       }
     }, {
       onSuccess: () => {
-        router.push("/");
+        window.location.href = "/";
       }
     });
   }
