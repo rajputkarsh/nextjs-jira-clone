@@ -24,6 +24,7 @@ import { ArrowLeftIcon, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "@/features/workspaces/types";
+import useConfirm from "@/hooks/use-confirm";
 
 interface IUpdateWorkspaceFormProps {
   onCancel?: () => void;
@@ -34,10 +35,15 @@ function UpdateWorkSpaceForm({
   onCancel,
   initialValues,
 }: IUpdateWorkspaceFormProps) {
+  const translations = useTranslations("UpdateWorkspaceForm");
+  const [DeleteDialog, confirmDelete] = useConfirm(
+    translations("delete_workspace"),
+    translations("this_action_cannot_be_undone"),
+    "destructive"
+  );
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { mutate, isPending } = useUpdateWorkspace();
-  const translations = useTranslations("UpdateWorkspaceForm");
 
   const form = useForm<z.infer<typeof updateWorkspaceSchema>>({
     resolver: zodResolver(updateWorkspaceSchema),
@@ -74,6 +80,13 @@ function UpdateWorkSpaceForm({
       form.setValue("image", file);
     }
   };
+
+  const handleDelete = async () => {
+    const ok = await confirmDelete();
+    if(!ok) return;
+
+    alert("Deleting");
+  }
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -231,7 +244,16 @@ function UpdateWorkSpaceForm({
                 "deleting_a_workspace_is_irreversible_and_will_delete_all_associated_data"
               )}
             </p>
-            <Button className="mt-6 w-fit ml-auto" size={"sm"} variant={"destructive"} type="button" disabled={isPending} onClick={() => {}}>{translations("delete_workspace")}</Button>
+            <Button
+              className="mt-6 w-fit ml-auto"
+              size={"sm"}
+              variant={"destructive"}
+              type="button"
+              disabled={isPending}
+              onClick={handleDelete}
+            >
+              {translations("delete_workspace")}
+            </Button>
           </div>
         </CardContent>
       </Card>
