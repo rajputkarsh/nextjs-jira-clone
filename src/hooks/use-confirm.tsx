@@ -39,7 +39,7 @@ function useConfirm(title: string, message: string, variant: ButtonProps['varian
               <CardTitle>{title}</CardTitle>
               <CardDescription>{message}</CardDescription>
             </CardHeader>
-            <div className="pt-4 w-full flex flex-row gap-y-2 gap-x-4 items-center justify-end">
+            <div className="pt-4 w-full flex flex-col lg:flex-row gap-y-2 gap-x-4 items-center justify-end">
               <Button
                 onClick={handleCancel}
                 variant={"outline"}
