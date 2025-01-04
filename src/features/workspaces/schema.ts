@@ -24,6 +24,10 @@ export const updateWorkspaceSchema = z.object({
     .optional(),
 });
 
+export const joinWorkspaceSchema = z.object({
+  code: z.string().trim().min(1, "Required"),
+});
+
 export const createWorkspaceFormDefaultValues: ICreateWorkspace = {
   name: "",
   image: "",
