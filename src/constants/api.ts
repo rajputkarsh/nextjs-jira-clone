@@ -2,15 +2,23 @@
 export const HTTP_STATUS = {
   OK: {
     STATUS: 200,
-    MESSAGE: '',
+    MESSAGE: "",
+  },
+  BAD_REQUEST: {
+    STATUS: 400,
+    MESSAGE: "Bad Request",
   },
   UNAUTHORISED: {
     STATUS: 401,
-    MESSAGE: 'Unauthorised',
+    MESSAGE: "Unauthorised",
+  },
+  CONFLICT: {
+    STATUS: 409,
+    MESSAGE: "Conflict",
   },
   INTERNAL_SERVER_ERROR: {
     STATUS: 500,
-    MESSAGE: 'Something went wrong. Please try again'
+    MESSAGE: "Something went wrong. Please try again",
   },
 } as const;
 
