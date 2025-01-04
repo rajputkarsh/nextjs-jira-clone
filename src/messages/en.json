@@ -81,5 +81,9 @@
   "DeleteWorkspaceForm": {
     "workspace_deleted": "Workspace deleted",
     "failed_to_delete_workspace": "Failed to delete workspace"
+  },
+  "ConfirmDialog": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
   }
 }
