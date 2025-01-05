@@ -28,7 +28,7 @@ export async function createSessionClient() {
     }
 }
 
-export const createAdminClient: () => Promise<{account: Account}> = async () => {
+export const createAdminClient: () => Promise<{account: Account, users: Users}> = async () => {
   const client = new Client()
     .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
     .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT!)
@@ -37,6 +37,9 @@ export const createAdminClient: () => Promise<{account: Account}> = async () => 
     return {
       get account() {
         return new Account(client);
+      },
+      get users() {
+        return new Users(client);
       }
     }
 };
