@@ -27,8 +27,8 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Workspace } from "@/features/workspaces/types";
 import useConfirm from "@/hooks/use-confirm";
-import { useDeleteWorkspace } from "../../api/use-deleteWorkspace";
-import { useResetInviteCode } from "../../api/use-ResetInviteCode";
+import { useDeleteWorkspace } from "@/features/workspaces/api/use-deleteWorkspace";
+import { useResetInviteCode } from "@/features/workspaces/api/use-ResetInviteCode";
 
 interface IUpdateWorkspaceFormProps {
   onCancel?: () => void;
