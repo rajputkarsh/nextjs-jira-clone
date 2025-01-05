@@ -40,8 +40,6 @@ export const getWorkspaces = async (): Promise<
   }
 };
 
-
-
 export const getWorkspace = async ({
   workspaceId,
 }: GetWorkspaceProps): Promise<Workspace | null> => {
@@ -63,6 +61,25 @@ export const getWorkspace = async ({
     );
 
     return workspace;
+  } catch (e) {
+    return null;
+  }
+};
+
+
+export const getWorkspaceInfo = async ({
+  workspaceId,
+}: GetWorkspaceProps): Promise<{name: string} | null> => {
+  try {
+    const { databases } = await createSessionClient();
+
+    const workspace = await databases.getDocument<Workspace>(
+      DATABASE_ID,
+      WORKSPACES_ID,
+      workspaceId
+    );
+
+    return { name: workspace.name};
   } catch (e) {
     return null;
   }
