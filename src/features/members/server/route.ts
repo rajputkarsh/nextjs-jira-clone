@@ -7,6 +7,7 @@ import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
 import { Query } from "node-appwrite";
+import { MemberRole } from "../types";
 
 const app = new Hono()
   .get(
@@ -54,8 +55,51 @@ const app = new Hono()
       );
 
       return c.json({ data: { ...members, documents: populatedMembers } });
-
      }
+  )
+  .delete(
+    "/:memberId",
+    sessionMiddleware,
+    async (c) => {
+      const { memberId } = c.req.param();
+      const user = c.get("user");
+      const databases = c.get("databases");
+
+      const memberToDelete = await databases.getDocument(
+        DATABASE_ID,
+        MEMBERS_ID,
+        memberId
+      );
+
+      const allMembersInWorkspace = await databases.listDocuments(
+        DATABASE_ID,
+        MEMBERS_ID,
+        [
+          Query.equal("workspaceId", memberToDelete.workspaceId)
+        ]
+      );
+
+      const member = await getMembers({
+        databases,
+        workspaceId: memberToDelete.workspaceId,
+        userId: user.$id,
+      });
+
+      if(!member || (member.$id !== memberToDelete.$id && member.role !== MemberRole.ADMIN)) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      await databases.deleteDocument(
+        DATABASE_ID,
+        MEMBERS_ID,
+        memberId
+      );
+
+      return c.json({ data: { $id: memberId } })
+    }
   );
 
 export default app;
