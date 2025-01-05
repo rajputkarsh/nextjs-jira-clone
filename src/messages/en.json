@@ -102,6 +102,7 @@
   }, 
   "JoinWorkspaceForm": {
     "join_workspace": "Join Workspace",
-    "youve_been_invited_to_join_workspace": "You've been invited to join {name} workspace"
+    "youve_been_invited_to_join_workspace": "You've been invited to join {name} workspace",
+    "cancel": "Cancel"
   }
 }
