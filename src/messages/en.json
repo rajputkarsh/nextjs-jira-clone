@@ -101,6 +101,7 @@
     "failed_to_join_workspace": "Failed to join workspace"
   }, 
   "JoinWorkspaceForm": {
-    "join_workspace": "Join Workspace"
+    "join_workspace": "Join Workspace",
+    "youve_been_invited_to_join_workspace": "You've been invited to join {name} workspace"
   }
 }

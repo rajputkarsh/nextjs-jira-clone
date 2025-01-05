@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrent } from "@/features/auth/queries";
 import { getWorkspaceInfo } from "@/features/workspaces/queries";
+import JoinWorkspaceForm from "@/features/workspaces/components/JoinWorkspaceForm";
 
 interface JoinWorkspaceProps {
   params: {
@@ -15,9 +16,13 @@ async function JoinWorkspace({ params }: JoinWorkspaceProps) {
 
   const workspace = await getWorkspaceInfo({ workspaceId: params.workspaceId });
 
+  if (!workspace) {
+    redirect('/');
+  }
+
   return (
     <div className="w-full lg:max-w-xl">
-      Join Workspace
+      <JoinWorkspaceForm initialValues={workspace} />
     </div>
   );
 }
