@@ -99,5 +99,8 @@
   "JoinWorkspace": {
     "workspace_joined": "Workspace joined",
     "failed_to_join_workspace": "Failed to join workspace"
+  }, 
+  "JoinWorkspaceForm": {
+    "join_workspace": "Join Workspace"
   }
 }
