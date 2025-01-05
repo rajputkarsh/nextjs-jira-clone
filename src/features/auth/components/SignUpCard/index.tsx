@@ -29,10 +29,14 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { useRegister } from "@/features/auth/api/use-register";
+import useCallbackUrl from "@/features/auth/hooks/use-callbackUrl";
+import { useRouter } from "next/navigation";
 
 export function SignUpCard() {
   const translations = useTranslations("SignUpCard");
+  const router = useRouter();
   const { mutate, isPending } = useRegister();
+  const callbackUrl = useCallbackUrl();
 
   const signUpForm = useForm<z.infer<typeof SignUpFormSchema>>({
     defaultValues: SignUpFormDefaultValues,
@@ -40,9 +44,18 @@ export function SignUpCard() {
   });
 
   const formSubmit = (values: z.infer<typeof SignUpFormSchema>) => {
-    mutate({
-      json: values,
-    });
+    mutate(
+      {
+        json: values,
+      },
+      {
+        onSuccess: () => {
+          if (callbackUrl) {
+            router.push(callbackUrl);
+          }
+        },
+      }
+    );
   };
 
   return (
@@ -154,7 +167,14 @@ export function SignUpCard() {
       <CardContent className="p-7 flex items-center justify-center">
         <p>
           {translations("already_have_an_account")}
-          <Link className="text-blue-700 hover:underline" href="/sign-in">
+          <Link
+            className="text-blue-700 hover:underline"
+            href={`/sign-in${
+              callbackUrl
+                ? `?callbackUrl=${encodeURIComponent(callbackUrl)}`
+                : ""
+            }`}
+          >
             {translations("login")}
           </Link>
         </p>
