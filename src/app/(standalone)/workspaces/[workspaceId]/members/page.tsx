@@ -30,7 +30,8 @@ async function WorkspaceMembers({ params }: WorkspaceMembersPageProps) {
     }
 
   return (
-    <div>WorkspaceMembers</div>
+    <div>
+    </div>
   )
 }
 
