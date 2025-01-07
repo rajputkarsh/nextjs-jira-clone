@@ -1,4 +1,5 @@
 import { getCurrent } from "@/features/auth/queries";
+import MembersList from "@/features/members/components/MembersList";
 import { getWorkspaceInfo } from "@/features/workspaces/queries";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -30,7 +31,8 @@ async function WorkspaceMembers({ params }: WorkspaceMembersPageProps) {
     }
 
   return (
-    <div>
+    <div className="w-full lg:max-w-xl">
+      <MembersList />
     </div>
   )
 }
