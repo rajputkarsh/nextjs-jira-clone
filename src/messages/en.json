@@ -112,5 +112,9 @@
   "UpdateMemberForm": {
     "member_updated": "Member updated",
     "failed_to_update_member": "Failed to update member"
+  },
+  "MembersList": {
+    "back": "Back",
+    "members_list": "Members List"
   }
 }
