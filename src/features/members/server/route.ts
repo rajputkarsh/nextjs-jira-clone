@@ -6,8 +6,8 @@ import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
 import { Query } from "node-appwrite";
-import { MemberRole } from "../types";
-import { getMembersListSchema, patchMemberSchema } from "../schema";
+import { MemberRole } from "@/features/members/types";
+import { getMembersListSchema, patchMemberSchema } from "@/features/members/schema";
 
 const app = new Hono()
   .get(
