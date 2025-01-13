@@ -115,6 +115,9 @@
   },
   "MembersList": {
     "back": "Back",
-    "members_list": "Members List"
+    "members_list": "Members List",
+    "set_as_administrator": "Set as Administrator",
+    "set_as_member": "Set as Member",
+    "remove": "Remove {name}"
   }
 }
