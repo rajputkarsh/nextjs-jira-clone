@@ -11,6 +11,12 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { useGetMembers } from "@/features/members/api/use-getMembers";
 import MemberAvatar from "../MemberAvatar";
 import { Separator } from "@/components/ui/separator";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function MembersList() {
   const translations = useTranslations("MembersList");
@@ -46,13 +52,44 @@ function MembersList() {
                 <p className="text-sm font-medium">{member.name}</p>
                 <p className="text-xs text-muted-foreground">{member.email}</p>
               </div>
-              <Button className="ml-auto" variant={"secondary"} size={"icon"}>
-                <MoreVerticalIcon className="size-4 text-muted-foreground" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="ml-auto"
+                    variant={"secondary"}
+                    size={"icon"}
+                  >
+                    <MoreVerticalIcon className="size-4 text-muted-foreground" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem
+                    className="font-medium"
+                    onClick={() => {}}
+                    disabled={false}
+                  >
+                    {translations("set_as_administrator")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="font-medium"
+                    onClick={() => {}}
+                    disabled={false}
+                  >
+                    {translations("set_as_member")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="font-medium text-amber-700"
+                    onClick={() => {}}
+                    disabled={false}
+                  >
+                    {translations("remove", {name: member.name})}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
-            {
-              index < (data?.documents?.length || 0) - 1 ? <Separator className="my-2.5 bg-neutral-200" /> : null
-            }
+            {index < (data?.documents?.length || 0) - 1 ? (
+              <Separator className="my-2.5 bg-neutral-200" />
+            ) : null}
           </Fragment>
         ))}
       </CardContent>
