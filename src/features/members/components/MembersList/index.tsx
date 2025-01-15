@@ -2,15 +2,18 @@
 
 import { Fragment } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
+import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
+import { useGetMembers } from "@/features/members/api/use-getMembers";
+import { useUpdateMember } from "@/features/members/api/use-UpdateMember";
+import { useDeleteMember } from "@/features/members/api/use-deleteMember";
+import MemberAvatar from "@/features/members/components/MemberAvatar";
+import { MemberRole } from "@/features/members/types";
+import { Separator } from "@/components/ui/separator";
+import { DottedSeparator } from "@/components/dotter-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
-import { ArrowLeftIcon, MoreVerticalIcon } from "lucide-react";
-import { DottedSeparator } from "@/components/dotter-separator";
-import { useGetMembers } from "@/features/members/api/use-getMembers";
-import MemberAvatar from "../MemberAvatar";
-import { Separator } from "@/components/ui/separator";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -21,7 +24,18 @@ import {
 function MembersList() {
   const translations = useTranslations("MembersList");
   const workspaceId = useWorkspaceId();
+  const { mutate: updateMember, isPending: isUpdateMemberPending } = useUpdateMember();
+  const { mutate: deleteMember, isPending: isDeleteMemberPending } = useDeleteMember();
+
   const { data } = useGetMembers({ workspaceId });
+
+  const handleUpdateMember = (memberId: string, role: MemberRole) => {
+    updateMember({ json: { role }, param: { memberId } });
+  };
+
+  const handleDeleteMember = (memberId: string) => {
+    deleteMember({ param: { memberId } });
+  };
 
   return (
     <Card className="w-full h-full border-none shadow-none">
@@ -66,23 +80,23 @@ function MembersList() {
                   <DropdownMenuItem
                     className="font-medium"
                     onClick={() => {}}
-                    disabled={false}
+                    disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
                     {translations("set_as_administrator")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="font-medium"
                     onClick={() => {}}
-                    disabled={false}
+                    disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
                     {translations("set_as_member")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className="font-medium text-amber-700"
                     onClick={() => {}}
-                    disabled={false}
+                    disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
-                    {translations("remove", {name: member.name})}
+                    {translations("remove", { name: member.name })}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
