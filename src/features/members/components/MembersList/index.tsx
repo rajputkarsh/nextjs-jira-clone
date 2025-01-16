@@ -10,6 +10,7 @@ import { useUpdateMember } from "@/features/members/api/use-UpdateMember";
 import { useDeleteMember } from "@/features/members/api/use-deleteMember";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { MemberRole } from "@/features/members/types";
+import useConfirm from "@/hooks/use-confirm";
 import { Separator } from "@/components/ui/separator";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,12 +21,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { capitalCase } from "@/lib/utils";
 
 function MembersList() {
   const translations = useTranslations("MembersList");
   const workspaceId = useWorkspaceId();
-  const { mutate: updateMember, isPending: isUpdateMemberPending } = useUpdateMember();
-  const { mutate: deleteMember, isPending: isDeleteMemberPending } = useDeleteMember();
+  const { mutate: updateMember, isPending: isUpdateMemberPending } =
+    useUpdateMember();
+  const { mutate: deleteMember, isPending: isDeleteMemberPending } =
+    useDeleteMember();
+
+  const [DeleteDialog, confirmDelete] = useConfirm(
+    translations("remove_member"),
+    translations("this_member_will_be_removed_from_the_workspace"),
+    "destructive"
+  );
 
   const { data } = useGetMembers({ workspaceId });
 
@@ -33,12 +43,24 @@ function MembersList() {
     updateMember({ json: { role }, param: { memberId } });
   };
 
-  const handleDeleteMember = (memberId: string) => {
-    deleteMember({ param: { memberId } });
+  const handleDeleteMember = async (memberId: string) => {
+    const ok = await confirmDelete();
+
+    if (!ok) return;
+
+    deleteMember(
+      { param: { memberId } },
+      {
+        onSuccess: () => {
+          window.location.reload();
+        },
+      }
+    );
   };
 
   return (
     <Card className="w-full h-full border-none shadow-none">
+      <DeleteDialog />
       <CardHeader className="flex flex-row items-center gap-x-4 p-7 space-y-0">
         <Button asChild variant={"secondary"} size={"sm"}>
           <Link href={`/workspaces/${workspaceId}`}>
@@ -63,7 +85,9 @@ function MembersList() {
                 fallbackClassName="text-lg"
               />
               <div className="flex flex-col">
-                <p className="text-sm font-medium">{member.name}</p>
+                <p className="text-sm cursor-pointer font-medium">
+                  {capitalCase(member.name)}
+                </p>
                 <p className="text-xs text-muted-foreground">{member.email}</p>
               </div>
               <DropdownMenu>
@@ -78,25 +102,31 @@ function MembersList() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem
-                    className="font-medium"
-                    onClick={() => {}}
+                    className="cursor-pointer font-medium"
+                    onClick={() =>
+                      handleUpdateMember(member.$id, MemberRole.ADMIN)
+                    }
                     disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
                     {translations("set_as_administrator")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="font-medium"
-                    onClick={() => {}}
+                    className="cursor-pointer font-medium"
+                    onClick={() =>
+                      handleUpdateMember(member.$id, MemberRole.MEMBER)
+                    }
                     disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
                     {translations("set_as_member")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
-                    className="font-medium text-amber-700"
-                    onClick={() => {}}
+                    className="cursor-pointer font-medium text-amber-700"
+                    onClick={() => handleDeleteMember(member.$id)}
                     disabled={isUpdateMemberPending || isDeleteMemberPending}
                   >
-                    {translations("remove", { name: member.name })}
+                    {translations("remove", {
+                      name: capitalCase(member.name),
+                    })}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
