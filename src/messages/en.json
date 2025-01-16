@@ -118,6 +118,8 @@
     "members_list": "Members List",
     "set_as_administrator": "Set as Administrator",
     "set_as_member": "Set as Member",
-    "remove": "Remove {name}"
+    "remove": "Remove {name}",
+    "remove_member": "Remove Member",
+    "this_member_will_be_removed_from_the_workspace": "This member will be removed from the workspace"
   }
 }
