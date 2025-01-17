@@ -3,6 +3,7 @@ import Link from "next/link";
 import { DottedSeparator } from "@/components/dotter-separator";
 import Navigation from "@/components/navigation";
 import WorkspaceSwitcher from "@/components/workspace-switcher";
+import Projects from "./projects";
 
 function Sidebar() {
   return (
@@ -14,6 +15,8 @@ function Sidebar() {
       <WorkspaceSwitcher />
       <DottedSeparator className="my-4" />
       <Navigation />
+      <DottedSeparator className="my-4" />
+      <Projects />
     </aside>
   );
 }
