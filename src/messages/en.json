@@ -121,5 +121,8 @@
     "remove": "Remove {name}",
     "remove_member": "Remove Member",
     "this_member_will_be_removed_from_the_workspace": "This member will be removed from the workspace"
+  },
+  "projects": {
+    "projects": "Projects"
   }
 }
