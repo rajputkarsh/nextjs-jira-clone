@@ -124,5 +124,9 @@
   },
   "projects": {
     "projects": "Projects"
+  },
+  "CreateProjectForm": {
+    "failed_to_create_new_project": "Failed to create new project",
+    "project_created": "Project Created"
   }
 }
