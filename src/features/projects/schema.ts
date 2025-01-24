@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+export interface ICreateProject {
+  name: string;
+  image?: string;
+  workspaceId: string;
+}
+
 export const getProjectsListSchema = z.object({
   workspaceId: z.string().trim(),
 });
@@ -14,3 +20,9 @@ export const createProjectSchema = z.object({
     ])
     .optional(),
 });
+
+export const createProjectFormDefaultValues: ICreateProject = {
+  name: "",
+  image: "",
+  workspaceId: "",
+};
