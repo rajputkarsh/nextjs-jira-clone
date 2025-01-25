@@ -42,12 +42,23 @@ export const getProject = async ({
 }: GetProjectProps): Promise<Project | null> => {
   try {
     const { account, databases } = await createSessionClient();
+    const user = await account.get();
 
     const project = await databases.getDocument<Project>(
       DATABASE_ID,
       PROJECTS_ID,
       projectId
     );
+
+    const member = await getMembers({
+      databases,
+      workspaceId: project?.workspaceId,
+      userId: user.$id,
+    });
+
+    if (!member) {
+      return null;
+    }
 
     return project;
   } catch (e) {
