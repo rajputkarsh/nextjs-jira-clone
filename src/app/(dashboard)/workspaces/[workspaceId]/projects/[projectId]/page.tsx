@@ -17,7 +17,7 @@ async function Project({ params }: ProjectProps) {
     const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
     // Construct the current URL
-    const currentUrl = `${protocol}://${host}/workspaces/${params.workspaceId}`;
+    const currentUrl = `${protocol}://${host}/workspaces/${params.workspaceId}/projects/${params.projectId}`;
     const encodedCallbackUrl = encodeURIComponent(currentUrl);
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
