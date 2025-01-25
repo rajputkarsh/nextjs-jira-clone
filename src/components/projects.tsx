@@ -8,9 +8,11 @@ import { useTranslations } from "next-intl";
 import { RiAddCircleFill } from "react-icons/ri";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useCreateProjectModal } from "@/features/projects/hooks/use-createProjectModal";
 
 function Projects() {
-  const translations = useTranslations("projects")
+  const translations = useTranslations("projects");
+  const { open } = useCreateProjectModal();
   const pathName = usePathname();
   const workspaceId = useWorkspaceId();
   const projectId = useProjectId();
@@ -23,32 +25,32 @@ function Projects() {
           {translations("projects")}
         </p>
         <RiAddCircleFill
-          onClick={() => {}}
+          onClick={open}
           className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition"
         />
       </div>
-      { (data?.documents || []).map((project) => {
-          const fullHref = `/workspaces/${workspaceId}/projects/${projectId}`;
-          const isActive = pathName === fullHref;
+      {(data?.documents || []).map((project) => {
+        const fullHref = `/workspaces/${workspaceId}/projects/${projectId}`;
+        const isActive = pathName === fullHref;
 
-          return (
-            <Link
-              key={project.$id}
-              href={`/workspaces/${workspaceId}/projects/${project.$id}`}
+        return (
+          <Link
+            key={project.$id}
+            href={`/workspaces/${workspaceId}/projects/${project.$id}`}
+          >
+            <div
+              className={cn(
+                "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
+                isActive
+                  ? "bg-white shadow-sm hover:opacity-100 text-primary"
+                  : ""
+              )}
             >
-              <div
-                className={cn(
-                  "flex items-center gap-2.5 p-2.5 rounded-md hover:opacity-75 transition cursor-pointer text-neutral-500",
-                  isActive
-                    ? "bg-white shadow-sm hover:opacity-100 text-primary"
-                    : ""
-                )}
-              >
-                <span className="truncate">{project?.name}</span>
-              </div>
-            </Link>
-          );
-      }) }
+              <span className="truncate">{project?.name}</span>
+            </div>
+          </Link>
+        );
+      })}
     </div>
   );
 }
