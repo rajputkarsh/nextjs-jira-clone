@@ -40,7 +40,7 @@ function CreateProjectForm({ onCancel }: ICreateProjectFormProps) {
   const translations = useTranslations("CreateProjectForm");
 
   const form = useForm<z.infer<typeof createProjectSchema>>({
-    resolver: zodResolver(createProjectSchema.omit("workspaceId")),
+    resolver: zodResolver(createProjectSchema),
     defaultValues: createProjectFormDefaultValues,
   });
 
