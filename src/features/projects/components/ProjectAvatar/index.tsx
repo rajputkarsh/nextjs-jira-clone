@@ -6,13 +6,19 @@ interface ProjectAvatarProps {
   name: string;
   image?: string;
   className?: string;
+  fallbackClassName?: string;
 }
 
-function ProjectAvatar({ name, image, className }: ProjectAvatarProps) {
+function ProjectAvatar({
+  name,
+  image,
+  className,
+  fallbackClassName,
+}: ProjectAvatarProps) {
   if (image && image !== "undefined") {
     return (
       <div
-        className={cn("size-10 relative rounded-md overflow-hidden", className)}
+        className={cn("size-5 relative rounded-md overflow-hidden", className)}
       >
         <Image src={image} alt={name} fill className="object cover" />
       </div>
@@ -20,8 +26,12 @@ function ProjectAvatar({ name, image, className }: ProjectAvatarProps) {
   }
 
   return (
-    <Avatar className={cn("size-10 rounded-md", className)}>
-      <AvatarFallback className="text-white bg-blue-600 font-semibold text-lg uppercase rounded-md">
+    <Avatar className={cn("size-5 rounded-md", className)}>
+      <AvatarFallback
+        className={cn(
+          "text-white bg-blue-600 font-semibold text-sm uppercase rounded-md", fallbackClassName
+        )}
+      >
         {name[0]}
       </AvatarFallback>
     </Avatar>
