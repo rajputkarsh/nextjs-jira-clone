@@ -1,6 +1,9 @@
 import { redirect } from "next/navigation";
 import { getCurrent } from "@/features/auth/queries";
 import { headers } from "next/headers";
+import { getProject } from "@/features/projects/queries";
+import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
+import EditProjectButton from "@/features/projects/components/EditProjectButton";
 
 interface ProjectProps {
   params: {
@@ -9,7 +12,7 @@ interface ProjectProps {
   };
 }
 
-async function Project({ params }: ProjectProps) {  
+async function Project({ params }: ProjectProps) {
   const user = await getCurrent();
   if (!user) {
     const headersList = headers();
@@ -21,10 +24,30 @@ async function Project({ params }: ProjectProps) {
     const encodedCallbackUrl = encodeURIComponent(currentUrl);
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
-  
+
+  const projectInfo = await getProject({ projectId: params.projectId });
+
+  if (!projectInfo) {
+    redirect(`/workspaces/${params.workspaceId}`);
+  }
+
   return (
-    <div>Project</div>
-  )
+    <div className="flex flex-col gap-y-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-x-2">
+          <ProjectAvatar
+            name={projectInfo.name}
+            image={projectInfo?.imageUrl}
+            className="size-8"
+          />
+          <p className="text-xl font-semibold">{projectInfo.name}</p>
+        </div>
+        <div>
+          <EditProjectButton workspaceId={params.workspaceId} projectId={params.projectId} />
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Project;
