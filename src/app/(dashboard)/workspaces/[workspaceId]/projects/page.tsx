@@ -26,8 +26,10 @@ export default async function Projects({ params: { workspaceId, projectId } }: P
   const projects = await getProjects(workspaceId);
 
   if (projects.total === 0) {
-    redirect("/projects/create");
+    redirect(`/workspaces/${workspaceId}/projects/create`);
   } else {
-    redirect(`/projects/${projects.documents?.[0]?.$id}`);
+    redirect(
+      `/workspaces/${workspaceId}/projects/${projects.documents?.[0]?.$id}`
+    );
   }
 }
