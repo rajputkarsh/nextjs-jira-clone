@@ -9,6 +9,7 @@ import { RiAddCircleFill } from "react-icons/ri";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-createProjectModal";
+import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 
 function Projects() {
   const translations = useTranslations("projects");
@@ -46,7 +47,13 @@ function Projects() {
                   : ""
               )}
             >
-              <span className="truncate">{project?.name}</span>
+              <div className="flex justify-center items-center gap-2 font-medium">
+                <ProjectAvatar
+                  name={project.name}
+                  image={project?.imageUrl}
+                />
+                <span className="truncate">{project?.name}</span>
+              </div>
             </div>
           </Link>
         );
