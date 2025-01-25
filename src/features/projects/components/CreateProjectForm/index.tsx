@@ -26,6 +26,7 @@ import { useCreateProject } from "@/features/projects/api/use-createProject";
 import { ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 
 interface ICreateProjectFormProps {
   onCancel?: () => void;
@@ -33,12 +34,13 @@ interface ICreateProjectFormProps {
 
 function CreateProjectForm({ onCancel }: ICreateProjectFormProps) {
   const router = useRouter();
+  const workspaceId = useWorkspaceId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { mutate, isPending } = useCreateProject();
   const translations = useTranslations("CreateProjectForm");
 
   const form = useForm<z.infer<typeof createProjectSchema>>({
-    resolver: zodResolver(createProjectSchema),
+    resolver: zodResolver(createProjectSchema.omit("workspaceId")),
     defaultValues: createProjectFormDefaultValues,
   });
 
@@ -49,6 +51,7 @@ function CreateProjectForm({ onCancel }: ICreateProjectFormProps) {
         form: {
           ...values,
           image: values.image instanceof File ? values.image : "",
+          workspaceId,
         },
       },
       {
