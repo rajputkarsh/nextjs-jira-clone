@@ -57,7 +57,7 @@ function CreateProjectForm({ onCancel }: ICreateProjectFormProps) {
       {
         onSuccess: ({ data }) => {
           form.reset();
-          router.push(`/projects/${data?.$id}`);
+          router.push(`/workspaces/${workspaceId}/projects/${data?.$id}`);
         },
       }
     );
