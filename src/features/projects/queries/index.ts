@@ -36,3 +36,21 @@ export const getProjects = async (
     return { documents: [], total: 0 };
   }
 };
+
+export const getProjectInfo = async ({
+  projectId,
+}: GetProjectProps): Promise<{ name: string } | null> => {
+  try {
+    const { databases } = await createSessionClient();
+
+    const project = await databases.getDocument<Project>(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId
+    );
+
+    return { name: project.name };
+  } catch (e) {
+    return null;
+  }
+};
