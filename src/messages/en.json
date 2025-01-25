@@ -123,7 +123,8 @@
     "this_member_will_be_removed_from_the_workspace": "This member will be removed from the workspace"
   },
   "projects": {
-    "projects": "Projects"
+    "projects": "Projects",
+    "edit_project": "Edit Project"
   },
   "CreateProjectForm": {
     "failed_to_create_new_project": "Failed to create new project",
