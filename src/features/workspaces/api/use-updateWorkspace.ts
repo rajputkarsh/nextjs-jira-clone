@@ -30,9 +30,9 @@ export const useUpdateWorkspace = () => {
     },
     onSuccess: ({ data }) => {
       toast.success(translations("workspace_updated"));
+      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data?.$id] });
-      router.refresh();
     },
     onError: () => {
       toast.error(translations("failed_to_update_workspace"));

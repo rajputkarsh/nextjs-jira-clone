@@ -81,7 +81,6 @@ function UpdateWorkSpaceForm({
       {
         onSuccess: ({ data }) => {
           form.reset();
-          router.push(`/workspaces/${data?.$id}`);
         },
       }
     );

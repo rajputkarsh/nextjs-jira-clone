@@ -31,9 +31,9 @@ export const useResetInviteCode = () => {
     },
     onSuccess: ({ data }) => {
       toast.success(translations("invite_code_reset"));
+      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data.$id] });
-      router.refresh();
     },
     onError: () => {
       toast.error(translations("failed_to_reset_invite_code"));
