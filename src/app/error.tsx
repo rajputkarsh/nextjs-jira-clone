@@ -10,7 +10,7 @@ function Error() {
   const translations = useTranslations("error");
 
   return (
-    <div className="h-screen flex gap-y4 items-center justify-center">
+    <div className="h-screen flex gap-y-4 items-center justify-center">
       <AlertTriangle className="size-10" />
       <p className="text-sm">
         {translations("something_went_wrong")}
