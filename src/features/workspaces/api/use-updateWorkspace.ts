@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
+import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]['$patch'], 200>;
 type RequestType = InferRequestType<
@@ -10,7 +11,7 @@ type RequestType = InferRequestType<
 >;
 
 export const useUpdateWorkspace = () => {
-
+  const router = useRouter()
   const translations = useTranslations("UpdateWorkspaceForm");
   const queryClient = useQueryClient();
 
@@ -31,6 +32,7 @@ export const useUpdateWorkspace = () => {
       toast.success(translations("workspace_updated"));
       queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       queryClient.invalidateQueries({ queryKey: ["workspace", data?.$id] });
+      router.refresh();
     },
     onError: () => {
       toast.error(translations("failed_to_update_workspace"));
