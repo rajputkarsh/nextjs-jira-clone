@@ -139,6 +139,10 @@
     "cancel": "Cancel",
     "create_project": "Create Project"
   },
+  "UpdateProjectForm": {
+    "failed_to_update_project": "Failed to update project",
+    "project_updated": "Project Updated"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
