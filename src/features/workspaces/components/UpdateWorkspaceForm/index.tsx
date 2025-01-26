@@ -119,11 +119,6 @@ function UpdateWorkSpaceForm({
         param: {
           workspaceId: initialValues.$id,
         },
-      },
-      {
-        onSuccess: () => {
-          router.refresh();
-        },
       }
     );    
   }
