@@ -6,6 +6,7 @@ import { headers } from "next/headers";
 
 interface ProjectSettingsProps {
   params: {
+    workspaceId: string
     projectId: string
   }
 }
@@ -19,7 +20,7 @@ async function ProjectSettings({ params }: ProjectSettingsProps) {
     const protocol = process.env.NODE_ENV === "development" ? "http" : "https";
 
     // Construct the current URL
-    const currentUrl = `${protocol}://${host}/projects/${params.projectId}/settings`;
+    const currentUrl = `${protocol}://${host}/workspaces/${params.workspaceId}/projects/${params.projectId}/settings`;
     const encodedCallbackUrl = encodeURIComponent(currentUrl);
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
@@ -27,7 +28,7 @@ async function ProjectSettings({ params }: ProjectSettingsProps) {
   const initialValues = await getProject({ projectId: params.projectId });
 
   if (!initialValues) {
-    redirect(`/projects/${params.projectId}`);
+    redirect(`/workspaces/${params.workspaceId}/projects/${params.projectId}`);
   }
 
   return (
@@ -37,4 +38,4 @@ async function ProjectSettings({ params }: ProjectSettingsProps) {
   );
 }
 
-export default ProjectSettings
+export default ProjectSettings;
