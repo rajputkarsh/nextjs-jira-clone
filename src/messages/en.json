@@ -143,6 +143,10 @@
     "failed_to_update_project": "Failed to update project",
     "project_updated": "Project Updated"
   },
+  "DeleteProjectForm": {
+    "failed_to_delete_project": "Failed to delete project",
+    "project_deleted": "Project deleted"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
