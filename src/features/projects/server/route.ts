@@ -7,6 +7,7 @@ import { Hono } from "hono";
 import { ID, Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 import { Project } from "@/features/projects/types";
+import { MemberRole } from "@/features/members/types";
 
 const app = new Hono()
   .get(
@@ -96,7 +97,7 @@ const app = new Hono()
         }
       );
 
-      return c.json({ data: project });      
+      return c.json({ data: project });
     }
   )
   .patch(
@@ -117,11 +118,11 @@ const app = new Hono()
         projectId
       );
 
-      if(!existingProject) {
+      if (!existingProject) {
         return c.json(
           { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
           HTTP_STATUS.UNAUTHORISED.STATUS
-        );        
+        );
       }
 
       const member = await getMembers({
@@ -166,6 +167,53 @@ const app = new Hono()
           name,
           imageUrl: uploadedImageUrl,
         }
+      );
+
+      return c.json({ data: project });
+    }
+  )
+
+  .delete(
+    "/:projectId",
+    sessionMiddleware,
+    async (c) => {
+      const databases = c.get("databases");
+      const storage = c.get("storage");
+      const user = c.get("user");
+
+      const { projectId } = c.req.param();
+
+      const existingProject = await databases.getDocument<Project>(
+        DATABASE_ID,
+        PROJECTS_ID,
+        projectId
+      );
+
+      if (!existingProject) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      const member = await getMembers({
+        databases,
+        workspaceId: existingProject.workspaceId,
+        userId: user?.$id,
+      });
+
+      if (!member || member?.role !== MemberRole.ADMIN) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+
+      const project = await databases.deleteDocument(
+        DATABASE_ID,
+        PROJECTS_ID,
+        projectId
       );
 
       return c.json({ data: project });
