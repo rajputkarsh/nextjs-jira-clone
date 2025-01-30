@@ -94,7 +94,7 @@ function UpdateProjectForm({
       }
     }, {
       onSuccess: () => {
-        window.location.href = "/";
+        window.location.href = `/workspaces/${initialValues.workspaceId}/`;
       }
     });
   }
@@ -113,7 +113,7 @@ function UpdateProjectForm({
             onClick={
               onCancel
                 ? onCancel
-                : () => router.push(`/projects/${initialValues.$id}`)
+                : () => router.push(`/workspaces/${initialValues.workspaceId}/projects/${initialValues.$id}`)
             }
           >
             <ArrowLeftIcon className="size-4" />
