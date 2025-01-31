@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { getProject } from "@/features/projects/queries";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 import EditProjectButton from "@/features/projects/components/EditProjectButton";
+import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
 
 interface ProjectProps {
   params: {
@@ -46,6 +47,7 @@ async function Project({ params }: ProjectProps) {
           <EditProjectButton workspaceId={params.workspaceId} projectId={params.projectId} />
         </div>
       </div>
+      <TaskViewSwitcher />
     </div>
   );
 }
