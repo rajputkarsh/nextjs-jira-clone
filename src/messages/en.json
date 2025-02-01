@@ -160,6 +160,11 @@
     "failed_to_delete_project": "Failed to delete project",
     "project_deleted": "Project deleted"
   },
+  "TaskViewSwitcher": {
+    "table": "Table",
+    "kanban": "Kanban",
+    "calendar": "Calendar"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
