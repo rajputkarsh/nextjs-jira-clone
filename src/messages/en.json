@@ -163,7 +163,8 @@
   "TaskViewSwitcher": {
     "table": "Table",
     "kanban": "Kanban",
-    "calendar": "Calendar"
+    "calendar": "Calendar",
+    "new": "New"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
