@@ -1,0 +1,35 @@
+import { z } from "zod";
+import { TASK_STATUS } from "./constants";
+
+export type TaskStatus = 'BACKLOG' | 'TODO' | 'IN_PROGRESS' | 'IN_REVIEW' | 'DONE';
+
+export interface ITask {
+  workspaceId: string;
+  name: string;
+  projectId: string;
+  assigneeId: string;
+  dueDate: string;
+  status: TaskStatus;
+  position?: Number;
+  description?: string;
+}
+
+export const createTaskSchema = z.object({
+  name: z.string().trim().min(1, "Required"),
+  workspaceId: z.string().trim().min(1, "Required"),
+  projectId: z.string().trim().min(1, "Required"),
+  assigneeId: z.string().trim().min(1, "Required"),
+  dueDate: z.coerce.date(),
+  status: z.nativeEnum(TASK_STATUS, { required_error: "Required" }),
+  description: z.string().optional(),
+});
+
+export const createProjectFormDefaultValues: ITask = {
+  workspaceId: "",
+  name: "",
+  projectId: "",
+  assigneeId: "",
+  dueDate: "",
+  status: TASK_STATUS.TODO,
+  description: "",
+};
