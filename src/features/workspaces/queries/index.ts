@@ -50,7 +50,7 @@ export const getWorkspace = async ({
 
     const member = await getMembers({ databases, workspaceId, userId: user.$id })
 
-    if(!member) {
+    if (!member) {
       return null;
     }
 
