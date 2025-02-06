@@ -14,6 +14,15 @@ export interface ITask {
   description?: string;
 }
 
+export const getTaskSchema = z.object({
+  workspaceId: z.string(),
+  projectId: z.string().nullish(),
+  assigneeId: z.string().nullish(),
+  status: z.nativeEnum(TASK_STATUS).nullish(),
+  search: z.string().nullish(),
+  dueDate: z.string().nullish(),
+});
+
 export const createTaskSchema = z.object({
   name: z.string().trim().min(1, "Required"),
   workspaceId: z.string().trim().min(1, "Required"),
