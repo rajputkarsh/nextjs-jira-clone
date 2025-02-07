@@ -3,6 +3,7 @@ import { useGetMembers } from "@/features/members/api/use-getMembers";
 import { useGetProjects } from "@/features/projects/api/use-getProjects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { Loader } from "lucide-react";
+import TaskForm from "./TaskForm";
 
 interface CreateTaskFormProps {
   onCancel: () => void;
@@ -40,7 +41,7 @@ function CreateTaskForm({ onCancel }: CreateTaskFormProps) {
     )
   }
 
-  return <div>CreateTaskForm</div>;
+  return <TaskForm onCancel={onCancel} projectOptions={projectOptions} memberOptions={memberOptions} />;
 }
 
 export default CreateTaskForm;
