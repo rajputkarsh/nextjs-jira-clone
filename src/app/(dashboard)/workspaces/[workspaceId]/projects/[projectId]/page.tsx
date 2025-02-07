@@ -4,7 +4,7 @@ import { headers } from "next/headers";
 import { getProject } from "@/features/projects/queries";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 import EditProjectButton from "@/features/projects/components/EditProjectButton";
-import TaskViewSwitcher from "@/features/tasks/components/task-view-switcher";
+import TaskViewSwitcher from "@/features/tasks/components/TaskViewSwitcher";
 
 interface ProjectProps {
   params: {
