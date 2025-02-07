@@ -8,7 +8,7 @@ export interface ITask {
   name: string;
   projectId: string;
   assigneeId: string;
-  dueDate: string;
+  dueDate: Date;
   status: TaskStatus;
   position?: Number;
   description?: string;
@@ -33,12 +33,12 @@ export const createTaskSchema = z.object({
   description: z.string().optional(),
 });
 
-export const createTaskFormDefaultValues: ITask = {
+export const createTaskFormDefaultValues: z.infer<typeof createTaskSchema> = {
   workspaceId: "",
   name: "",
   projectId: "",
   assigneeId: "",
-  dueDate: "",
+  dueDate: new Date(),
   status: TASK_STATUS.TODO,
   description: "",
 };
