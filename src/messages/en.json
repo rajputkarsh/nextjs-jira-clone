@@ -166,6 +166,11 @@
     "calendar": "Calendar",
     "new": "New"
   },
+  "CreateTaskForm": {
+    "task_created": "Task Created",
+    "failed_to_create_new_task": "Failed to create new task",
+    "failed_to_fetch_tasks": "Failed to fetch tasks"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
