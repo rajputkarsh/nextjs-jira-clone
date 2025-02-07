@@ -33,7 +33,7 @@ export const createTaskSchema = z.object({
   description: z.string().optional(),
 });
 
-export const createProjectFormDefaultValues: ITask = {
+export const createTaskFormDefaultValues: ITask = {
   workspaceId: "",
   name: "",
   projectId: "",
