@@ -168,8 +168,13 @@
   },
   "CreateTaskForm": {
     "task_created": "Task Created",
+    "create_task": "Create Task",
     "failed_to_create_new_task": "Failed to create new task",
-    "failed_to_fetch_tasks": "Failed to fetch tasks"
+    "failed_to_fetch_tasks": "Failed to fetch tasks",
+    "create_new_task": "Create new task",
+    "task": "Task",
+    "cancel": "Cancel",
+    "task_placeholder": "Enter task name"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
