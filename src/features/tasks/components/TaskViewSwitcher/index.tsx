@@ -1,11 +1,15 @@
+"use client";
+
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useCreateTaskModal } from "../../hooks/use-createTaskModal";
 
 function TaskViewSwitcher() {
   const translations = useTranslations("TaskViewSwitcher");
+    const { open } = useCreateTaskModal();
 
   return (
     <Tabs className="flex-1 w-full border rounded-lg">
@@ -22,7 +26,7 @@ function TaskViewSwitcher() {
               {translations("calendar")}
             </TabsTrigger>
           </TabsList>
-          <Button size={"sm"} className="w-full lg:w-auto">
+          <Button size={"sm"} onClick={open} className="w-full lg:w-auto">
             <PlusIcon className="size-4 mr-2" />
             {translations("new")}
           </Button>
