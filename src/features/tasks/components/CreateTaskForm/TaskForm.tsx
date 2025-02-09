@@ -1,12 +1,9 @@
 "use client";
-import { ChangeEvent, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Form,
   FormControl,
@@ -16,15 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import {
-  createTaskFormDefaultValues,
   createTaskSchema,
 } from "@/features/tasks/schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateTask } from "@/features/tasks/api/use-createTask";
-import { ImageIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 
@@ -35,9 +29,7 @@ interface ITaskFormProps {
 }
 
 function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
-  const router = useRouter();
   const workspaceId = useWorkspaceId();
-  const inputRef = useRef<HTMLInputElement | null>(null);
   const { mutate, isPending } = useCreateTask();
   const translations = useTranslations("CreateTaskForm");
 
