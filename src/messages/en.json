@@ -174,7 +174,8 @@
     "create_new_task": "Create new task",
     "task": "Task",
     "cancel": "Cancel",
-    "task_placeholder": "Enter task name"
+    "task_placeholder": "Enter task name",
+    "due_date": "Due Date"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
