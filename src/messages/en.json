@@ -175,7 +175,12 @@
     "task": "Task",
     "cancel": "Cancel",
     "task_placeholder": "Enter task name",
-    "due_date": "Due Date"
+    "due_date": "Due Date",
+    "select_date": "Select Date",
+    "assignee": "Assignee",
+    "assignee_placeholder": "Select Assignee",
+    "status": "Status",
+    "status_placeholder": "Select Status"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
