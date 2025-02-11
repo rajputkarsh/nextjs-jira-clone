@@ -180,7 +180,9 @@
     "assignee": "Assignee",
     "assignee_placeholder": "Select Assignee",
     "status": "Status",
-    "status_placeholder": "Select Status"
+    "status_placeholder": "Select Status",
+    "project": "Project",
+    "project_placeholder": "Select Project"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
