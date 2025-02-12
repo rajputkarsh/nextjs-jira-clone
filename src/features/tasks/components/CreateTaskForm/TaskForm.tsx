@@ -13,10 +13,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  createTaskSchema,
-} from "@/features/tasks/schema";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { createTaskSchema } from "@/features/tasks/schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -29,8 +33,8 @@ import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 
 interface ITaskFormProps {
   onCancel?: () => void;
-  projectOptions: Array<{ id: string; name: string; imageUrl: string; }>;
-  memberOptions: Array<{ id: string; name: string; }>;
+  projectOptions: Array<{ id: string; name: string; imageUrl: string }>;
+  memberOptions: Array<{ id: string; name: string }>;
 }
 
 function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
@@ -41,7 +45,7 @@ function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
   const form = useForm<z.infer<typeof createTaskSchema>>({
     resolver: zodResolver(createTaskSchema),
     defaultValues: {
-      workspaceId
+      workspaceId,
     },
   });
 
@@ -56,6 +60,7 @@ function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
       {
         onSuccess: ({ data }) => {
           form.reset();
+          onCancel?.();
         },
       }
     );
@@ -150,7 +155,7 @@ function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
               />
               <FormField
                 control={form.control}
-                name="assigneeId"
+                name="status"
                 render={({ field }) => {
                   return (
                     <FormItem>
@@ -209,7 +214,8 @@ function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
                           {projectOptions.map((project) => (
                             <SelectItem key={project.id} value={project.id}>
                               <div className="flex items-center gap-x-2">
-                                <ProjectAvatar image={project.imageUrl}
+                                <ProjectAvatar
+                                  image={project.imageUrl}
                                   className="size-6"
                                   name={project.name}
                                 />
