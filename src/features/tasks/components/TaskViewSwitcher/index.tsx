@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-createTaskModal";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
+import { useQueryState } from "nuqs";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -16,6 +17,9 @@ enum AVAILABLE_TABS {
 }
 
 function TaskViewSwitcher() {
+  const [view, setView] = useQueryState("task-view", {
+    defaultValue: AVAILABLE_TABS.TABLE
+  });
   const translations = useTranslations("TaskViewSwitcher");
   const workspaceId = useWorkspaceId();
   const { open } = useCreateTaskModal();
@@ -25,7 +29,7 @@ function TaskViewSwitcher() {
   });
 
   return (
-    <Tabs defaultValue={AVAILABLE_TABS.TABLE} className="flex-1 w-full border rounded-lg">
+    <Tabs defaultValue={view} onValueChange={setView} className="flex-1 w-full border rounded-lg">
       <div className="h-full flex flex-col overflow-auto p-4">
         <div className="flex flex-col gap-y-2 lg:flex-row justify-between items-center">
           <TabsList className="w-full lg:w-auto">
@@ -35,10 +39,16 @@ function TaskViewSwitcher() {
             >
               {translations(AVAILABLE_TABS.TABLE.toLowerCase())}
             </TabsTrigger>
-            <TabsTrigger className="h-8 w-full lg:w-auto" value={AVAILABLE_TABS.KANBAN}>
+            <TabsTrigger
+              className="h-8 w-full lg:w-auto"
+              value={AVAILABLE_TABS.KANBAN}
+            >
               {translations(AVAILABLE_TABS.KANBAN.toLowerCase())}
             </TabsTrigger>
-            <TabsTrigger className="h-8 w-full lg:w-auto" value={AVAILABLE_TABS.CALENDAR}>
+            <TabsTrigger
+              className="h-8 w-full lg:w-auto"
+              value={AVAILABLE_TABS.CALENDAR}
+            >
               {translations(AVAILABLE_TABS.CALENDAR.toLowerCase())}
             </TabsTrigger>
           </TabsList>
