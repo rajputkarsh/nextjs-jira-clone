@@ -185,7 +185,8 @@
     "project_placeholder": "Select Project"
   },
   "DataFilters": {
-    "all_statuses": "All Statuses"
+    "all_statuses": "All Statuses",
+    "all_assignees": "All Assignees"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
