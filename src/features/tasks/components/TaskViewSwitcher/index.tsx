@@ -3,7 +3,7 @@
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PlusIcon } from "lucide-react";
+import { Loader, PlusIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-createTaskModal";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
@@ -29,7 +29,11 @@ function TaskViewSwitcher() {
   });
 
   return (
-    <Tabs defaultValue={view} onValueChange={setView} className="flex-1 w-full border rounded-lg">
+    <Tabs
+      defaultValue={view}
+      onValueChange={setView}
+      className="flex-1 w-full border rounded-lg"
+    >
       <div className="h-full flex flex-col overflow-auto p-4">
         <div className="flex flex-col gap-y-2 lg:flex-row justify-between items-center">
           <TabsList className="w-full lg:w-auto">
@@ -60,17 +64,23 @@ function TaskViewSwitcher() {
         <DottedSeparator className="my-4" />
         Data Filters
         <DottedSeparator className="my-4" />
-        <>
-          <TabsContent value={AVAILABLE_TABS.TABLE} className="mt-0">
-            Data Table
-          </TabsContent>
-          <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
-            Data Kanban
-          </TabsContent>
-          <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
-            Data Calendar
-          </TabsContent>
-        </>
+        {isLoadingTasks ? (
+          <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
+            <Loader className="size-5 animate-spin text-muted-foreground" />
+          </div>
+        ) : (
+          <>
+            <TabsContent value={AVAILABLE_TABS.TABLE} className="mt-0">
+              Data Table
+            </TabsContent>
+            <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
+              Data Kanban
+            </TabsContent>
+            <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
+              Data Calendar
+            </TabsContent>
+          </>
+        )}
       </div>
     </Tabs>
   );
