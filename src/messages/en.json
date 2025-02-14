@@ -184,6 +184,9 @@
     "project": "Project",
     "project_placeholder": "Select Project"
   },
+  "DataFilters": {
+    "all_statuses": "All Statuses"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
