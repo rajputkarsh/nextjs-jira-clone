@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { format } from "date-fns";
 
 interface DataFiltersProps {
   hideProjectFilter?: boolean;
@@ -58,6 +59,10 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
 
   const onProjectChange = (value: string) => {
     setFilters({ projectId: value === "all" ? null : (value as string) });
+  };
+
+  const onDateChange = (value: Date) => {
+    setFilters({ dueDate: value ? format(value, "yyyy-MM-dd") : undefined });
   };
 
   if (isLoading) return null;
@@ -132,6 +137,15 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
           ))}
         </SelectContent>
       </Select>
+
+      <DatePicker
+        placeholder={translations("due_date")}
+        className="h-8 w-full lg:w-auto"
+        value={dueDate ? new Date(dueDate) : undefined}
+        onChange={(date) => {
+          onDateChange(date);
+        }}
+      />
     </div>
   );
 }
