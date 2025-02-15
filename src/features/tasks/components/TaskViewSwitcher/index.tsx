@@ -9,6 +9,7 @@ import { useCreateTaskModal } from "@/features/tasks/hooks/use-createTaskModal";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { useQueryState } from "nuqs";
+import DataFilters from "@/features/tasks/components/DataFilters";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -62,7 +63,7 @@ function TaskViewSwitcher() {
           </Button>
         </div>
         <DottedSeparator className="my-4" />
-        Data Filters
+        <DataFilters />
         <DottedSeparator className="my-4" />
         {isLoadingTasks ? (
           <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
