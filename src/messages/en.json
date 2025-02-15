@@ -187,7 +187,8 @@
   "DataFilters": {
     "all_statuses": "All Statuses",
     "all_assignees": "All Assignees",
-    "all_projects": "All Projects"
+    "all_projects": "All Projects",
+    "due_date": "Due Date"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
