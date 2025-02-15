@@ -16,7 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { format } from "date-fns";
 
 interface DataFiltersProps {
   hideProjectFilter?: boolean;
@@ -62,7 +61,7 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
   };
 
   const onDateChange = (value: Date) => {
-    setFilters({ dueDate: value ? format(value, "yyyy-MM-dd") : undefined });
+    setFilters({ dueDate: value ? value.toISOString() : undefined });
   };
 
   if (isLoading) return null;
