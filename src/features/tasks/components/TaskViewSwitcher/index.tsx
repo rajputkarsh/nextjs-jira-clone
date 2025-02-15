@@ -10,6 +10,7 @@ import { useGetTasks } from "@/features/tasks/api/use-getTasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { useQueryState } from "nuqs";
 import DataFilters from "@/features/tasks/components/DataFilters";
+import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -19,14 +20,21 @@ enum AVAILABLE_TABS {
 
 function TaskViewSwitcher() {
   const [view, setView] = useQueryState("task-view", {
-    defaultValue: AVAILABLE_TABS.TABLE
+    defaultValue: AVAILABLE_TABS.TABLE,
   });
   const translations = useTranslations("TaskViewSwitcher");
   const workspaceId = useWorkspaceId();
   const { open } = useCreateTaskModal();
 
+  const [{ status, assigneeId, projectId, search, dueDate }] = useTaskFilters();
+
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
+    status: status ?? undefined,
+    assigneeId: assigneeId ?? undefined,
+    projectId: projectId ?? undefined,
+    search: search ?? undefined,
+    dueDate: dueDate ?? undefined,
   });
 
   return (
