@@ -1,12 +1,12 @@
 import { useTranslations } from "next-intl";
-import { ListChecks } from "lucide-react";
+import { FolderIcon, ListChecks, UserIcon } from "lucide-react";
 import { useGetMembers } from "@/features/members/api/use-getMembers";
 import { useGetProjects } from "@/features/projects/api/use-getProjects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { TASK_STATUS, TASK_STATUS_OBJECT } from "@/features/tasks/constants";
 import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
+import { capitalCase } from "@/lib/utils";
 
-import MemberAvatar from "@/features/members/components/MemberAvatar";
 import DatePicker from "@/components/date-picker";
 import {
   Select,
@@ -16,8 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { capitalCase } from "@/lib/utils";
-import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 
 interface DataFiltersProps {
   hideProjectFilter?: boolean;
@@ -95,7 +93,7 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
       >
         <SelectTrigger className="w-full lg:w-auto h-8">
           <div className="flex items-center pr-2">
-            <ListChecks className="size-4 mr-2" />
+            <UserIcon className="size-4 mr-2" />
             <SelectValue placeholder={translations("all_assignees")} />
           </div>
         </SelectTrigger>
@@ -105,7 +103,6 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
           {memberOptions.map((member) => (
             <SelectItem key={member.id} value={member.id}>
               <div className="flex items-center gap-x-2">
-                <MemberAvatar className="size-6" name={member.name} />
                 {capitalCase(member.name)}
               </div>
             </SelectItem>
@@ -119,7 +116,7 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
       >
         <SelectTrigger className="w-full lg:w-auto h-8">
           <div className="flex items-center pr-2">
-            <ListChecks className="size-4 mr-2" />
+            <FolderIcon className="size-4 mr-2" />
             <SelectValue placeholder={translations("all_projects")} />
           </div>
         </SelectTrigger>
@@ -129,7 +126,6 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
           {projectOptions.map((project) => (
             <SelectItem key={project.id} value={project.id}>
               <div className="flex items-center gap-x-2">
-                <ProjectAvatar className="size-6" name={project.name} />
                 {capitalCase(project.name)}
               </div>
             </SelectItem>
