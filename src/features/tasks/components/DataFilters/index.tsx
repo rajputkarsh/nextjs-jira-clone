@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { capitalCase } from "@/lib/utils";
+import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 
 interface DataFiltersProps {
   hideProjectFilter?: boolean;
@@ -52,8 +53,13 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
   const onStatusChange = (value: string) => {
     setFilters({ status: value === "all" ? null : (value as TASK_STATUS) });
   };
+
   const onAssigneeChange = (value: string) => {
     setFilters({ assigneeId: value === "all" ? null : (value as string) });
+  };
+
+  const onProjectChange = (value: string) => {
+    setFilters({ projectId: value === "all" ? null : (value as string) });
   };
 
   if (isLoading) return null;
@@ -101,6 +107,30 @@ function DataFilters({ hideProjectFilter }: DataFiltersProps) {
               <div className="flex items-center gap-x-2">
                 <MemberAvatar className="size-6" name={member.name} />
                 {capitalCase(member.name)}
+              </div>
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select
+        defaultValue={projectId || undefined}
+        onValueChange={(value) => onProjectChange(value)}
+      >
+        <SelectTrigger className="w-full lg:w-auto h-8">
+          <div className="flex items-center pr-2">
+            <ListChecks className="size-4 mr-2" />
+            <SelectValue placeholder={translations("all_projects")} />
+          </div>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">{translations("all_projects")}</SelectItem>
+          <SelectSeparator />
+          {projectOptions.map((project) => (
+            <SelectItem key={project.id} value={project.id}>
+              <div className="flex items-center gap-x-2">
+                <ProjectAvatar className="size-6" name={project.name} />
+                {capitalCase(project.name)}
               </div>
             </SelectItem>
           ))}
