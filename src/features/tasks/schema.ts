@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TASK_STATUS } from "./constants";
 import { Models } from "node-appwrite";
 
-export type Task = Models.Document & Exclude<ITask, 'workspaceId'>;
+export type Task = Models.Document & ITask;
 
 export type TaskStatus = 'BACKLOG' | 'TODO' | 'IN_PROGRESS' | 'IN_REVIEW' | 'DONE';
 
