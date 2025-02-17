@@ -190,6 +190,9 @@
     "all_projects": "All Projects",
     "due_date": "Due Date"
   },
+  "tasks_table": {
+    "task_name": "Task Name"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
