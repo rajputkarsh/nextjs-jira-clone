@@ -11,6 +11,9 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { useQueryState } from "nuqs";
 import DataFilters from "@/features/tasks/components/DataFilters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
+import { DataTable } from "../DataTable";
+import { ColumnDef } from "@tanstack/react-table";
+import { ITask, Task } from "@/features/tasks/schema";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -23,6 +26,7 @@ function TaskViewSwitcher() {
     defaultValue: AVAILABLE_TABS.TABLE,
   });
   const translations = useTranslations("TaskViewSwitcher");
+  const tableTranslations = useTranslations("tasks_table");
   const workspaceId = useWorkspaceId();
   const { open } = useCreateTaskModal();
 
@@ -36,6 +40,13 @@ function TaskViewSwitcher() {
     search: search ?? undefined,
     dueDate: dueDate ?? undefined,
   });
+
+  const columns: Array<ColumnDef<Task>> = [
+    {
+      accessorKey: "name",
+      header: tableTranslations("task_name"),
+    },
+  ];
 
   return (
     <Tabs
@@ -80,7 +91,14 @@ function TaskViewSwitcher() {
         ) : (
           <>
             <TabsContent value={AVAILABLE_TABS.TABLE} className="mt-0">
-              Data Table
+              <DataTable
+                columns={columns}
+                data={
+                  tasks?.documents?.length
+                    ? (tasks?.documents as unknown as Array<Task>)
+                    : []
+                }
+              />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
               Data Kanban
