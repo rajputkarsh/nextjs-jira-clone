@@ -191,7 +191,8 @@
     "due_date": "Due Date"
   },
   "tasks_table": {
-    "task_name": "Task Name"
+    "task_name": "Task Name",
+    "no_results": " No results."
   },
   "error": {
     "something_went_wrong": "Something went wrong",
