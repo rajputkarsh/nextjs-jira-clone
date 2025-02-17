@@ -1,5 +1,8 @@
 import { z } from "zod";
 import { TASK_STATUS } from "./constants";
+import { Models } from "node-appwrite";
+
+export type Task = Models.Document & Exclude<ITask, 'workspaceId'>;
 
 export type TaskStatus = 'BACKLOG' | 'TODO' | 'IN_PROGRESS' | 'IN_REVIEW' | 'DONE';
 
@@ -8,7 +11,7 @@ export interface ITask {
   name: string;
   projectId: string;
   assigneeId: string;
-  dueDate: Date;
+  dueDate: string;
   status: TaskStatus;
   position?: Number;
   description?: string;
