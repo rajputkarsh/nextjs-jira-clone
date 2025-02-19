@@ -192,7 +192,9 @@
   },
   "tasks_table": {
     "task_name": "Task Name",
-    "no_results": " No results."
+    "no_results": " No results.",
+    "next": "Next",
+    "previous":"Previous"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
