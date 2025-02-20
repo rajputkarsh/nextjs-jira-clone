@@ -3,7 +3,7 @@
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Loader, PlusIcon } from "lucide-react";
+import { Loader, PlusIcon, ArrowUpDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useCreateTaskModal } from "@/features/tasks/hooks/use-createTaskModal";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
@@ -44,7 +44,17 @@ function TaskViewSwitcher() {
   const columns: Array<ColumnDef<Task>> = [
     {
       accessorKey: "name",
-      header: tableTranslations("task_name"),
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {tableTranslations("task_name")}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
     },
   ];
 
