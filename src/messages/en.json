@@ -192,6 +192,7 @@
   },
   "tasks_table": {
     "task_name": "Task Name",
+    "filter_tasks": "Filter tasks...",
     "no_results": " No results.",
     "next": "Next",
     "previous":"Previous"
