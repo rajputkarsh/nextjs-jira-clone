@@ -19,7 +19,7 @@ import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { Badge } from "@/components/ui/badge";
 import { snakeCaseToTitleCase } from "@/lib/utils";
-import { TASK_STATUS } from "../../constants";
+import { TASK_STATUS } from "@/features/tasks/constants";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
