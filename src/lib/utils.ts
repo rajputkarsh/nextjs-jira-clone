@@ -22,3 +22,7 @@ export const generateInviteCode = (length: number): string => {
 export const capitalCase = (str: string): string => {
   return String(str).charAt(0).toUpperCase() + String(str).slice(1);
 }
+
+export const snakeCaseToTitleCase = (str: string): string => {
+  return str.toLowerCase().replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+}
