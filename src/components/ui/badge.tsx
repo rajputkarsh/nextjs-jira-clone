@@ -1,5 +1,6 @@
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { TASK_STATUS } from "@/features/tasks/constants"
 
 import { cn } from "@/lib/utils"
 
@@ -15,13 +16,23 @@ const badgeVariants = cva(
         destructive:
           "border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80",
         outline: "text-foreground",
+        [TASK_STATUS.TODO]:
+          "border-transparent bg-red-400 text-primary hover:bg-red-400/80",
+        [TASK_STATUS.IN_PROGRESS]:
+          "border-transparent bg-yellow-400 text-primary hover:bg-yellow-400/80",
+        [TASK_STATUS.IN_REVIEW]:
+          "border-transparent bg-blue-400 text-primary hover:bg-blue-400/80",
+        [TASK_STATUS.DONE]:
+          "border-transparent bg-emerald-400 text-primary hover:bg-emerald-400/80",
+        [TASK_STATUS.BACKLOG]:
+          "border-transparent bg-pink-400 text-primary hover:bg-pink-400/80",
       },
     },
     defaultVariants: {
       variant: "default",
     },
   }
-)
+);
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
