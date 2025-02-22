@@ -201,6 +201,12 @@
     "next": "Next",
     "previous": "Previous"
   },
+  "TaskActions": {
+    "task_details": "Task Details",
+    "edit_task": "Edit Task",
+    "open_project": "Open Project",
+    "delete_task": "Delete Task"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
