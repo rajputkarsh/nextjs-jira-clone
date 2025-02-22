@@ -205,7 +205,9 @@
     "task_details": "Task Details",
     "edit_task": "Edit Task",
     "open_project": "Open Project",
-    "delete_task": "Delete Task"
+    "delete_task": "Delete Task",
+    "task_deleted": "Task Deleted",
+    "failed_to_delete_task": "Failed to delete task"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
