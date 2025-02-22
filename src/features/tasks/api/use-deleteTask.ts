@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.tasks[":taskId"]['$delete'], 200>;
 type RequestType = InferRequestType<
@@ -12,7 +11,6 @@ type RequestType = InferRequestType<
 
 export const useDeleteTask = () => {
 
-  const router = useRouter();
   const translations = useTranslations("TaskActions");
   const queryClient = useQueryClient();
 
@@ -30,9 +28,6 @@ export const useDeleteTask = () => {
       toast.success(translations("task_deleted"));
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["tasks", data.$id] });
-      setTimeout(() => {
-        router.refresh();
-      }, 2000);
     },
     onError: () => {
       toast.error(translations("failed_to_delete_task"));
