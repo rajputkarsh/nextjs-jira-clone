@@ -11,7 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, MoreVertical } from "lucide-react";
+import TaskActions from "../TaskActions";
 
 interface TaskTableProps {
   tasks: Task
@@ -133,6 +134,21 @@ function TaskTable({ tasks }: TaskTableProps) {
         );
       },
     },
+    {
+      id:"actions",
+      cell: ({ row }) => {
+        const id = row.original.$id;
+        const projectId = row.original.projectId;
+
+        return (
+          <TaskActions id={id} projectId={projectId}>
+            <Button variant={"ghost"} className="size-8 p-0">
+              <MoreVertical className="size-4" />
+            </Button>
+          </TaskActions>
+        )
+      }
+    }
   ];
 
   return (
