@@ -207,7 +207,8 @@
     "open_project": "Open Project",
     "delete_task": "Delete Task",
     "task_deleted": "Task Deleted",
-    "failed_to_delete_task": "Failed to delete task"
+    "failed_to_delete_task": "Failed to delete task",
+    "this_action_cannot_be_undone": "This action cannot be undone."
   },
   "error": {
     "something_went_wrong": "Something went wrong",
