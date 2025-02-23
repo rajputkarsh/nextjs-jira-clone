@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { createTaskSchema, getTaskSchema, Task } from "@/features/tasks/schema";
+import { createTaskSchema, getTaskSchema, Task, updateTaskSchema } from "@/features/tasks/schema";
 import { sessionMiddleware } from "@/middlewares/session";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
@@ -19,14 +19,8 @@ const app = new Hono()
       const databases = c.get("databases");
       const user = c.get("user");
 
-      const { 
-        workspaceId,
-        projectId,
-        assigneeId,
-        status,
-        search,
-        dueDate,    
-       } = c.req.valid("query");
+      const { workspaceId, projectId, assigneeId, status, search, dueDate } =
+        c.req.valid("query");
 
       const member = await getMembers({
         databases,
@@ -44,7 +38,7 @@ const app = new Hono()
       const query = [
         Query.equal("workspaceId", workspaceId),
         Query.orderDesc("$createdAt"),
-      ]
+      ];
 
       if (projectId) {
         query.push(Query.equal("projectId", projectId));
@@ -66,7 +60,11 @@ const app = new Hono()
         query.push(Query.search("name", search));
       }
 
-      const tasks = await databases.listDocuments<Task>(DATABASE_ID, TASKS_ID, query);
+      const tasks = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        query
+      );
 
       const projectIds = tasks.documents.map((task) => task.projectId);
       const assigneeIds = tasks.documents.map((task) => task.assigneeId);
@@ -93,7 +91,7 @@ const app = new Hono()
             email: user.email,
           };
         })
-      )
+      );
 
       const populatedTasks = tasks.documents.map((task) => {
         const project = projects.documents.find(
@@ -106,8 +104,8 @@ const app = new Hono()
         return {
           ...task,
           project,
-          assignee
-        }
+          assignee,
+        };
       });
 
       return c.json({ data: { ...tasks, documents: populatedTasks } });
@@ -121,8 +119,15 @@ const app = new Hono()
       const user = c.get("user");
       const databases = c.get("databases");
 
-      const { name, status, workspaceId, projectId, assigneeId, dueDate } =
-        c.req.valid("json");
+      const {
+        name,
+        status,
+        workspaceId,
+        projectId,
+        assigneeId,
+        dueDate,
+        description,
+      } = c.req.valid("json");
 
       const member = await getMembers({
         databases,
@@ -162,6 +167,7 @@ const app = new Hono()
           projectId,
           assigneeId,
           dueDate,
+          description,
           position: newPosition,
         }
       );
@@ -169,24 +175,28 @@ const app = new Hono()
       return c.json({ data: task });
     }
   )
-  .delete(
+  .patch(
     "/:taskId",
     sessionMiddleware,
+    zValidator("json", updateTaskSchema),
     async (c) => {
       const user = c.get("user");
       const databases = c.get("databases");
 
       const { taskId } = c.req.param();
 
-      const task = await databases.getDocument<Task>(
+      const { name, status, projectId, assigneeId, dueDate, description } =
+        c.req.valid("json");
+
+      const existingTask = await databases.getDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
-        taskId
+        taskId,
       );
 
       const member = await getMembers({
         databases,
-        workspaceId: task.workspaceId,
+        workspaceId: existingTask.workspaceId,
         userId: user.$id,
       });
 
@@ -197,14 +207,51 @@ const app = new Hono()
         );
       }
 
-      await databases.deleteDocument(
+      const task = await databases.updateDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
-        taskId
+        taskId,
+        {
+          name,
+          status,
+          projectId,
+          assigneeId,
+          dueDate,
+          description,
+        }
       );
 
-      return c.json({ data: { $id: task.$id } });
+      return c.json({ data: task });
     }
-  );
+  )
+  .delete("/:taskId", sessionMiddleware, async (c) => {
+    const user = c.get("user");
+    const databases = c.get("databases");
+
+    const { taskId } = c.req.param();
+
+    const task = await databases.getDocument<Task>(
+      DATABASE_ID,
+      TASKS_ID,
+      taskId
+    );
+
+    const member = await getMembers({
+      databases,
+      workspaceId: task.workspaceId,
+      userId: user.$id,
+    });
+
+    if (!member) {
+      return c.json(
+        { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+        HTTP_STATUS.UNAUTHORISED.STATUS
+      );
+    }
+
+    await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
+
+    return c.json({ data: { $id: task.$id } });
+  });
 
 export default app;
