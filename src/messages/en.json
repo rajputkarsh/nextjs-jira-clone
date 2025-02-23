@@ -212,6 +212,21 @@
     "failed_to_update_task": "Failed to update Task",
     "task_updated": "Task Updated"
   },
+  "UpdateTaskForm": {
+    "update_task": "Update Task",
+    "task": "Task",
+    "cancel": "Cancel",
+    "task_placeholder": "Enter task name",
+    "due_date": "Due Date",
+    "select_date": "Select Date",
+    "assignee": "Assignee",
+    "assignee_placeholder": "Select Assignee",
+    "status": "Status",
+    "status_placeholder": "Select Status",
+    "project": "Project",
+    "project_placeholder": "Select Project",
+    "save_changes": "Save Changes"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
