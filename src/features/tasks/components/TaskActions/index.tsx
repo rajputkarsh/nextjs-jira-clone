@@ -11,6 +11,7 @@ import {
 import useConfirm from "@/hooks/use-confirm";
 import { useDeleteTask } from "@/features/tasks/api/use-deleteTask";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
+import { useEditTaskModal } from "@/features/tasks/hooks/use-editTaskModal";
 
 interface TaskActionsProps {
   id: string;
@@ -22,6 +23,7 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
   const translations = useTranslations("TaskActions");
   const workspaceId = useWorkspaceId();
   const router = useRouter();
+  const { open } = useEditTaskModal();
   
   const [DeleteDialog, confirmDelete] = useConfirm(
     translations("delete_task"),
@@ -72,7 +74,7 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
           <DropdownMenuItem
             className="cursor-pointer font-medium p-[10px]"
             disabled={isPending}
-            onClick={() => {}}
+            onClick={() => {open(id)}}
           >
             <PencilIcon className="size-4 mr-2 stroke-2" />
             {translations("edit_task")}

@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { updateTaskSchema, Task, ITask } from "@/features/tasks/schema";
+import { updateTaskSchema, ITask } from "@/features/tasks/schema";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -52,8 +52,11 @@ function TaskForm({
     resolver: zodResolver(updateTaskSchema),
     defaultValues: {
       ...initialValues,
-      status: (initialValues.status as TASK_STATUS),
-      dueDate: initialValues.dueDate ? new Date(initialValues.dueDate) : undefined,
+      status: initialValues.status as TASK_STATUS,
+      dueDate: initialValues.dueDate
+        ? new Date(initialValues.dueDate)
+        : undefined,
+      description: initialValues.description ? initialValues.description : undefined,
     },
   });
 

@@ -37,9 +37,9 @@ export const createTaskSchema = z.object({
 });
 
 export const updateTaskSchema = z.object({
-  name: z.string().trim().min(1, "Required").optional(),
-  projectId: z.string().trim().min(1, "Required").optional(),
-  assigneeId: z.string().trim().min(1, "Required").optional(),
+  name: z.string().optional(),
+  projectId: z.string().optional(),
+  assigneeId: z.string().optional(),
   dueDate: z.coerce.date().optional(),
   status: z.nativeEnum(TASK_STATUS, { required_error: "Required" }).optional(),
   description: z.string().optional(),
