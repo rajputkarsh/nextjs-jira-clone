@@ -12,6 +12,7 @@ import { useQueryState } from "nuqs";
 import DataFilters from "@/features/tasks/components/DataFilters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
 import TaskTable from "@/features/tasks/components/TaskTable";
+import DataKanban from "@/features/tasks/components/DataKanban";
 import { Task } from "@/features/tasks/schema";
 
 enum AVAILABLE_TABS {
@@ -93,7 +94,7 @@ function TaskViewSwitcher() {
               <TaskTable tasks={tasks as unknown as Task} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
-              Data Kanban
+              <DataKanban data={tasks as unknown as Task} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
               Data Calendar

@@ -13,7 +13,7 @@ export interface ITask {
   assigneeId: string;
   dueDate: string;
   status: TaskStatus;
-  position?: Number;
+  position?: number;
   description?: string;
 }
 
