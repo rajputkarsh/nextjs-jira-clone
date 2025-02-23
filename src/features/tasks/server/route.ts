@@ -111,6 +111,59 @@ const app = new Hono()
       return c.json({ data: { ...tasks, documents: populatedTasks } });
     }
   )
+  .get(
+    "/:taskId",
+    sessionMiddleware,
+    zValidator("query", getTaskSchema),
+    async (c) => {
+      const { users } = await createAdminClient();
+      const databases = c.get("databases");
+      const currentUser = c.get("user");
+
+      const { taskId } = c.req.param();
+
+      const task = await databases.getDocument<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        taskId
+      );
+
+      const member = await getMembers({
+        databases,
+        workspaceId: task.workspaceId,
+        userId: currentUser.$id,
+      });
+
+      if (!member) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      const project = await databases.getDocument<Project>(
+        DATABASE_ID,
+        PROJECTS_ID,
+        task.projectId
+      );
+
+      let assignee = await databases.getDocument(
+        DATABASE_ID,
+        MEMBERS_ID,
+        task.assigneeId
+      );
+      
+      const user = await users.get(assignee.userId);
+
+      assignee = {
+        ...assignee,
+        name: user.name,
+        email: user.email,
+      };
+
+      return c.json({ data: { ...task, project, assignee } });
+    }
+  )
   .post(
     "/",
     sessionMiddleware,
@@ -191,7 +244,7 @@ const app = new Hono()
       const existingTask = await databases.getDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
-        taskId,
+        taskId
       );
 
       const member = await getMembers({
