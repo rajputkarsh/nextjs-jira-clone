@@ -36,6 +36,15 @@ export const createTaskSchema = z.object({
   description: z.string().optional(),
 });
 
+export const updateTaskSchema = z.object({
+  name: z.string().trim().min(1, "Required").optional(),
+  projectId: z.string().trim().min(1, "Required").optional(),
+  assigneeId: z.string().trim().min(1, "Required").optional(),
+  dueDate: z.coerce.date().optional(),
+  status: z.nativeEnum(TASK_STATUS, { required_error: "Required" }).optional(),
+  description: z.string().optional(),
+});
+
 export const createTaskFormDefaultValues: z.infer<typeof createTaskSchema> = {
   workspaceId: "",
   name: "",
