@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-react";
 import {
   DropdownMenu,
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import useConfirm from "@/hooks/use-confirm";
 import { useDeleteTask } from "@/features/tasks/api/use-deleteTask";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 
 interface TaskActionsProps {
   id: string;
@@ -18,6 +20,8 @@ interface TaskActionsProps {
 
 function TaskActions({ id, projectId, children }: TaskActionsProps) {
   const translations = useTranslations("TaskActions");
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
   
   const [DeleteDialog, confirmDelete] = useConfirm(
     translations("delete_task"),
@@ -33,6 +37,14 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
     deleteTask({param: { taskId: id }});
   }
 
+  const handleOpenTask = () => {
+    router.push(`/workspaces/${workspaceId}/tasks/${id}`);
+  };
+
+  const handleOpenProject = () => {
+    router.push(`/workspaces/${workspaceId}/projects/${projectId}`);
+  };
+
   const isPending = isDeletingTask;
 
   return (
@@ -44,7 +56,7 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
           <DropdownMenuItem
             className="cursor-pointer font-medium p-[10px]"
             disabled={isPending}
-            onClick={() => {}}
+            onClick={handleOpenTask}
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             {translations("task_details")}
@@ -52,7 +64,7 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
           <DropdownMenuItem
             className="cursor-pointer font-medium p-[10px]"
             disabled={isPending}
-            onClick={() => {}}
+            onClick={handleOpenProject}
           >
             <ExternalLinkIcon className="size-4 mr-2 stroke-2" />
             {translations("open_project")}
