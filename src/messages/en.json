@@ -208,7 +208,9 @@
     "delete_task": "Delete Task",
     "task_deleted": "Task Deleted",
     "failed_to_delete_task": "Failed to delete task",
-    "this_action_cannot_be_undone": "This action cannot be undone."
+    "this_action_cannot_be_undone": "This action cannot be undone.",
+    "failed_to_update_task": "Failed to update Task",
+    "task_updated": "Task Updated"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
