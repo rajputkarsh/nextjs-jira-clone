@@ -27,9 +27,9 @@ export const useUpdateTask = () => {
 
       return await response.json();
     },
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success(translations("task_updated"));
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      queryClient.invalidateQueries({ queryKey: ["tasks", data.$id] });
     },
     onError: () => {
       toast.error(translations("failed_to_update_task"));
