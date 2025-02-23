@@ -114,7 +114,6 @@ const app = new Hono()
   .get(
     "/:taskId",
     sessionMiddleware,
-    zValidator("query", getTaskSchema),
     async (c) => {
       const { users } = await createAdminClient();
       const databases = c.get("databases");
