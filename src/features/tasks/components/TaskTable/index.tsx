@@ -12,7 +12,7 @@ import { snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreVertical } from "lucide-react";
-import TaskActions from "../TaskActions";
+import TaskActions from "@/features/tasks/components/TaskActions";
 
 interface TaskTableProps {
   tasks: Task
