@@ -7,6 +7,7 @@ export type Task = Models.Document & ITask;
 export type TaskStatus = 'BACKLOG' | 'TODO' | 'IN_PROGRESS' | 'IN_REVIEW' | 'DONE';
 
 export interface ITask {
+  $id?: string;
   workspaceId: string;
   name: string;
   projectId: string;
