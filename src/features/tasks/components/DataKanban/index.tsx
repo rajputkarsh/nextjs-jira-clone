@@ -5,10 +5,10 @@ import {
   Droppable,
   DropResult,
 } from "@hello-pangea/dnd";
-
+import KanbanCard from './KanbanCard';
+import KanbanColumnHeader from "./KanbanColumnHeader";
 import { ITask, Task } from "@/features/tasks/schema";
 import { TASK_STATUS } from "@/features/tasks/constants";
-import KanbanColumnHeader from "./KanbanColumnHeader";
 
 const boards: Array<TASK_STATUS> = [
   TASK_STATUS.BACKLOG,
@@ -81,7 +81,7 @@ function DataKanban({ data }: DataKanbanProps) {
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
                           >
-                            {task.name}
+                            <KanbanCard task={task} />
                           </div>
                         )}
                       </Draggable>
