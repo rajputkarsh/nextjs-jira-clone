@@ -3,12 +3,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
+import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.tasks['$post'], 200>;
 type RequestType = InferRequestType<typeof client.api.tasks['$post']>;
 
 export const useCreateTask = () => {
 
+  const router = useRouter();
   const translations = useTranslations("CreateTaskForm");
   const queryClient = useQueryClient();
 
@@ -25,6 +27,7 @@ export const useCreateTask = () => {
     onSuccess: () => {
       toast.success(translations("task_created"));
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
+      router.refresh();
     },
     onError: () => {
       toast.error(translations("failed_to_create_new_task"));
