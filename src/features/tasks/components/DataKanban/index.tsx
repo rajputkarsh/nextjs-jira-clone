@@ -24,7 +24,9 @@ type TasksState = {
 
 interface DataKanbanProps {
   data: Task;
-  onChange: (tasks: Array<{ $id: string, status: TaskStatus, position: number }>) => void;
+  onChange: (
+    tasks: Array<{ $id: string; status: TaskStatus; position: number }>
+  ) => void;
 }
 
 function DataKanban({ data, onChange }: DataKanbanProps) {
@@ -51,7 +53,6 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
   });
 
   useEffect(() => {
-    setTasks(() => {
     const newTasks: TasksState = {
       [TASK_STATUS.BACKLOG]: [],
       [TASK_STATUS.TODO]: [],
@@ -69,8 +70,8 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
         (a, b) => (a?.position || 0) - (b?.position || 0)
       );
     });
-      return newTasks;
-    })
+
+    setTasks(newTasks);
   }, [data?.total]);
 
   const onDragEnd = useCallback(
