@@ -72,7 +72,7 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
     });
 
     setTasks(newTasks);
-  }, [data?.total]);
+  }, [data]);
 
   const onDragEnd = useCallback(
     (result: DropResult) => {
