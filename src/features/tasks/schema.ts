@@ -46,6 +46,16 @@ export const updateTaskSchema = z.object({
   description: z.string().optional(),
 });
 
+export const bulkUpdateTaskSchema = z.object({
+  tasks: z.array(
+    z.object({
+      $id: z.string(),
+      status: z.nativeEnum(TASK_STATUS),
+      position: z.number().int().positive().min(1000).max(1_000_000)
+    })
+  )
+});
+
 export const createTaskFormDefaultValues: z.infer<typeof createTaskSchema> = {
   workspaceId: "",
   name: "",
