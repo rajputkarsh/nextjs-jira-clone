@@ -1,6 +1,12 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { bulkUpdateTaskSchema, createTaskSchema, getTaskSchema, Task, updateTaskSchema } from "@/features/tasks/schema";
+import {
+  bulkUpdateTaskSchema,
+  createTaskSchema,
+  getTaskSchema,
+  Task,
+  updateTaskSchema,
+} from "@/features/tasks/schema";
 import { sessionMiddleware } from "@/middlewares/session";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
@@ -315,16 +321,23 @@ const app = new Hono()
       const tasksToUpdate = await databases.listDocuments<Task>(
         DATABASE_ID,
         TASKS_ID,
-        [Query.contains("$id", tasks.map((task) => task.$id))]
-      )
+        [
+          Query.contains(
+            "$id",
+            tasks.map((task) => task.$id)
+          ),
+        ]
+      );
 
-      const workspaceIds = new Set(tasksToUpdate.documents.map((task) => task.workspaceId));
+      const workspaceIds = new Set(
+        tasksToUpdate.documents.map((task) => task.workspaceId)
+      );
 
       if (workspaceIds.size !== 1) {
         return c.json(
           { error: HTTP_STATUS.BAD_REQUEST.MESSAGE },
           HTTP_STATUS.BAD_REQUEST.STATUS
-        );        
+        );
       }
 
       const workspaceId = workspaceIds.values().next().value;
@@ -345,16 +358,12 @@ const app = new Hono()
       const updatedTasks = await Promise.all(
         tasks.map(async (task) => {
           const { $id, status, position } = task;
-          return databases.updateDocument<Task>(
-            DATABASE_ID,
-            TASKS_ID,
-            $id,
-            {
-              status, position
-            }
-          );
+          return databases.updateDocument<Task>(DATABASE_ID, TASKS_ID, $id, {
+            status,
+            position,
+          });
         })
-      )
+      );
 
       return c.json({ data: updatedTasks });
     }
