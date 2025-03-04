@@ -30,7 +30,7 @@ export const useBulkUpdateTasks = () => {
 
       return await response.json();
     },
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       toast.success(translations("task_updated"));
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       router.refresh();
