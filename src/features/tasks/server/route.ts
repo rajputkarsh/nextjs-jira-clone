@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
-import { createTaskSchema, getTaskSchema, Task, updateTaskSchema } from "@/features/tasks/schema";
+import { bulkUpdateTaskSchema, createTaskSchema, getTaskSchema, Task, updateTaskSchema } from "@/features/tasks/schema";
 import { sessionMiddleware } from "@/middlewares/session";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
@@ -111,58 +111,54 @@ const app = new Hono()
       return c.json({ data: { ...tasks, documents: populatedTasks } });
     }
   )
-  .get(
-    "/:taskId",
-    sessionMiddleware,
-    async (c) => {
-      const { users } = await createAdminClient();
-      const databases = c.get("databases");
-      const currentUser = c.get("user");
+  .get("/:taskId", sessionMiddleware, async (c) => {
+    const { users } = await createAdminClient();
+    const databases = c.get("databases");
+    const currentUser = c.get("user");
 
-      const { taskId } = c.req.param();
+    const { taskId } = c.req.param();
 
-      const task = await databases.getDocument<Task>(
-        DATABASE_ID,
-        TASKS_ID,
-        taskId
+    const task = await databases.getDocument<Task>(
+      DATABASE_ID,
+      TASKS_ID,
+      taskId
+    );
+
+    const member = await getMembers({
+      databases,
+      workspaceId: task.workspaceId,
+      userId: currentUser.$id,
+    });
+
+    if (!member) {
+      return c.json(
+        { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+        HTTP_STATUS.UNAUTHORISED.STATUS
       );
-
-      const member = await getMembers({
-        databases,
-        workspaceId: task.workspaceId,
-        userId: currentUser.$id,
-      });
-
-      if (!member) {
-        return c.json(
-          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
-          HTTP_STATUS.UNAUTHORISED.STATUS
-        );
-      }
-
-      const project = await databases.getDocument<Project>(
-        DATABASE_ID,
-        PROJECTS_ID,
-        task.projectId
-      );
-
-      let assignee = await databases.getDocument(
-        DATABASE_ID,
-        MEMBERS_ID,
-        task.assigneeId
-      );
-      
-      const user = await users.get(assignee.userId);
-
-      assignee = {
-        ...assignee,
-        name: user.name,
-        email: user.email,
-      };
-
-      return c.json({ data: { ...task, project, assignee } });
     }
-  )
+
+    const project = await databases.getDocument<Project>(
+      DATABASE_ID,
+      PROJECTS_ID,
+      task.projectId
+    );
+
+    let assignee = await databases.getDocument(
+      DATABASE_ID,
+      MEMBERS_ID,
+      task.assigneeId
+    );
+
+    const user = await users.get(assignee.userId);
+
+    assignee = {
+      ...assignee,
+      name: user.name,
+      email: user.email,
+    };
+
+    return c.json({ data: { ...task, project, assignee } });
+  })
   .post(
     "/",
     sessionMiddleware,
@@ -304,6 +300,64 @@ const app = new Hono()
     await databases.deleteDocument(DATABASE_ID, TASKS_ID, taskId);
 
     return c.json({ data: { $id: task.$id } });
-  });
+  })
+
+  .post(
+    "/bulk-update",
+    sessionMiddleware,
+    zValidator("json", bulkUpdateTaskSchema),
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+
+      const { tasks } = c.req.valid("json");
+
+      const tasksToUpdate = await databases.listDocuments<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        [Query.contains("$id", tasks.map((task) => task.$id))]
+      )
+
+      const workspaceIds = new Set(tasksToUpdate.documents.map((task) => task.workspaceId));
+
+      if (workspaceIds.size !== 1) {
+        return c.json(
+          { error: HTTP_STATUS.BAD_REQUEST.MESSAGE },
+          HTTP_STATUS.BAD_REQUEST.STATUS
+        );        
+      }
+
+      const workspaceId = workspaceIds.values().next().value;
+
+      const member = await getMembers({
+        databases,
+        workspaceId: workspaceId as string,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      const updatedTasks = await Promise.all(
+        tasks.map(async (task) => {
+          const { $id, status, position } = task;
+          return databases.updateDocument<Task>(
+            DATABASE_ID,
+            TASKS_ID,
+            $id,
+            {
+              status, position
+            }
+          );
+        })
+      )
+
+      return c.json({ data: updatedTasks });
+    }
+  );
 
 export default app;
