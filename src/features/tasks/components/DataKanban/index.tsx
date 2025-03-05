@@ -25,7 +25,7 @@ type TasksState = {
 interface DataKanbanProps {
   data: Task;
   onChange: (
-    tasks: Array<{ $id: string; status: TaskStatus; position: number }>
+    tasks: Array<{ $id: string; status: TASK_STATUS; position: number }>
   ) => void;
 }
 
@@ -85,7 +85,7 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
 
       let updatePayload: Array<{
         $id: string;
-        status: TaskStatus;
+        status: TASK_STATUS;
         position: number;
       }> = [];
 
@@ -117,7 +117,7 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
         updatePayload = [];
         updatePayload.push({
           $id: updatedMovedTask.$id as string,
-          status: destinationStatus,
+          status: destinationStatus as TASK_STATUS,
           position: Math.min((destination.index + 1) * 1000, 1_000_000),
         });
 
@@ -129,7 +129,7 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
             if (task.position !== newPosition) {
               updatePayload.push({
                 $id: task.$id as string,
-                status: destinationStatus,
+                status: destinationStatus as TASK_STATUS,
                 position: newPosition,
               });
             }
@@ -143,7 +143,7 @@ function DataKanban({ data, onChange }: DataKanbanProps) {
               if (task.position !== newPosition) {
                 updatePayload.push({
                   $id: task.$id as string,
-                  status: sourceStatus,
+                  status: sourceStatus as TASK_STATUS,
                   position: newPosition,
                 });
               }
