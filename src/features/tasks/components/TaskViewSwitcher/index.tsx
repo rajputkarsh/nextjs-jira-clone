@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -13,7 +14,9 @@ import DataFilters from "@/features/tasks/components/DataFilters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
 import TaskTable from "@/features/tasks/components/TaskTable";
 import DataKanban from "@/features/tasks/components/DataKanban";
-import { Task } from "@/features/tasks/schema";
+import { Task, TaskStatus } from "@/features/tasks/schema";
+import { useBulkUpdateTasks } from "@/features/tasks/api/use-bulkUpdateTasks";
+import { TASK_STATUS } from "@/features/tasks/constants";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -27,7 +30,9 @@ function TaskViewSwitcher() {
   });
   const translations = useTranslations("TaskViewSwitcher");
   const workspaceId = useWorkspaceId();
+  
   const { open } = useCreateTaskModal();
+  const { mutate: bulkUpdate } = useBulkUpdateTasks();
 
   const [{ status, assigneeId, projectId, search, dueDate }] = useTaskFilters();
 
@@ -39,6 +44,15 @@ function TaskViewSwitcher() {
     search: search ?? undefined,
     dueDate: dueDate ?? undefined,
   });
+
+  const onKanbanChange = useCallback(
+    (tasks: Array<{ $id: string; status: TASK_STATUS; position: number }>) => {
+      bulkUpdate({
+        json: { tasks },
+      });
+    },
+    [bulkUpdate]
+  );
 
   if(!tasks) {
     return (
@@ -94,7 +108,7 @@ function TaskViewSwitcher() {
               <TaskTable tasks={tasks as unknown as Task} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
-              <DataKanban data={tasks as unknown as Task} />
+              <DataKanban data={tasks as unknown as Task} onChange={onKanbanChange} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
               Data Calendar
