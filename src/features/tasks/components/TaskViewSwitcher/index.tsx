@@ -111,8 +111,8 @@ function TaskViewSwitcher() {
             <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
               <DataKanban data={tasks as unknown as Task} onChange={onKanbanChange} />
             </TabsContent>
-            <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
-              <DataCalendar data={(tasks?.documents || []) as Array<ITask>} />
+            <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0 h-full pb-4">
+              <DataCalendar data={(tasks?.documents || []) as Array<Task>} />
             </TabsContent>
           </>
         )}
