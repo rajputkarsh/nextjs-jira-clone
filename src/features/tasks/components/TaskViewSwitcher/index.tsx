@@ -14,9 +14,10 @@ import DataFilters from "@/features/tasks/components/DataFilters";
 import { useTaskFilters } from "@/features/tasks/hooks/use-taskFilters";
 import TaskTable from "@/features/tasks/components/TaskTable";
 import DataKanban from "@/features/tasks/components/DataKanban";
-import { Task, TaskStatus } from "@/features/tasks/schema";
+import { ITask, Task } from "@/features/tasks/schema";
 import { useBulkUpdateTasks } from "@/features/tasks/api/use-bulkUpdateTasks";
 import { TASK_STATUS } from "@/features/tasks/constants";
+import DataCalendar from "../DataCalendar";
 
 enum AVAILABLE_TABS {
   TABLE = "TABLE",
@@ -111,7 +112,7 @@ function TaskViewSwitcher() {
               <DataKanban data={tasks as unknown as Task} onChange={onKanbanChange} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0">
-              Data Calendar
+              <DataCalendar data={(tasks?.documents || []) as Array<ITask>} />
             </TabsContent>
           </>
         )}
