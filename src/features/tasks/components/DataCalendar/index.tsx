@@ -9,7 +9,9 @@ import {
 } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
+import EventCard from "./EventCard";
 import { Task } from "@/features/tasks/schema";
+import { TASK_STATUS } from "@/features/tasks/constants";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./index.css";
@@ -42,7 +44,7 @@ function DataCalendar({ data }: DataCalendarProps) {
     end: new Date(task.dueDate),
     project: task.project,
     assignee: task.assignee,
-    status: task.status,
+    status: task.status as TASK_STATUS,
   }));
 
   const handleNavigate = (action: "PREV" | "NEXT" | "TODAY") => {
@@ -67,7 +69,19 @@ function DataCalendar({ data }: DataCalendarProps) {
       className="h-full"
       max={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
       formats={{
-        weekdayFormat: (date, culture, localizer) => localizer?.format(date, "EEE", culture) || ""
+        weekdayFormat: (date, culture, localizer) =>
+          localizer?.format(date, "EEE", culture) || "",
+      }}
+      components={{
+        eventWrapper: ({ event }) => (
+          <EventCard
+            id={event.id}
+            title={event.title}
+            assignee={event.assignee}
+            project={event.project}
+            status={event.status}
+          />
+        ),
       }}
     />
   );
