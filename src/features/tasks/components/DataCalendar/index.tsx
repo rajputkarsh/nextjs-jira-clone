@@ -10,7 +10,9 @@ import {
 import { enUS } from "date-fns/locale";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
 import { Task } from "@/features/tasks/schema";
+
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "./index.css";
 
 interface DataCalendarProps {
   data: Array<Task>;
