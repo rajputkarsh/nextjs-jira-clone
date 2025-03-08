@@ -1,4 +1,6 @@
 import { useState } from "react";
+import EventCard from "./EventCard";
+import CalendarToolbar from "./CalendarToolbar";
 import {
   format,
   getDay,
@@ -9,7 +11,6 @@ import {
 } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import EventCard from "./EventCard";
 import { Task } from "@/features/tasks/schema";
 import { TASK_STATUS } from "@/features/tasks/constants";
 
@@ -82,6 +83,9 @@ function DataCalendar({ data }: DataCalendarProps) {
             status={event.status}
           />
         ),
+        toolbar: (() => (
+          <CalendarToolbar date={value} onNavigate={handleNavigate} />
+        ))
       }}
     />
   );
