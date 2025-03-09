@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -25,17 +25,25 @@ enum AVAILABLE_TABS {
   CALENDAR = "CALENDAR",
 }
 
-function TaskViewSwitcher() {
+interface TaskViewSwitcherProps {
+  hideProjectFilter?: boolean;
+  initialProjectId?: string;
+}
+
+function TaskViewSwitcher({
+  hideProjectFilter,
+  initialProjectId,
+}: TaskViewSwitcherProps) {
   const [view, setView] = useQueryState("task-view", {
     defaultValue: AVAILABLE_TABS.TABLE,
   });
   const translations = useTranslations("TaskViewSwitcher");
   const workspaceId = useWorkspaceId();
-  
+
   const { open } = useCreateTaskModal();
   const { mutate: bulkUpdate } = useBulkUpdateTasks();
 
-  const [{ status, assigneeId, projectId, search, dueDate }] = useTaskFilters();
+  const [{ status, assigneeId, projectId, search, dueDate }, setFilters] = useTaskFilters();
 
   const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({
     workspaceId,
@@ -55,7 +63,14 @@ function TaskViewSwitcher() {
     [bulkUpdate]
   );
 
-  if(!tasks) {
+  
+  useEffect(() => {
+    if (initialProjectId) {
+      setFilters({ projectId: initialProjectId });
+    }
+  }, [initialProjectId]);
+
+  if (!tasks) {
     return (
       <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
         <Loader className="size-5 animate-spin text-muted-foreground" />
@@ -97,7 +112,7 @@ function TaskViewSwitcher() {
           </Button>
         </div>
         <DottedSeparator className="my-4" />
-        <DataFilters />
+        <DataFilters hideProjectFilter={hideProjectFilter} />
         <DottedSeparator className="my-4" />
         {isLoadingTasks ? (
           <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
@@ -109,9 +124,15 @@ function TaskViewSwitcher() {
               <TaskTable tasks={tasks as unknown as Task} />
             </TabsContent>
             <TabsContent value={AVAILABLE_TABS.KANBAN} className="mt-0">
-              <DataKanban data={tasks as unknown as Task} onChange={onKanbanChange} />
+              <DataKanban
+                data={tasks as unknown as Task}
+                onChange={onKanbanChange}
+              />
             </TabsContent>
-            <TabsContent value={AVAILABLE_TABS.CALENDAR} className="mt-0 h-full pb-4">
+            <TabsContent
+              value={AVAILABLE_TABS.CALENDAR}
+              className="mt-0 h-full pb-4"
+            >
               <DataCalendar data={(tasks?.documents || []) as Array<Task>} />
             </TabsContent>
           </>

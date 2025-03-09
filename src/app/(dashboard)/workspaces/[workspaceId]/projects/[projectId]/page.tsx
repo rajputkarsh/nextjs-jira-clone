@@ -44,10 +44,13 @@ async function Project({ params }: ProjectProps) {
           <p className="text-xl font-semibold">{projectInfo.name}</p>
         </div>
         <div>
-          <EditProjectButton workspaceId={params.workspaceId} projectId={params.projectId} />
+          <EditProjectButton
+            workspaceId={params.workspaceId}
+            projectId={params.projectId}
+          />
         </div>
       </div>
-      <TaskViewSwitcher />
+      <TaskViewSwitcher hideProjectFilter={true} initialProjectId={params.projectId} />
     </div>
   );
 }
