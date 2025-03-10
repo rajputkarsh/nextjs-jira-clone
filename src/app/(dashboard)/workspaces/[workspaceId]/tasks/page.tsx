@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 interface TaskProps {
   params: {
     workspaceId: string;
-    projectId: string;
   };
 }
 
