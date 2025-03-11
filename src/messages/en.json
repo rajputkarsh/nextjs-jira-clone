@@ -227,6 +227,9 @@
     "project_placeholder": "Select Project",
     "save_changes": "Save Changes"
   },
+  "Task": {
+    "task_not_found": "Task not found"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
