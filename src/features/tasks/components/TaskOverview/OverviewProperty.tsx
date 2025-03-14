@@ -11,7 +11,7 @@ function OverviewProperty({ label, children }: OverviewPropertyProps) {
       <div className="min-w-[100px]">
         <p className="text-sm text-muted-foreground">{label}</p>
       </div>
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center justify-center gap-x-2">
         {children}
       </div>
     </div>
