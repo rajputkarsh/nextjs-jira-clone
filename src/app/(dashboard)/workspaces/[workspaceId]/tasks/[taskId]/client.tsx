@@ -1,5 +1,6 @@
 "use client";
 
+import TaskBreadCrumbs from "@/features/tasks/components/TaskBreadcrumbs";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
 import { useGetTasksById } from "@/features/tasks/api/use-getTaskById";
@@ -20,7 +21,11 @@ function TaskClientPage() {
     return <PageError message={translate("task_not_found")} />;
   }
 
-  return <div>{JSON.stringify(data)}</div>;
+  return (
+    <div className="flex flex-col">
+      <TaskBreadCrumbs project={data.project} task={data} />
+    </div>    
+  );
 }
 
 export default TaskClientPage;
