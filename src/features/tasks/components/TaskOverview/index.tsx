@@ -9,6 +9,7 @@ import { PencilIcon } from "lucide-react";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Task } from "@/features/tasks/schema";
+import { useEditTaskModal } from "@/features/tasks/hooks/use-editTaskModal";
 
 interface TaskOverviewProps {
   task: Task;
@@ -17,12 +18,14 @@ interface TaskOverviewProps {
 function TaskOverview({ task }: TaskOverviewProps) {
   const translate = useTranslations("Task");
 
+  const { open } = useEditTaskModal();
+
   return (
     <div className="flex flex-col gap-y-4 col-span-1">
       <div className="bg-muted rounded-lg p-4">
         <div className="flex items-center justify-between">
           <p className="text-lg font-semibold">{translate("overview")}</p>
-          <Button size={"sm"} variant={"secondary"}>
+          <Button onClick={() => open(task.$id)} size={"sm"} variant={"secondary"}>
             <PencilIcon className="size-4 mr-2" />
             {translate("edit")}
           </Button>
