@@ -228,6 +228,8 @@
     "save_changes": "Save Changes"
   },
   "Task": {
+    "overview": "Overview",
+    "edit": "Edit",
     "task_not_found": "Task not found"
   },
   "error": {
