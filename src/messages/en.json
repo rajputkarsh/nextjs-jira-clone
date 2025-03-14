@@ -229,6 +229,9 @@
   },
   "Task": {
     "overview": "Overview",
+    "assignee": "Assignee",
+    "status": "Status",
+    "due_date": "Due Date",
     "edit": "Edit",
     "task_not_found": "Task not found"
   },
