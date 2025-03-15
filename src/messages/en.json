@@ -124,6 +124,7 @@
   },
   "projects": {
     "projects": "Projects",
+    "project_not_found": "Project not found",
     "edit": "Edit"
   },
   "CreateProjectForm": {
