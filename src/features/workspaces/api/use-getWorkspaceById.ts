@@ -21,7 +21,8 @@ export const useGetWorkspaceById = ({
         throw new Error("failed_to_fetch_workspace");
       }
 
-      return await response.json();
+      const { data } = await response.json();
+      return data;
     },
   });
 
