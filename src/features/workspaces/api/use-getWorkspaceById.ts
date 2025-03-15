@@ -11,7 +11,7 @@ export const useGetWorkspaceById = ({
   const queryClient = useQueryClient();
 
   const query = useQuery({
-    queryKey: ["tasks", workspaceId],
+    queryKey: ["workspace", workspaceId],
     queryFn: async () => {
       const response = await client.api.workspaces[":workspaceId"]["$get"]({
         param: { workspaceId },

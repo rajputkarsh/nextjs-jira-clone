@@ -3,6 +3,7 @@ import { getCurrent } from "@/features/auth/queries";
 import UpdateWorkSpaceForm from "@/features/workspaces/components/UpdateWorkspaceForm";
 import { getWorkspace } from "@/features/workspaces/queries";
 import { headers } from "next/headers";
+import WorkspaceSettingsClient from "./client";
 
 interface WorkspaceSettingsProps {
   params: {
@@ -24,16 +25,8 @@ async function WorkspaceSettings({ params }: WorkspaceSettingsProps) {
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
 
-  const initialValues = await getWorkspace({ workspaceId: params.workspaceId });
-
-  if (!initialValues) {
-    redirect(`/workspaces/${params.workspaceId}`);
-  }
-
   return (
-    <div className="w-full lg:max-w-xl">
-      <UpdateWorkSpaceForm initialValues={initialValues} />
-    </div>
+    <WorkspaceSettingsClient />
   );
 }
 

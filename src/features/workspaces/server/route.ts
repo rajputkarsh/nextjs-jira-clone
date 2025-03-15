@@ -56,7 +56,10 @@ const app = new Hono()
     });
 
   if (!member) {
-    return c.json({ data: { documents: [], total: 0 } });
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
   }
 
     const workspace = await databases.getDocument<Workspace>(
