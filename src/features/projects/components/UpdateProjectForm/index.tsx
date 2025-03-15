@@ -67,11 +67,6 @@ function UpdateProjectForm({
           ...values,
           image: values.image instanceof File ? values.image : "",
         },
-      },
-      {
-        onSuccess: ({ data }) => {
-          form.reset();
-        },
       }
     );
   };
