@@ -1,6 +1,7 @@
 "use client";
 
 import TaskBreadCrumbs from "@/features/tasks/components/TaskBreadcrumbs";
+import TaskDescription from "@/features/tasks/components/TaskDescription";
 import TaskOverview from "@/features/tasks/components/TaskOverview";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
@@ -29,8 +30,9 @@ function TaskClientPage() {
       <DottedSeparator className="my-6" />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskOverview task={data} />
+        <TaskDescription task={data} />
       </div>
-    </div>    
+    </div>
   );
 }
 
