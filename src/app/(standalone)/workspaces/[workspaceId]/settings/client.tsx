@@ -23,8 +23,6 @@ function WorkspaceSettingsClient() {
       return <PageError message={translate("workspace_not_found")} />;
     }
 
-    console.log(`workspaceInfo -- `, workspaceInfo);
-
   return (
     <div className="w-full lg:max-w-xl">
       <UpdateWorkSpaceForm initialValues={workspaceInfo} />
