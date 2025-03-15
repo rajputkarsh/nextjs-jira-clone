@@ -233,7 +233,12 @@
     "status": "Status",
     "due_date": "Due Date",
     "edit": "Edit",
-    "task_not_found": "Task not found"
+    "cancel": "Cancel",
+    "task_not_found": "Task not found",
+    "add_a_description": "Add a description...",
+    "no_description_set": "No description set",
+    "save_changes": "Save Changes",
+    "saving": "Saving..."
   },
   "error": {
     "something_went_wrong": "Something went wrong",
