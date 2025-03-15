@@ -43,6 +43,39 @@ const app = new Hono()
       });
     }
   )
+  .get(
+    "/:projectId",
+    sessionMiddleware,
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+
+      const { projectId } = c.req.param();
+
+      const projectInfo = await databases.getDocument<Project>(
+       DATABASE_ID,
+       PROJECTS_ID,
+       projectId 
+      );
+
+      const member = await getMembers({
+        databases,
+        workspaceId: projectInfo?.workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      return c.json({
+        data: projectInfo,
+      });
+    }
+  )
   .post(
     "/",
     sessionMiddleware,
@@ -173,50 +206,45 @@ const app = new Hono()
     }
   )
 
-  .delete(
-    "/:projectId",
-    sessionMiddleware,
-    async (c) => {
-      const databases = c.get("databases");
-      const storage = c.get("storage");
-      const user = c.get("user");
+  .delete("/:projectId", sessionMiddleware, async (c) => {
+    const databases = c.get("databases");
+    const storage = c.get("storage");
+    const user = c.get("user");
 
-      const { projectId } = c.req.param();
+    const { projectId } = c.req.param();
 
-      const existingProject = await databases.getDocument<Project>(
-        DATABASE_ID,
-        PROJECTS_ID,
-        projectId
+    const existingProject = await databases.getDocument<Project>(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId
+    );
+
+    if (!existingProject) {
+      return c.json(
+        { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+        HTTP_STATUS.UNAUTHORISED.STATUS
       );
-
-      if (!existingProject) {
-        return c.json(
-          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
-          HTTP_STATUS.UNAUTHORISED.STATUS
-        );
-      }
-
-      const member = await getMembers({
-        databases,
-        workspaceId: existingProject.workspaceId,
-        userId: user?.$id,
-      });
-
-      if (!member || member?.role !== MemberRole.ADMIN) {
-        return c.json(
-          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
-          HTTP_STATUS.UNAUTHORISED.STATUS
-        );
-      }
-
-
-      const project = await databases.deleteDocument(
-        DATABASE_ID,
-        PROJECTS_ID,
-        projectId
-      );
-
-      return c.json({ data: project });
     }
-  );
+
+    const member = await getMembers({
+      databases,
+      workspaceId: existingProject.workspaceId,
+      userId: user?.$id,
+    });
+
+    if (!member || member?.role !== MemberRole.ADMIN) {
+      return c.json(
+        { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+        HTTP_STATUS.UNAUTHORISED.STATUS
+      );
+    }
+
+    const project = await databases.deleteDocument(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId
+    );
+
+    return c.json({ data: project });
+  });
 export default app;
