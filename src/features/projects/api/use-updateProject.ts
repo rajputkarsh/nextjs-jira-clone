@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.projects[":projectId"]['$patch'], 200>;
 type RequestType = InferRequestType<
@@ -11,7 +10,6 @@ type RequestType = InferRequestType<
 >;
 
 export const useUpdateProject = () => {
-  const router = useRouter();
   const translations = useTranslations("UpdateProjectForm");
   const queryClient = useQueryClient();
 
@@ -30,7 +28,6 @@ export const useUpdateProject = () => {
     },
     onSuccess: ({ data }) => {
       toast.success(translations("project_updated"));
-      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["projects"] });
       queryClient.invalidateQueries({ queryKey: ["project", data?.$id] });
     },
