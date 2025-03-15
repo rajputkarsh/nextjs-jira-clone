@@ -1,19 +1,20 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { InferRequestType, InferResponseType } from "hono";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { client } from "@/lib/rpc";
 
-type ResponseType = InferResponseType<typeof client.api.workspaces[":workspaceId"]['$get'], 200>;
-type RequestType = InferRequestType<
-  (typeof client.api.workspaces)[":workspaceId"]["$get"]
->;
+interface UseGetWorkspaceByIdProps {
+  workspaceId: string;
+}
 
-export const useGetWorkspaceById = () => {
+export const useGetWorkspaceById = ({
+  workspaceId,
+}: UseGetWorkspaceByIdProps) => {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({ param }) => {
+  const query = useQuery({
+    queryKey: ["tasks", workspaceId],
+    queryFn: async () => {
       const response = await client.api.workspaces[":workspaceId"]["$get"]({
-        param
+        param: { workspaceId },
       });
 
       if (!response.ok) {
@@ -22,10 +23,7 @@ export const useGetWorkspaceById = () => {
 
       return await response.json();
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
-    }
   });
 
-  return mutation;
-}
+  return query;
+};
