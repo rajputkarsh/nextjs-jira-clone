@@ -1,8 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrent } from "@/features/auth/queries";
-import UpdateProjectForm from "@/features/projects/components/UpdateProjectForm";
-import { getProject } from "@/features/projects/queries";
 import { headers } from "next/headers";
+import ProjectSettingsClient from "./client";
 
 interface ProjectSettingsProps {
   params: {
@@ -25,17 +24,7 @@ async function ProjectSettings({ params }: ProjectSettingsProps) {
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
 
-  const initialValues = await getProject({ projectId: params.projectId });
-
-  if (!initialValues) {
-    redirect(`/workspaces/${params.workspaceId}/projects/${params.projectId}`);
-  }
-
-  return (
-    <div className="w-full lg:max-w-xl">
-      <UpdateProjectForm initialValues={initialValues} />
-    </div>
-  );
+  return <ProjectSettingsClient />
 }
 
 export default ProjectSettings;
