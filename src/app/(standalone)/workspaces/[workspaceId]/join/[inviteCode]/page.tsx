@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { getCurrent } from "@/features/auth/queries";
 import { getWorkspaceInfo } from "@/features/workspaces/queries";
 import JoinWorkspaceForm from "@/features/workspaces/components/JoinWorkspaceForm";
+import WorkspaceInviteCodeClient from "./client";
 
 interface JoinWorkspaceProps {
   params: {
@@ -24,16 +25,8 @@ async function JoinWorkspace({ params }: JoinWorkspaceProps) {
     redirect(`/sign-in?callbackUrl=${encodedCallbackUrl}`);
   }
 
-  const workspace = await getWorkspaceInfo({ workspaceId: params.workspaceId });
-
-  if (!workspace) {
-    redirect("/");
-  }
-
   return (
-    <div className="w-full lg:max-w-xl">
-      <JoinWorkspaceForm initialValues={workspace} />
-    </div>
+    <WorkspaceInviteCodeClient />
   );
 }
 
