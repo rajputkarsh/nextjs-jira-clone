@@ -249,6 +249,10 @@
     "back_to_home": "Back to home"
   },
   "analytics": {
-    "total_tasks": "Total Tasks"
+    "total_tasks": "Total Tasks",
+    "assigned_tasks": "Assigned Tasks",
+    "completed_tasks": "Completed Tasks",
+    "overdue_tasks": "Overdue Tasks",
+    "incomplete_tasks": "Incomplete Tasks"
   }
 }
