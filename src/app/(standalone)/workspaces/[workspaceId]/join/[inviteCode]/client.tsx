@@ -2,7 +2,7 @@
 
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
-import { useGetWorkspaceById } from "@/features/workspaces/api/use-getWorkspaceById";
+import { useGetWorkspaceByIdInfo } from "@/features/workspaces/api/use-getWorkspaceByIdInfo";
 import JoinWorkspaceForm from "@/features/workspaces/components/JoinWorkspaceForm";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { useTranslations } from "next-intl";
@@ -11,7 +11,7 @@ function WorkspaceInviteCodeClient() {
   const translate = useTranslations("Workspace");
   const workspaceId = useWorkspaceId();
 
-  const { data: workspaceInfo, isLoading } = useGetWorkspaceById({
+  const { data: workspaceInfo, isLoading } = useGetWorkspaceByIdInfo({
     workspaceId,
   });
 
