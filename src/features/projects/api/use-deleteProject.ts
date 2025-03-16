@@ -3,7 +3,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
-import { useRouter } from "next/navigation";
 
 type ResponseType = InferResponseType<typeof client.api.projects[":projectId"]['$delete'], 200>;
 type RequestType = InferRequestType<
@@ -11,7 +10,6 @@ type RequestType = InferRequestType<
 >;
 
 export const useDeleteProject = () => {
-  const router = useRouter();
   const translations = useTranslations("DeleteProjectForm");
   const queryClient = useQueryClient();
 
@@ -29,7 +27,6 @@ export const useDeleteProject = () => {
     },
     onSuccess: ({ data }) => {
       toast.success(translations("project_deleted"));
-      router.refresh();
       queryClient.invalidateQueries({ queryKey: ["projects"] });
     },
     onError: () => {
