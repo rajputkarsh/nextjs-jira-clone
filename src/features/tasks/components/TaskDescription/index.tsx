@@ -24,6 +24,10 @@ function TaskDescription({ task }: TaskDescriptionProps) {
     updateDescription({
       param: { taskId: task.$id },
       json: { description: value },
+    }, {
+      onSuccess: () => {
+        setIsEditing(false);
+      }
     });
   };
 
