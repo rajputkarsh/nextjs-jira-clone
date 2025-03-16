@@ -46,7 +46,9 @@ function ProjectClient() {
           <EditProjectButton workspaceId={workspaceId} projectId={projectId} />
         </div>
       </div>
-      <Analytics data={projectAnalytics} />
+      {projectAnalytics ? (
+        <Analytics data={projectAnalytics} />
+      ) : null}
       <TaskViewSwitcher hideProjectFilter={true} initialProjectId={projectId} />
     </div>
   );

@@ -247,5 +247,8 @@
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
+  },
+  "analytics": {
+    "total_tasks": "Total Tasks"
   }
 }
