@@ -10,7 +10,7 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 interface EventCardProps {
   id: string;
   title: string;
-  assignee: any;
+  assignee: {[key: string]: string};
   project: Project;
   status: TASK_STATUS;
 }
