@@ -22,6 +22,7 @@ import Link from "next/link";
 import { useLogin } from "@/features/auth/api/use-login";
 import useCallbackUrl from "@/features/auth/hooks/use-callbackUrl";
 import { useRouter } from "next/navigation";
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 export function SignInCard() {
   const translations = useTranslations("SignInCard");
@@ -108,6 +109,7 @@ export function SignInCard() {
           className="w-full"
           variant={"secondary"}
           disabled={isPending}
+          onClick={() => signUpWithGoogle()}
         >
           <FcGoogle className="mr-2 size-5" />
           {translations("login_with_google")}
@@ -117,6 +119,7 @@ export function SignInCard() {
           className="w-full"
           disabled={isPending}
           variant={"secondary"}
+          onClick={() => signUpWithGithub()}
         >
           <FaGithub className="mr-2 size-5" />
           {translations("login_with_github")}
