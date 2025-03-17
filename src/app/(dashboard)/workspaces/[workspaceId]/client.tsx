@@ -9,7 +9,8 @@ import { useGetProjects } from "@/features/projects/api/use-getProjects";
 import { useGetMembers } from "@/features/members/api/use-getMembers";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
 import { useCreateProjectModal } from "@/features/projects/hooks/use-createProjectModal";
-import { useCreateTaskModal } from "@/features/tasks/hooks/use-createTaskModal";
+import Analytics from "@/components/analytics";
+import TaskList from "@/features/tasks/components/TaskList";
 
 function WorkspaceClient() {
   const translate = useTranslations("workspaces");
@@ -31,7 +32,6 @@ function WorkspaceClient() {
     isLoadingMembers;
 
   const { open: createProject } = useCreateProjectModal();
-  const { open: createTask } = useCreateTaskModal();
 
   if (isLoading) {
     return <PageLoader />;
@@ -42,7 +42,12 @@ function WorkspaceClient() {
   }
 
   return (
-    <div>WorkspaceClient</div>
+    <div className="h-full flex flex-col space-y-4">
+      <Analytics data={workspaceAnalytics} />
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <TaskList data={tasks.documents} total={tasks.total} />
+      </div>
+    </div>
   )
 }
 

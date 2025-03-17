@@ -14,8 +14,6 @@ function Analytics({ data }: AnalyticsProps) {
 
   const translate = useTranslations("analytics");
 
-  console.log(`data -- `, data);
-
   if (!data) return null;
 
   return (

@@ -242,7 +242,10 @@
     "add_a_description": "Add a description...",
     "no_description_set": "No description set",
     "save_changes": "Save Changes",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "tasks_total": "Tasks ({total})",
+    "no_tasks_found": "No Tasks Found",
+    "show_all": "Show All"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
