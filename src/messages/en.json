@@ -252,6 +252,11 @@
     "no_projects_found": "No Projects Found",
     "show_all": "Show All"
   },
+  "Member": {
+    "members_total": "Members ({total})",
+    "no_members_found": "No Members Found",
+    "show_all": "Show All"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
