@@ -77,7 +77,7 @@ function MembersList() {
       </div>
       <CardContent className="p-7">
         {(data?.documents || []).map((member, index) => (
-          <Fragment>
+          <Fragment key={`member_${index}`}>
             <div className="flex items-center gap-2" key={member.$id}>
               <MemberAvatar
                 name={member.name}
