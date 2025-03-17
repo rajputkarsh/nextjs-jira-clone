@@ -42,7 +42,11 @@
   },
   "Navbar": {
     "home": "Home",
-    "home_desc": "Monitor all of your projects and tasks here"
+    "home_desc": "Monitor all of your projects and tasks here",
+    "tasks": "My Tasks",
+    "tasks_desc": "View all of your tasks here",
+    "projects": "My Projects",
+    "projects_desc": "View tasks of your projects here"
   },
   "CreateWorkspaceForm": {
     "create_new_workspace": "Create a new workspace",
