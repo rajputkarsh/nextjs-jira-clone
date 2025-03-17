@@ -482,6 +482,6 @@ const app = new Hono()
         overdueTaskDifference,
       },
     });
-  });;
+  });
 
 export default app;
