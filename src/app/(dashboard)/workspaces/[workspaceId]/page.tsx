@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCurrent } from "@/features/auth/queries";
 import { headers } from "next/headers";
+import WorkspaceClient from "./client";
 
 interface WorkspaceProps {
   params: {
@@ -22,7 +23,7 @@ async function Workspace({ params }: WorkspaceProps) {
   }
   
   return (
-    <div>Workspace</div>
+    <WorkspaceClient />
   )
 }
 

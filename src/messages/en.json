@@ -254,5 +254,8 @@
     "completed_tasks": "Completed Tasks",
     "overdue_tasks": "Overdue Tasks",
     "incomplete_tasks": "Incomplete Tasks"
+  },
+  "workspaces": {
+    "workspace_not_found": "Workspace not found"
   }
 }
