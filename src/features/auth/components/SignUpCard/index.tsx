@@ -31,7 +31,7 @@ import Link from "next/link";
 import { useRegister } from "@/features/auth/api/use-register";
 import useCallbackUrl from "@/features/auth/hooks/use-callbackUrl";
 import { useRouter } from "next/navigation";
-import { signUpWithGoogle } from "@/lib/oauth";
+import { signUpWithGithub, signUpWithGoogle } from "@/lib/oauth";
 
 export function SignUpCard() {
   const translations = useTranslations("SignUpCard");
