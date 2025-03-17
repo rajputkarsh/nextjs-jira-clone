@@ -1,8 +1,6 @@
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { getCurrent } from "@/features/auth/queries";
-import { getWorkspaceInfo } from "@/features/workspaces/queries";
-import JoinWorkspaceForm from "@/features/workspaces/components/JoinWorkspaceForm";
 import WorkspaceInviteCodeClient from "./client";
 
 interface JoinWorkspaceProps {
