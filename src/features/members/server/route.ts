@@ -6,7 +6,7 @@ import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
 import { DATABASE_ID, MEMBERS_ID } from "@/config";
 import { Query } from "node-appwrite";
-import { MemberRole } from "@/features/members/types";
+import { Member, MemberRole } from "@/features/members/types";
 import { getMembersListSchema, patchMemberSchema } from "@/features/members/schema";
 
 const app = new Hono()
@@ -34,7 +34,7 @@ const app = new Hono()
         );
       }
 
-      const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+      const members = await databases.listDocuments<Member>(DATABASE_ID, MEMBERS_ID, [
         Query.equal("workspaceId", workspaceId),
       ]);
 
