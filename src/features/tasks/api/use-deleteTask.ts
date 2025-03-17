@@ -28,6 +28,8 @@ export const useDeleteTask = () => {
       toast.success(translations("task_deleted"));
       queryClient.invalidateQueries({ queryKey: ["tasks"] });
       queryClient.invalidateQueries({ queryKey: ["tasks", data.$id] });
+      queryClient.invalidateQueries({ queryKey: ["project-analytics"] });
+      queryClient.invalidateQueries({ queryKey: ["workspace-analytics"] });     
     },
     onError: () => {
       toast.error(translations("failed_to_delete_task"));
