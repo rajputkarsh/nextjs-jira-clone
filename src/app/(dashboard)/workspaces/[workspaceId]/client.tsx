@@ -8,9 +8,9 @@ import { useGetWorkspaceAnalyticsById } from "@/features/workspaces/api/use-getW
 import { useGetProjects } from "@/features/projects/api/use-getProjects";
 import { useGetMembers } from "@/features/members/api/use-getMembers";
 import { useGetTasks } from "@/features/tasks/api/use-getTasks";
-import { useCreateProjectModal } from "@/features/projects/hooks/use-createProjectModal";
 import Analytics from "@/components/analytics";
 import TaskList from "@/features/tasks/components/TaskList";
+import ProjectList from "@/features/projects/components/ProjectList";
 
 function WorkspaceClient() {
   const translate = useTranslations("workspaces");
@@ -31,8 +31,6 @@ function WorkspaceClient() {
     isLoadingProjects ||
     isLoadingMembers;
 
-  const { open: createProject } = useCreateProjectModal();
-
   if (isLoading) {
     return <PageLoader />;
   }
@@ -46,9 +44,10 @@ function WorkspaceClient() {
       <Analytics data={workspaceAnalytics} />
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
         <TaskList data={tasks.documents} total={tasks.total} />
+        <ProjectList data={projects.documents} total={projects.total} />
       </div>
     </div>
-  )
+  );
 }
 
 export default WorkspaceClient
