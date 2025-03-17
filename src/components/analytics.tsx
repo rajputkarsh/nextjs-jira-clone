@@ -6,11 +6,7 @@ import AnalyticsCard from "@/components/analytics-card";
 import { ResponseType as ProjectAnalyticsResponseType } from "@/features/projects/api/use-getProjectAnalyticsById";
 import { DottedSeparator } from "./dotter-separator";
 
-interface AnalyticsProps extends ProjectAnalyticsResponseType {
-
-};
-
-function Analytics({ data }: AnalyticsProps) {
+function Analytics({ data }: ProjectAnalyticsResponseType) {
 
   const translate = useTranslations("analytics");
 
