@@ -247,6 +247,11 @@
     "no_tasks_found": "No Tasks Found",
     "show_all": "Show All"
   },
+  "Project": {
+    "projects_total": "Projects ({total})",
+    "no_projects_found": "No Projects Found",
+    "show_all": "Show All"
+  },
   "error": {
     "something_went_wrong": "Something went wrong",
     "back_to_home": "Back to home"
