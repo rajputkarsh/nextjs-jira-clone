@@ -1,4 +1,6 @@
 # Heera - Ultimate Project Management Solution
 ## Inspired by something of a similar name 🤔
 
-# Demo Link - # Demo Link - [Click Here](https://heera.utkarsh.app)
+# Demo Link - [Click Here][def]
+
+[def]: https://heera.utkarsh.app
