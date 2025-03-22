@@ -2,23 +2,35 @@ import { useState } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/button";
 import ResponsiveModal from "@/components/responsive-modal";
-import { Card, CardContent, CardTitle, CardHeader, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardTitle,
+  CardHeader,
+  CardDescription,
+} from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 
-function useConfirm(title: string, message: string, variant: ButtonProps['variant'] = 'primary'): [() => JSX.Element, () => Promise<unknown>] {
+function useConfirm(
+  title: string,
+  message: string,
+  variant: ButtonProps["variant"] = "primary"
+): [() => JSX.Element, () => Promise<unknown>] {
   const translations = useTranslations("ConfirmDialog");
 
-  const [promise, setPromise] = useState<{ resolve: (value: boolean) => void } | null>(null);
+  const [promise, setPromise] = useState<{
+    resolve: (value: boolean) => void;
+  } | null>(null);
 
   const confirm = () => {
     return new Promise((resolve) => {
       setPromise({ resolve });
     });
-  }
+  };
 
   const handleClose = () => {
     setPromise(null);
-  }
+  };
 
   const handleConfirm = () => {
     promise?.resolve(true);
@@ -59,7 +71,7 @@ function useConfirm(title: string, message: string, variant: ButtonProps['varian
         </Card>
       </ResponsiveModal>
     );
-  }
+  };
 
   return [ConfirmationDialog, confirm];
 }
