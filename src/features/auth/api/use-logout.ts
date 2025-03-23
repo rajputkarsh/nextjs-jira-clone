@@ -7,10 +7,11 @@ import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 
-type ResponseType = InferResponseType<typeof client.api.auth['logout']['$post']>;
+type ResponseType = InferResponseType<
+  (typeof client.api.auth)["logout"]["$post"]
+>;
 
 export const useLogout = () => {
-
   const translations = useTranslations("auth");
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -31,4 +32,4 @@ export const useLogout = () => {
   });
 
   return mutation;
-}
+};

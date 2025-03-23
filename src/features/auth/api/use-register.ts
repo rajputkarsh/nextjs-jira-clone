@@ -22,7 +22,7 @@ export const useRegister = () => {
     mutationFn: async ({ json }) => {
       const response = await client.api.auth["sign-up"]["$post"]({ json });
 
-      if(!response.ok) {
+      if (!response.ok) {
         throw new Error(translations("failed_to_sign_up"));
       }
 

@@ -6,8 +6,12 @@ import { client } from "@/lib/rpc";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 
-type ResponseType = InferResponseType<typeof client.api.auth['sign-in']['$post']>;
-type RequestType = InferRequestType<typeof client.api.auth['sign-in']['$post']>;
+type ResponseType = InferResponseType<
+  (typeof client.api.auth)["sign-in"]["$post"]
+>;
+type RequestType = InferRequestType<
+  (typeof client.api.auth)["sign-in"]["$post"]
+>;
 
 export const useLogin = () => {
   const translations = useTranslations("SignInCard");
@@ -31,8 +35,8 @@ export const useLogin = () => {
     },
     onError: () => {
       toast.error(translations("failed_to_log_in"));
-    }
+    },
   });
 
   return mutation;
-}
+};
