@@ -1,5 +1,4 @@
-
-import { z } from 'zod';
+import { z } from "zod";
 import { PASSWORD_REGEX } from "@/constants/regex";
 
 // SignIn Schemas
@@ -17,9 +16,6 @@ export const SignInFormDefaultValues: ISignInForm = {
   email: "",
   password: "",
 };
-
-
-
 
 // SignUp Schemas
 export interface ISignUpForm {
