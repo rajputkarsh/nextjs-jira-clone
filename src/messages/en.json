@@ -236,6 +236,7 @@
     "save_changes": "Save Changes"
   },
   "Task": {
+    "comments": "Comments",
     "overview": "Overview",
     "assignee": "Assignee",
     "status": "Status",
@@ -249,7 +250,16 @@
     "saving": "Saving...",
     "tasks_total": "Tasks ({total})",
     "no_tasks_found": "No Tasks Found",
-    "show_all": "Show All"
+    "show_all": "Show All",
+    "add_a_comment": "Add a comment...",
+    "post_comment": "Post Comment",
+    "posting": "Posting...",
+    "loading_comments": "Loading comments...",
+    "no_comments": "No comments yet. Be the first to comment!",
+    "failed_to_fetch_comments": "Failed to fetch comments",
+    "failed_to_create_comment": "Failed to create comment",
+    "comment_added": "Comment added successfully",
+    "failed_to_add_comment": "Failed to add comment"
   },
   "Project": {
     "projects_total": "Projects ({total})",
