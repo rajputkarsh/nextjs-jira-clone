@@ -3,6 +3,7 @@
 import TaskBreadCrumbs from "@/features/tasks/components/TaskBreadcrumbs";
 import TaskDescription from "@/features/tasks/components/TaskDescription";
 import TaskOverview from "@/features/tasks/components/TaskOverview";
+import TaskComments from "@/features/tasks/components/TaskComments";
 import PageError from "@/components/page-error";
 import PageLoader from "@/components/page-loader";
 import { useTranslations } from "next-intl";
@@ -31,6 +32,10 @@ function TaskClientPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskOverview task={data} />
         <TaskDescription task={data} />
+      </div>
+      <DottedSeparator className="my-6" />
+      <div className="max-w-3xl">
+        <TaskComments task={data} />
       </div>
     </div>
   );
