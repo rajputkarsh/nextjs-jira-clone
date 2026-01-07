@@ -243,6 +243,8 @@
     "due_date": "Due Date",
     "edit": "Edit",
     "cancel": "Cancel",
+    "save": "Save",
+    "edited": "edited",
     "task_not_found": "Task not found",
     "add_a_description": "Add a description...",
     "no_description_set": "No description set",
@@ -259,7 +261,9 @@
     "failed_to_fetch_comments": "Failed to fetch comments",
     "failed_to_create_comment": "Failed to create comment",
     "comment_added": "Comment added successfully",
-    "failed_to_add_comment": "Failed to add comment"
+    "failed_to_add_comment": "Failed to add comment",
+    "comment_updated": "Comment updated successfully",
+    "failed_to_update_comment": "Failed to update comment"
   },
   "Project": {
     "projects_total": "Projects ({total})",
