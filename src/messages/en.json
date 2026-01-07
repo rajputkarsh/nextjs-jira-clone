@@ -263,7 +263,11 @@
     "comment_added": "Comment added successfully",
     "failed_to_add_comment": "Failed to add comment",
     "comment_updated": "Comment updated successfully",
-    "failed_to_update_comment": "Failed to update comment"
+    "failed_to_update_comment": "Failed to update comment",
+    "comment_deleted": "Comment deleted successfully",
+    "failed_to_delete_comment": "Failed to delete comment",
+    "delete_comment": "Delete Comment",
+    "this_action_cannot_be_undone": "This action cannot be undone."
   },
   "Project": {
     "projects_total": "Projects ({total})",

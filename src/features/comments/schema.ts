@@ -6,6 +6,7 @@ export interface IComment {
   taskId: string;
   userId: string;
   message: string;
+  deletedAt?: string | null;
   $createdAt?: string;
   $updatedAt?: string;
 }

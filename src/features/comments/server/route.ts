@@ -42,12 +42,13 @@ const app = new Hono()
         );
       }
 
-      // Get all comments for this task
+      // Get all non-deleted comments for this task
       const comments = await databases.listDocuments<Comment>(
         DATABASE_ID,
         COMMENTS_ID,
         [
           Query.equal("taskId", taskId),
+          Query.isNull("deletedAt"),
           Query.orderAsc("$createdAt"),
         ]
       );
@@ -195,6 +196,63 @@ const app = new Hono()
       };
 
       return c.json({ data: populatedComment });
+    }
+  )
+  .delete(
+    "/:commentId",
+    sessionMiddleware,
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+
+      const { commentId } = c.req.param();
+
+      // Get the comment
+      const comment = await databases.getDocument<Comment>(
+        DATABASE_ID,
+        COMMENTS_ID,
+        commentId
+      );
+
+      // Verify the comment belongs to the current user
+      if (comment.userId !== user.$id) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      // Verify task exists and user has access
+      const task = await databases.getDocument<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        comment.taskId
+      );
+
+      const member = await getMembers({
+        databases,
+        workspaceId: task.workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      // Soft delete the comment by setting deletedAt
+      await databases.updateDocument<Comment>(
+        DATABASE_ID,
+        COMMENTS_ID,
+        commentId,
+        {
+          deletedAt: new Date().toISOString(),
+        }
+      );
+
+      return c.json({ data: { $id: commentId } });
     }
   );
 

@@ -9,22 +9,31 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { useGetComments } from "@/features/comments/api/use-getComments";
 import { useCreateComment } from "@/features/comments/api/use-createComment";
 import { useUpdateComment } from "@/features/comments/api/use-updateComment";
+import { useDeleteComment } from "@/features/comments/api/use-deleteComment";
 import { useCurrentUser } from "@/features/auth/api/use-currentUser";
 import { useTranslations } from "next-intl";
 import { Task } from "@/features/tasks/schema";
-import { PencilIcon, XIcon, CheckIcon } from "lucide-react";
+import { PencilIcon, XIcon, CheckIcon, TrashIcon } from "lucide-react";
 import { CommentWithUser } from "@/features/comments/schema";
+import useConfirm from "@/hooks/use-confirm";
 
 interface TaskCommentsProps {
   task: Task;
 }
 
-function CommentItem({ comment }: { comment: CommentWithUser }) {
+function CommentItem({ comment, taskId }: { comment: CommentWithUser; taskId: string }) {
   const translate = useTranslations("Task");
   const { data: currentUser } = useCurrentUser();
   const { mutate: updateComment, isPending: isUpdating } = useUpdateComment();
+  const { mutate: deleteComment, isPending: isDeleting } = useDeleteComment();
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(comment.message);
+
+  const [DeleteDialog, confirmDelete] = useConfirm(
+    translate("delete_comment") || "Delete Comment",
+    translate("this_action_cannot_be_undone") || "This action cannot be undone.",
+    "destructive"
+  );
 
   const isOwnComment = currentUser?.$id === comment.userId;
   const isEdited = comment.$createdAt && comment.$updatedAt && 
@@ -55,10 +64,22 @@ function CommentItem({ comment }: { comment: CommentWithUser }) {
     setEditText(comment.message);
   };
 
+  const handleDelete = async () => {
+    const ok = await confirmDelete();
+    if (!ok) return;
+
+    deleteComment({
+      param: { commentId: comment.$id! },
+      taskId,
+    });
+  };
+
   return (
-    <div className="flex gap-3">
-      <Avatar className="size-8 shrink-0">
-        <AvatarFallback className="bg-neutral-200 font-medium text-neutral-600">
+    <>
+      <DeleteDialog />
+      <div className="flex gap-3">
+        <Avatar className="size-8 shrink-0">
+          <AvatarFallback className="bg-neutral-200 font-medium text-neutral-600">
           {comment.user.name[0].toUpperCase()}
         </AvatarFallback>
       </Avatar>
@@ -77,14 +98,25 @@ function CommentItem({ comment }: { comment: CommentWithUser }) {
             </span>
           )}
           {isOwnComment && !isEditing && (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-6 px-2 ml-auto"
-              onClick={() => setIsEditing(true)}
-            >
-              <PencilIcon className="size-3" />
-            </Button>
+            <div className="flex gap-1 ml-auto">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 px-2"
+                onClick={() => setIsEditing(true)}
+              >
+                <PencilIcon className="size-3" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-6 px-2 text-amber-700 hover:text-amber-800"
+                onClick={handleDelete}
+                disabled={isDeleting}
+              >
+                <TrashIcon className="size-3" />
+              </Button>
+            </div>
           )}
         </div>
         {isEditing ? (
@@ -124,6 +156,7 @@ function CommentItem({ comment }: { comment: CommentWithUser }) {
         )}
       </div>
     </div>
+    </>
   );
 }
 
@@ -195,7 +228,7 @@ function TaskComments({ task }: TaskCommentsProps) {
       ) : (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <CommentItem key={comment.$id} comment={comment} />
+            <CommentItem key={comment.$id} comment={comment} taskId={task.$id} />
           ))}
         </div>
       )}
