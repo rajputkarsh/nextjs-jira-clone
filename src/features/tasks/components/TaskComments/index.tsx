@@ -8,11 +8,123 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { useGetComments } from "@/features/comments/api/use-getComments";
 import { useCreateComment } from "@/features/comments/api/use-createComment";
+import { useUpdateComment } from "@/features/comments/api/use-updateComment";
+import { useCurrentUser } from "@/features/auth/api/use-currentUser";
 import { useTranslations } from "next-intl";
 import { Task } from "@/features/tasks/schema";
+import { PencilIcon, XIcon, CheckIcon } from "lucide-react";
+import { CommentWithUser } from "@/features/comments/schema";
 
 interface TaskCommentsProps {
   task: Task;
+}
+
+function CommentItem({ comment }: { comment: CommentWithUser }) {
+  const translate = useTranslations("Task");
+  const { data: currentUser } = useCurrentUser();
+  const { mutate: updateComment, isPending: isUpdating } = useUpdateComment();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editText, setEditText] = useState(comment.message);
+
+  const isOwnComment = currentUser?.$id === comment.userId;
+  const isEdited = comment.$createdAt && comment.$updatedAt && 
+    comment.$createdAt !== comment.$updatedAt;
+
+  const handleSave = () => {
+    if (!editText.trim() || editText.trim() === comment.message) {
+      setIsEditing(false);
+      setEditText(comment.message);
+      return;
+    }
+
+    updateComment(
+      {
+        param: { commentId: comment.$id! },
+        json: { message: editText.trim() },
+      },
+      {
+        onSuccess: () => {
+          setIsEditing(false);
+        },
+      }
+    );
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditText(comment.message);
+  };
+
+  return (
+    <div className="flex gap-3">
+      <Avatar className="size-8 shrink-0">
+        <AvatarFallback className="bg-neutral-200 font-medium text-neutral-600">
+          {comment.user.name[0].toUpperCase()}
+        </AvatarFallback>
+      </Avatar>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1">
+          <p className="text-sm font-semibold">{comment.user.name}</p>
+          <span className="text-xs text-muted-foreground">
+            {comment.$createdAt &&
+              formatDistanceToNow(new Date(comment.$createdAt), {
+                addSuffix: true,
+              })}
+          </span>
+          {isEdited && (
+            <span className="text-xs text-muted-foreground italic">
+              ({translate("edited") || "edited"})
+            </span>
+          )}
+          {isOwnComment && !isEditing && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-6 px-2 ml-auto"
+              onClick={() => setIsEditing(true)}
+            >
+              <PencilIcon className="size-3" />
+            </Button>
+          )}
+        </div>
+        {isEditing ? (
+          <div className="flex flex-col gap-2">
+            <Textarea
+              disabled={isUpdating}
+              value={editText}
+              rows={3}
+              onChange={(e) => setEditText(e.target.value)}
+              className="text-sm"
+            />
+            <div className="flex gap-2">
+              <Button
+                size="sm"
+                variant="primary"
+                onClick={handleSave}
+                disabled={isUpdating || !editText.trim()}
+              >
+                <CheckIcon className="size-3 mr-1" />
+                {translate("save") || "Save"}
+              </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={handleCancel}
+                disabled={isUpdating}
+              >
+                <XIcon className="size-3 mr-1" />
+                {translate("cancel") || "Cancel"}
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-foreground whitespace-pre-wrap break-words">
+            {comment.message}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function TaskComments({ task }: TaskCommentsProps) {
@@ -83,27 +195,7 @@ function TaskComments({ task }: TaskCommentsProps) {
       ) : (
         <div className="flex flex-col gap-4">
           {comments.map((comment) => (
-            <div key={comment.$id} className="flex gap-3">
-              <Avatar className="size-8 shrink-0">
-                <AvatarFallback className="bg-neutral-200 font-medium text-neutral-600">
-                  {comment.user.name[0].toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <p className="text-sm font-semibold">{comment.user.name}</p>
-                  <span className="text-xs text-muted-foreground">
-                    {comment.$createdAt &&
-                      formatDistanceToNow(new Date(comment.$createdAt), {
-                        addSuffix: true,
-                      })}
-                  </span>
-                </div>
-                <p className="text-sm text-foreground whitespace-pre-wrap break-words">
-                  {comment.message}
-                </p>
-              </div>
-            </div>
+            <CommentItem key={comment.$id} comment={comment} />
           ))}
         </div>
       )}
