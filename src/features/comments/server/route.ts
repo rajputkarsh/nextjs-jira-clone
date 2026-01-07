@@ -49,7 +49,7 @@ const app = new Hono()
         [
           Query.equal("taskId", taskId),
           Query.isNull("deletedAt"),
-          Query.orderAsc("$createdAt"),
+          Query.orderDesc("$createdAt"),
         ]
       );
 

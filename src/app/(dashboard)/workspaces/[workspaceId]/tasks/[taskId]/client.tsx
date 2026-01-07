@@ -34,7 +34,7 @@ function TaskClientPage() {
         <TaskDescription task={data} />
       </div>
       <DottedSeparator className="my-6" />
-      <div className="max-w-3xl">
+      <div className="max-w-[50%]">
         <TaskComments task={data} />
       </div>
     </div>
