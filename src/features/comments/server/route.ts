@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
-import { createCommentSchema, Comment, CommentWithUser } from "@/features/comments/schema";
+import { createCommentSchema, updateCommentSchema, Comment, CommentWithUser } from "@/features/comments/schema";
 import { sessionMiddleware } from "@/middlewares/session";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
@@ -117,6 +117,77 @@ const app = new Hono()
 
       const populatedComment: CommentWithUser = {
         ...comment,
+        user: {
+          name: userInfo.name || userInfo.email,
+          email: userInfo.email,
+        },
+      };
+
+      return c.json({ data: populatedComment });
+    }
+  )
+  .patch(
+    "/:commentId",
+    sessionMiddleware,
+    zValidator("json", updateCommentSchema),
+    async (c) => {
+      const user = c.get("user");
+      const databases = c.get("databases");
+
+      const { commentId } = c.req.param();
+      const { message } = c.req.valid("json");
+
+      // Get the comment
+      const comment = await databases.getDocument<Comment>(
+        DATABASE_ID,
+        COMMENTS_ID,
+        commentId
+      );
+
+      // Verify the comment belongs to the current user
+      if (comment.userId !== user.$id) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      // Verify task exists and user has access
+      const task = await databases.getDocument<Task>(
+        DATABASE_ID,
+        TASKS_ID,
+        comment.taskId
+      );
+
+      const member = await getMembers({
+        databases,
+        workspaceId: task.workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json(
+          { error: HTTP_STATUS.UNAUTHORISED.MESSAGE },
+          HTTP_STATUS.UNAUTHORISED.STATUS
+        );
+      }
+
+      // Update the comment
+      const updatedComment = await databases.updateDocument<Comment>(
+        DATABASE_ID,
+        COMMENTS_ID,
+        commentId,
+        {
+          message,
+        }
+      );
+
+      // Get user information for the comment
+      const { users } = await createAdminClient();
+      const userInfo = await users.get(user.$id);
+
+      const populatedComment: CommentWithUser = {
+        ...updatedComment,
         user: {
           name: userInfo.name || userInfo.email,
           email: userInfo.email,
