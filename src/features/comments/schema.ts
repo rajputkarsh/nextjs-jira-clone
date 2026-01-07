@@ -24,6 +24,10 @@ export const createCommentSchema = z.object({
   message: z.string().trim().min(1, "Comment cannot be empty"),
 });
 
+export const updateCommentSchema = z.object({
+  message: z.string().trim().min(1, "Comment cannot be empty"),
+});
+
 export const getCommentsSchema = z.object({
   taskId: z.string().trim().min(1, "Required"),
 });
