@@ -181,6 +181,7 @@ const app = new Hono()
         assigneeId,
         dueDate,
         description,
+        estimatedEfforts,
       } = c.req.valid("json");
 
       const member = await getMembers({
@@ -222,6 +223,7 @@ const app = new Hono()
           assigneeId,
           dueDate,
           description,
+          estimatedEfforts,
           position: newPosition,
         }
       );
@@ -239,7 +241,7 @@ const app = new Hono()
 
       const { taskId } = c.req.param();
 
-      const { name, status, projectId, assigneeId, dueDate, description } =
+      const { name, status, projectId, assigneeId, dueDate, description, estimatedEfforts } =
         c.req.valid("json");
 
       const existingTask = await databases.getDocument<Task>(
@@ -261,18 +263,21 @@ const app = new Hono()
         );
       }
 
+      const updateData: Partial<Task> = {};
+      
+      if (name !== undefined) updateData.name = name;
+      if (status !== undefined) updateData.status = status;
+      if (projectId !== undefined) updateData.projectId = projectId;
+      if (assigneeId !== undefined) updateData.assigneeId = assigneeId;
+      if (dueDate !== undefined) updateData.dueDate = dueDate;
+      if (description !== undefined) updateData.description = description;
+      if (estimatedEfforts !== undefined) updateData.estimatedEfforts = estimatedEfforts;
+
       const task = await databases.updateDocument<Task>(
         DATABASE_ID,
         TASKS_ID,
         taskId,
-        {
-          name,
-          status,
-          projectId,
-          assigneeId,
-          dueDate,
-          description,
-        }
+        updateData
       );
 
       return c.json({ data: task });

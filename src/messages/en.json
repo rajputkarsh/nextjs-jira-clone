@@ -190,7 +190,9 @@
     "status": "Status",
     "status_placeholder": "Select Status",
     "project": "Project",
-    "project_placeholder": "Select Project"
+    "project_placeholder": "Select Project",
+    "estimated_efforts": "Estimated Efforts (minutes)",
+    "estimated_efforts_placeholder": "Enter estimated efforts in minutes"
   },
   "DataFilters": {
     "all_statuses": "All Statuses",
@@ -204,6 +206,7 @@
     "assignee": "Assignee",
     "due_date": "Due Date",
     "status": "Status",
+    "estimated_efforts": "Estimated Efforts",
     "filter_tasks": "Filter tasks...",
     "no_results": " No results.",
     "next": "Next",
@@ -233,6 +236,8 @@
     "status_placeholder": "Select Status",
     "project": "Project",
     "project_placeholder": "Select Project",
+    "estimated_efforts": "Estimated Efforts (minutes)",
+    "estimated_efforts_placeholder": "Enter estimated efforts in minutes",
     "save_changes": "Save Changes"
   },
   "Task": {
@@ -267,7 +272,8 @@
     "comment_deleted": "Comment deleted successfully",
     "failed_to_delete_comment": "Failed to delete comment",
     "delete_comment": "Delete Comment",
-    "this_action_cannot_be_undone": "This action cannot be undone."
+    "this_action_cannot_be_undone": "This action cannot be undone.",
+    "estimated_efforts": "Estimated Efforts"
   },
   "Project": {
     "projects_total": "Projects ({total})",

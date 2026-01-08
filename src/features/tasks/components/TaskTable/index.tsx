@@ -8,7 +8,7 @@ import { Task } from "@/features/tasks/schema";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { Badge } from "@/components/ui/badge";
-import { snakeCaseToTitleCase } from "@/lib/utils";
+import { formatEfforts, snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, Link, MoreVertical } from "lucide-react";
@@ -140,6 +140,24 @@ function TaskTable({ tasks }: TaskTableProps) {
             {snakeCaseToTitleCase(status)}
           </Badge>
         );
+      },
+    },
+    {
+      accessorKey: "estimatedEfforts",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {tableTranslations("estimated_efforts")}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const estimatedEfforts = row.original.estimatedEfforts;
+        return <p className="text-sm font-medium">{formatEfforts(estimatedEfforts)}</p>;
       },
     },
     {

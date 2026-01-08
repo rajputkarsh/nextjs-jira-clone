@@ -25,7 +25,7 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useUpdateTask } from "@/features/tasks/api/use-updateTask";
-import { capitalCase, cn } from "@/lib/utils";
+import { capitalCase, cn, formatEfforts } from "@/lib/utils";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { TASK_STATUS, TASK_STATUS_OBJECT } from "@/features/tasks/constants";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
@@ -57,6 +57,7 @@ function TaskForm({
         ? new Date(initialValues.dueDate)
         : undefined,
       description: initialValues.description ? initialValues.description : undefined,
+      estimatedEfforts: initialValues.estimatedEfforts ? initialValues.estimatedEfforts : undefined,
     },
   });
 
@@ -238,6 +239,45 @@ function TaskForm({
                           ))}
                         </SelectContent>
                       </Select>
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="estimatedEfforts"
+                render={({ field }) => {
+                  const formattedTime = formatEfforts(field.value);
+                  return (
+                    <FormItem>
+                      <FormLabel>{translations("estimated_efforts")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          min="1"
+                          step="1"
+                          placeholder={translations("estimated_efforts_placeholder")}
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === "") {
+                              field.onChange(undefined);
+                            } else {
+                              const numValue = parseInt(value, 10);
+                              if (!isNaN(numValue)) {
+                                field.onChange(numValue);
+                              }
+                            }
+                          }}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      {formattedTime && (
+                        <p className="text-sm text-muted-foreground">
+                          {formattedTime}
+                        </p>
+                      )}
+                      <FormMessage />
                     </FormItem>
                   );
                 }}

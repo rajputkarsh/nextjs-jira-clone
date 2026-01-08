@@ -25,7 +25,7 @@ import { DottedSeparator } from "@/components/dotter-separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateTask } from "@/features/tasks/api/use-createTask";
-import { capitalCase, cn } from "@/lib/utils";
+import { capitalCase, cn, formatEfforts } from "@/lib/utils";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { TASK_STATUS_OBJECT } from "@/features/tasks/constants";
@@ -225,6 +225,45 @@ function TaskForm({ onCancel, projectOptions, memberOptions }: ITaskFormProps) {
                           ))}
                         </SelectContent>
                       </Select>
+                    </FormItem>
+                  );
+                }}
+              />
+              <FormField
+                control={form.control}
+                name="estimatedEfforts"
+                render={({ field }) => {
+                  const formattedTime = formatEfforts(field.value);
+                  return (
+                    <FormItem>
+                      <FormLabel>{translations("estimated_efforts")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          min="1"
+                          step="1"
+                          placeholder={translations("estimated_efforts_placeholder")}
+                          {...field}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            if (value === "") {
+                              field.onChange(undefined);
+                            } else {
+                              const numValue = parseInt(value, 10);
+                              if (!isNaN(numValue)) {
+                                field.onChange(numValue);
+                              }
+                            }
+                          }}
+                          value={field.value ?? ""}
+                        />
+                      </FormControl>
+                      {formattedTime && (
+                        <p className="text-sm text-muted-foreground">
+                          {formattedTime}
+                        </p>
+                      )}
+                      <FormMessage />
                     </FormItem>
                   );
                 }}

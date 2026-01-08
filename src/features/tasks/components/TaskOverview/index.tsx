@@ -6,7 +6,7 @@ import MemberAvatar from "@/features/members/components/MemberAvatar";
 import TaskDate from "../TaskDate";
 import { Badge } from "@/components/ui/badge";
 import { PencilIcon } from "lucide-react";
-import { snakeCaseToTitleCase } from "@/lib/utils";
+import { formatEfforts, snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Task } from "@/features/tasks/schema";
 import { useEditTaskModal } from "@/features/tasks/hooks/use-editTaskModal";
@@ -43,6 +43,9 @@ function TaskOverview({ task }: TaskOverviewProps) {
             <Badge variant={task.status as TASK_STATUS}>
               {snakeCaseToTitleCase(task.status)}
             </Badge>
+          </OverviewProperty>
+          <OverviewProperty label={translate("estimated_efforts")}>
+            <p className="text-sm font-medium">{formatEfforts(task?.estimatedEfforts || 0)}</p>
           </OverviewProperty>
         </div>
       </div>
