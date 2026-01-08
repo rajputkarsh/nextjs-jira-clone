@@ -6,9 +6,10 @@ import { cn } from "@/lib/utils";
 interface TaskDateProps {
   value: string;
   className?: string;
+  short?: boolean;
 }
 
-function TaskDate({ value, className }: TaskDateProps) {
+function TaskDate({ value, className, short=false }: TaskDateProps) {
 
   const today = new Date();
   const endDate = new Date(value);
@@ -28,7 +29,7 @@ function TaskDate({ value, className }: TaskDateProps) {
   return (
     <div className={textColor}>
       <span className={cn("truncate", className)}>
-        {format(value, "PPP")}
+        {format(value, short ? "PP" : "PPP")}
       </span>
     </div>
   )
