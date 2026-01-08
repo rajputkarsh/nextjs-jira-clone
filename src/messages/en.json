@@ -207,7 +207,7 @@
     "assignee": "Assignee",
     "due_date": "Due Date",
     "status": "Status",
-    "estimated_efforts": "Estd Efforts",
+    "estimated_efforts": "Efforts",
     "worklogs": "Worklogs",
     "filter_tasks": "Filter tasks...",
     "no_results": " No results.",
