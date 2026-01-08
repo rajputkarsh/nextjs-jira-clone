@@ -213,7 +213,7 @@
     "no_results": " No results.",
     "next": "Next",
     "previous": "Previous",
-    "worklogsTotalEfforts": "Efforts Consumed"
+    "worklogsTotalEfforts": "Worklog"
   },
   "TaskActions": {
     "task_details": "Task Details",
@@ -278,7 +278,7 @@
     "failed_to_delete_comment": "Failed to delete comment",
     "delete_comment": "Delete Comment",
     "this_action_cannot_be_undone": "This action cannot be undone.",
-    "estimated_efforts": "Estimated Efforts"
+    "estimated_efforts": "Estd Efforts"
   },
   "Project": {
     "projects_total": "Projects ({total})",
