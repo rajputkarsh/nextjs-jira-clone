@@ -35,12 +35,9 @@ function TaskClientPage() {
         <TaskDescription task={data} />
       </div>
       <DottedSeparator className="my-6" />
-      <div className="max-w-[50%]">
-        <TaskWorklogs taskId={taskId} />
-      </div>
-      <DottedSeparator className="my-6" />
-      <div className="max-w-[50%]">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <TaskComments task={data} />
+        <TaskWorklogs taskId={taskId} />
       </div>
     </div>
   );
