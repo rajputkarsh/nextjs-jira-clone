@@ -4,7 +4,7 @@ import { InferRequestType, InferResponseType } from "hono";
 import { useTranslations } from "next-intl";
 import { client } from "@/lib/rpc";
 
-type ResponseType = InferResponseType<typeof client.api.worklogs["$post"]>;
+type ResponseType = InferResponseType<typeof client.api.worklogs["$post"], 200>;
 type RequestType = InferRequestType<typeof client.api.worklogs["$post"]>;
 
 export const useCreateWorklog = () => {
@@ -24,7 +24,7 @@ export const useCreateWorklog = () => {
     onSuccess: ({ data }) => {
       toast.success(translations("worklog_created"));
       queryClient.invalidateQueries({ queryKey: ["worklogs", data.taskId] });
-      queryClient.invalidateQueries({ queryKey: ["tasks", data.taskId] });
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
     },
     onError: () => {
       toast.error(translations("failed_to_create_worklog"));
