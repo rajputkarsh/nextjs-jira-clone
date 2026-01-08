@@ -11,8 +11,10 @@ import { Badge } from "@/components/ui/badge";
 import { snakeCaseToTitleCase } from "@/lib/utils";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown, MoreVertical } from "lucide-react";
+import { ArrowUpDown, Link, MoreVertical } from "lucide-react";
 import TaskActions from "@/features/tasks/components/TaskActions";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
+import { useRouter } from "next/navigation";
 
 interface TaskTableProps {
   tasks: Task
@@ -20,7 +22,13 @@ interface TaskTableProps {
  
 function TaskTable({ tasks }: TaskTableProps) {
   const tableTranslations = useTranslations("tasks_table");
-
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
+  
+  const handleOpenTask = (id: string) => {
+    router.push(`/workspaces/${workspaceId}/tasks/${id}`);
+  }
+  
   const columns: Array<ColumnDef<Task>> = [
     {
       accessorKey: "name",
@@ -37,7 +45,7 @@ function TaskTable({ tasks }: TaskTableProps) {
       },
       cell: ({ row }) => {
         const name = row.original.name;
-        return <p className="line-clamp-1">{name}</p>;
+        return <p className="line-clamp-1 hover:underline text-primary cursor-pointer" onClick={() => handleOpenTask(row.original.$id)}>{name}</p>
       },
     },
     {
