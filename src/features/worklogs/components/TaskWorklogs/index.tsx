@@ -28,6 +28,7 @@ interface WorklogItemProps {
 
 function WorklogItem({ worklog, taskId }: WorklogItemProps) {
   const translations = useTranslations("Worklogs");
+  const translate = useTranslations("Task");
   const { data: currentUser } = useCurrentUser();
   const { open: openEdit } = useEditWorklogDialog();
   const { mutate: deleteWorklog, isPending: isDeleting } = useDeleteWorklog();
@@ -39,6 +40,8 @@ function WorklogItem({ worklog, taskId }: WorklogItemProps) {
   );
 
   const isOwnWorklog = currentUser?.$id === worklog.userId;
+  const isEdited = worklog.$createdAt && worklog.$updatedAt && 
+    worklog.$createdAt !== worklog.$updatedAt;
 
   const handleDelete = async () => {
     const ok = await confirmDelete();
@@ -60,9 +63,16 @@ function WorklogItem({ worklog, taskId }: WorklogItemProps) {
         />
         <div className="flex-1 flex flex-col gap-y-1">
           <div className="flex items-center justify-between">
-            <p className="font-medium text-sm">
-              {worklog.member?.name || "Unknown"}
-            </p>
+            <div className="flex items-center gap-2">
+              <p className="font-medium text-sm">
+                {worklog.member?.name || "Unknown"}
+              </p>
+              {isEdited && (
+                <span className="text-xs text-muted-foreground italic">
+                  ({translate("edited") || "edited"})
+                </span>
+              )}
+            </div>
             <div className="flex items-center gap-x-4">
               <div className="flex items-center gap-x-4 text-sm text-muted-foreground">
                 <span>{formatEfforts(worklog.efforts)}</span>
