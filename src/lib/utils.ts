@@ -26,3 +26,16 @@ export const capitalCase = (str: string): string => {
 export const snakeCaseToTitleCase = (str: string): string => {
   return str.toLowerCase().replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 }
+
+export const formatEfforts = (minutes: number | undefined): string => {
+  if (!minutes || minutes <= 0) return "0m";
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (hours > 0 && mins > 0) {
+    return `${hours}h ${mins}m`;
+  } else if (hours > 0) {
+    return `${hours}h`;
+  } else {
+    return `${mins}m`;
+  }
+};
