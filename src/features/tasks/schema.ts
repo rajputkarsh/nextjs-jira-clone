@@ -17,6 +17,7 @@ export interface ITask {
   position?: number;
   description?: string;
   estimatedEfforts?: number;
+  worklogsTotalEfforts?: number; // Total efforts from all worklogs (in minutes)
 }
 
 export const getTaskSchema = z.object({

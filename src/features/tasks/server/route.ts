@@ -10,10 +10,11 @@ import {
 import { sessionMiddleware } from "@/middlewares/session";
 import { getMembers } from "@/features/members/types/utils";
 import { HTTP_STATUS } from "@/constants/api";
-import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID } from "@/config";
+import { DATABASE_ID, MEMBERS_ID, PROJECTS_ID, TASKS_ID, WORKLOGS_ID } from "@/config";
 import { ID, Query } from "node-appwrite";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "@/features/projects/types";
+import { Worklog } from "@/features/worklogs/schema";
 
 const app = new Hono()
   .get(
@@ -99,6 +100,32 @@ const app = new Hono()
         })
       );
 
+      // Fetch worklogs for all tasks in this workspace
+      const taskIds = tasks.documents.map((task) => task.$id!);
+      const taskIdsSet = new Set(taskIds);
+      
+      // Fetch all worklogs for this workspace and filter by taskId
+      const allWorklogs = await databases.listDocuments<Worklog>(
+        DATABASE_ID,
+        WORKLOGS_ID,
+        [Query.equal("workspaceId", workspaceId)]
+      );
+      
+      // Filter worklogs to only include those for the fetched tasks
+      const worklogs = {
+        ...allWorklogs,
+        documents: allWorklogs.documents.filter((w) => taskIdsSet.has(w.taskId)),
+      };
+
+      // Calculate total efforts for each task
+      const worklogsByTaskId = worklogs.documents.reduce((acc, worklog) => {
+        if (!acc[worklog.taskId]) {
+          acc[worklog.taskId] = 0;
+        }
+        acc[worklog.taskId] += worklog.efforts || 0;
+        return acc;
+      }, {} as Record<string, number>);
+
       const populatedTasks = tasks.documents.map((task) => {
         const project = projects.documents.find(
           (project) => project.$id === task.projectId
@@ -106,11 +133,13 @@ const app = new Hono()
         const assignee = assignees.find(
           (assignee) => assignee.$id === task.assigneeId
         );
+        const worklogsTotalEfforts = worklogsByTaskId[task.$id!] || 0;
 
         return {
           ...task,
           project,
           assignee,
+          worklogsTotalEfforts,
         };
       });
 

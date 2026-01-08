@@ -208,10 +208,12 @@
     "due_date": "Due Date",
     "status": "Status",
     "estimated_efforts": "Estimated Efforts",
+    "worklogs": "Worklogs",
     "filter_tasks": "Filter tasks...",
     "no_results": " No results.",
     "next": "Next",
-    "previous": "Previous"
+    "previous": "Previous",
+    "worklogsTotalEfforts": "Efforts Consumed"
   },
   "TaskActions": {
     "task_details": "Task Details",

@@ -161,6 +161,24 @@ function TaskTable({ tasks }: TaskTableProps) {
       },
     },
     {
+      accessorKey: "worklogsTotalEfforts",
+      header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            {tableTranslations("worklogsTotalEfforts")}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const worklogsTotalEfforts = row.original.worklogsTotalEfforts || 0;
+        return <p className="text-sm font-medium">{formatEfforts(worklogsTotalEfforts)}</p>;
+      },
+    },
+    {
       id:"actions",
       cell: ({ row }) => {
         const id = row.original.$id;
