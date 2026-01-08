@@ -192,7 +192,8 @@
     "project": "Project",
     "project_placeholder": "Select Project",
     "estimated_efforts": "Estimated Efforts (minutes)",
-    "estimated_efforts_placeholder": "Enter estimated efforts in minutes"
+    "estimated_efforts_placeholder": "Enter estimated efforts in minutes",
+    "estimated_efforts_required": "Estimated efforts is required"
   },
   "DataFilters": {
     "all_statuses": "All Statuses",
@@ -221,7 +222,8 @@
     "failed_to_delete_task": "Failed to delete task",
     "this_action_cannot_be_undone": "This action cannot be undone.",
     "failed_to_update_task": "Failed to update Task",
-    "task_updated": "Task Updated"
+    "task_updated": "Task Updated",
+    "add_efforts": "Add Efforts"
   },
   "UpdateTaskForm": {
     "update_task": "Update Task",
@@ -238,6 +240,7 @@
     "project_placeholder": "Select Project",
     "estimated_efforts": "Estimated Efforts (minutes)",
     "estimated_efforts_placeholder": "Enter estimated efforts in minutes",
+    "estimated_efforts_required": "Estimated efforts is required",
     "save_changes": "Save Changes"
   },
   "Task": {
@@ -300,5 +303,20 @@
   },
   "workspaces": {
     "workspace_not_found": "Workspace not found"
+  },
+  "Worklogs": {
+    "worklogs": "Worklogs",
+    "add_worklog": "Add Worklog",
+    "efforts": "Efforts (minutes)",
+    "efforts_placeholder": "Enter efforts in minutes",
+    "date": "Date",
+    "select_date": "Select Date",
+    "description": "Description",
+    "description_placeholder": "Enter description (optional)",
+    "cancel": "Cancel",
+    "worklog_created": "Worklog created",
+    "failed_to_create_worklog": "Failed to create worklog",
+    "total_efforts": "Total Efforts",
+    "no_worklogs": "No worklogs yet. Add your first worklog!"
   }
 }

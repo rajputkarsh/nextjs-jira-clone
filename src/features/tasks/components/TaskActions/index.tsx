@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { ExternalLinkIcon, PencilIcon, TrashIcon } from "lucide-react";
+import { ExternalLinkIcon, PencilIcon, TrashIcon, ClockIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +12,7 @@ import useConfirm from "@/hooks/use-confirm";
 import { useDeleteTask } from "@/features/tasks/api/use-deleteTask";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import { useEditTaskModal } from "@/features/tasks/hooks/use-editTaskModal";
+import { useWorklogDialog } from "@/features/worklogs/hooks/use-worklogDialog";
 
 interface TaskActionsProps {
   id: string;
@@ -23,7 +24,8 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
   const translations = useTranslations("TaskActions");
   const workspaceId = useWorkspaceId();
   const router = useRouter();
-  const { open } = useEditTaskModal();
+  const { open: openEditTask } = useEditTaskModal();
+  const { open: openWorklog } = useWorklogDialog();
   
   const [DeleteDialog, confirmDelete] = useConfirm(
     translations("delete_task"),
@@ -74,10 +76,18 @@ function TaskActions({ id, projectId, children }: TaskActionsProps) {
           <DropdownMenuItem
             className="cursor-pointer font-medium p-[10px]"
             disabled={isPending}
-            onClick={() => {open(id)}}
+            onClick={() => {openEditTask(id)}}
           >
             <PencilIcon className="size-4 mr-2 stroke-2" />
             {translations("edit_task")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer font-medium p-[10px]"
+            disabled={isPending}
+            onClick={() => openWorklog(id)}
+          >
+            <ClockIcon className="size-4 mr-2 stroke-2" />
+            {translations("add_efforts")}
           </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer text-amber-700 focus:text-amber-700 font-medium p-[10px]"

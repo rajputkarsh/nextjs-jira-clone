@@ -29,6 +29,7 @@ import { capitalCase, cn, formatEfforts } from "@/lib/utils";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { TASK_STATUS, TASK_STATUS_OBJECT } from "@/features/tasks/constants";
 import ProjectAvatar from "@/features/projects/components/ProjectAvatar";
+import { toast } from "sonner";
 
 interface ITaskFormProps {
   onCancel?: () => void;
@@ -260,13 +261,13 @@ function TaskForm({
                           {...field}
                           onChange={(e) => {
                             const value = e.target.value;
-                            if (value === "") {
-                              field.onChange(undefined);
-                            } else {
-                              const numValue = parseInt(value, 10);
-                              if (!isNaN(numValue)) {
-                                field.onChange(numValue);
-                              }
+                            if (!value) {
+                              toast.error(translations("estimated_efforts_required"));
+                              return;
+                            }
+                            const numValue = parseInt(value, 10);
+                            if (!isNaN(numValue)) {
+                              field.onChange(numValue);
                             }
                           }}
                           value={field.value ?? ""}

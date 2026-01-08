@@ -36,7 +36,7 @@ export const createTaskSchema = z.object({
   dueDate: z.coerce.date(),
   status: z.nativeEnum(TASK_STATUS, { required_error: "Required" }),
   description: z.string().optional(),
-  estimatedEfforts: z.coerce.number().int().positive("Estimated efforts must be a positive number"),
+  estimatedEfforts: z.coerce.number().int().positive().min(1, "Estimated efforts must be a positive number"),
 });
 
 export const updateTaskSchema = z.object({
@@ -46,7 +46,7 @@ export const updateTaskSchema = z.object({
   dueDate: z.coerce.date().optional(),
   status: z.nativeEnum(TASK_STATUS, { required_error: "Required" }).optional(),
   description: z.string().optional(),
-  estimatedEfforts: z.coerce.number().int().positive("Estimated efforts must be a positive number").optional(),
+  estimatedEfforts: z.coerce.number().int().positive().min(1, "Estimated efforts must be a positive number"),
 });
 
 export const bulkUpdateTaskSchema = z.object({
