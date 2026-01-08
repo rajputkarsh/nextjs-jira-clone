@@ -1,14 +1,10 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
 import { Member } from "@/features/members/types";
 import { Task } from "@/features/tasks/schema";
 import { TASK_STATUS } from "@/features/tasks/constants";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { differenceInMilliseconds } from "date-fns";
-import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspaceId";
 import MemberAvatar from "@/features/members/components/MemberAvatar";
 import { useMemo } from "react";
 
@@ -19,7 +15,6 @@ interface MembersWithoutActiveTasksProps {
 
 function MembersWithoutActiveTasks({ members, tasks }: MembersWithoutActiveTasksProps) {
   const translate = useTranslations("Member");
-  const workspaceId = useWorkspaceId();
 
   // Filter members who:
   // 1. Don't have any assigned tasks, OR
@@ -28,7 +23,7 @@ function MembersWithoutActiveTasks({ members, tasks }: MembersWithoutActiveTasks
     return members.filter((member) => {
       // Get all tasks assigned to this member
       const memberTasks = tasks.filter(
-        (task) => task.assigneeId === member.userId
+        (task) => task.assignee?.userId === member.userId
       );
 
       // If member has no tasks at all, include them
