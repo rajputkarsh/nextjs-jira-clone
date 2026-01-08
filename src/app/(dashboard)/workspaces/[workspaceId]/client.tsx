@@ -12,6 +12,7 @@ import Analytics from "@/components/analytics";
 import TaskList from "@/features/tasks/components/TaskList";
 import ProjectList from "@/features/projects/components/ProjectList";
 import MemberList from "@/features/members/components/MemberListAnalytics";
+import MembersWithoutActiveTasks from "@/features/members/components/MembersWithoutActiveTasks";
 
 function WorkspaceClient() {
   const translate = useTranslations("workspaces");
@@ -47,6 +48,7 @@ function WorkspaceClient() {
         <TaskList data={tasks.documents} total={tasks.total} />
         <ProjectList data={projects.documents} total={projects.total} />
         <MemberList data={members.documents} total={members.total} />
+        <MembersWithoutActiveTasks members={members.documents} tasks={tasks.documents} />
       </div>
     </div>
   );

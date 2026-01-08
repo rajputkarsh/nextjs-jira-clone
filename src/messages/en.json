@@ -277,7 +277,9 @@
   "Member": {
     "members_total": "Members ({total})",
     "no_members_found": "No Members Found",
-    "show_all": "Show All"
+    "show_all": "Show All",
+    "members_without_active_tasks_total": "Members Without Active Tasks ({total})",
+    "all_members_have_active_tasks": "All members have active tasks"
   },
   "error": {
     "something_went_wrong": "Something went wrong",
