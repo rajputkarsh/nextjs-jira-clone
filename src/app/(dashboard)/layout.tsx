@@ -4,6 +4,7 @@ import CreateProjectModal from "@/features/projects/components/CreateProjectModa
 import CreateTaskModal from "@/features/tasks/components/CreateTaskModal";
 import EditTaskModal from "@/features/tasks/components/EditTaskModal";
 import CreateWorklogModal from "@/features/worklogs/components/CreateWorklogModal";
+import EditWorklogModal from "@/features/worklogs/components/EditWorklogModal";
 import CreateWorkspaceModal from "@/features/workspaces/components/CreateWorkspaceModal";
 
 interface DashboardLayoutProps {
@@ -20,6 +21,7 @@ export default async function DashboardLayout({
       <CreateProjectModal />
       <CreateTaskModal />
       <EditTaskModal />
+      <EditWorklogModal />
       <CreateWorklogModal />
       <div className="flex w-full h-full">
         <div className="fixed left-0 top-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">

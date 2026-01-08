@@ -309,6 +309,8 @@
   "Worklogs": {
     "worklogs": "Worklogs",
     "add_worklog": "Add Worklog",
+    "edit_worklog": "Edit Worklog",
+    "delete_worklog": "Delete Worklog",
     "efforts": "Efforts (minutes)",
     "efforts_placeholder": "Enter efforts in minutes",
     "date": "Date",
@@ -316,9 +318,15 @@
     "description": "Description",
     "description_placeholder": "Enter description (optional)",
     "cancel": "Cancel",
+    "save_changes": "Save Changes",
     "worklog_created": "Worklog created",
+    "worklog_updated": "Worklog updated",
+    "worklog_deleted": "Worklog deleted",
     "failed_to_create_worklog": "Failed to create worklog",
+    "failed_to_update_worklog": "Failed to update worklog",
+    "failed_to_delete_worklog": "Failed to delete worklog",
     "total_efforts": "Total Efforts",
-    "no_worklogs": "No worklogs yet. Add your first worklog!"
+    "no_worklogs": "No worklogs yet. Add your first worklog!",
+    "this_action_cannot_be_undone": "This action cannot be undone."
   }
 }

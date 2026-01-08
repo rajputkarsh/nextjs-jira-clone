@@ -25,3 +25,9 @@ export const createWorklogSchema = z.object({
 export const getWorklogsSchema = z.object({
   taskId: z.string().trim().min(1, "Required"),
 });
+
+export const updateWorklogSchema = z.object({
+  efforts: z.coerce.number().int().positive("Efforts must be a positive number").optional(),
+  date: z.coerce.date().optional(),
+  description: z.string().optional(),
+});

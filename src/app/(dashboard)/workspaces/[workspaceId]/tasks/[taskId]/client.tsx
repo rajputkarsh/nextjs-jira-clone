@@ -11,6 +11,7 @@ import { useTranslations } from "next-intl";
 import { DottedSeparator } from "@/components/dotter-separator";
 import { useGetTasksById } from "@/features/tasks/api/use-getTaskById";
 import { useTaskId } from "@/features/tasks/hooks/use-taskId";
+import EditWorklogModal from "@/features/worklogs/components/EditWorklogModal";
 
 function TaskClientPage() {
   const taskId = useTaskId();
