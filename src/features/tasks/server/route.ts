@@ -269,7 +269,7 @@ const app = new Hono()
       if (status !== undefined) updateData.status = status;
       if (projectId !== undefined) updateData.projectId = projectId;
       if (assigneeId !== undefined) updateData.assigneeId = assigneeId;
-      if (dueDate !== undefined) updateData.dueDate = dueDate;
+      if (dueDate !== undefined) updateData.dueDate = dueDate.toISOString();
       if (description !== undefined) updateData.description = description;
       if (estimatedEfforts !== undefined) updateData.estimatedEfforts = estimatedEfforts;
 
